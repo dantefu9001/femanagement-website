@@ -1,26 +1,32 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import axios from 'axios';
 @Component({
   selector: 'app-equipments',
   templateUrl: './equipments.component.html',
   styleUrls: ['./equipments.component.scss']
 })
 export class EquipmentsComponent {
-  data = [
-    {
-      name: 'John Brown',
-      age: 33,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
+
+  equipments = Array<any>();
+
+  constructor() {
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    var api = 'http://localhost:8080/equipments';
+    this.fetchEquipments(api).then((result: any) => {
+      this.equipments = result.data;
+    })
+  }
+
+  fetchEquipments(api: string): any {
+    return new Promise((resolve, reject) => {
+      axios.get(api).then(function (response) {
+        resolve(response);
+      });
+    });
+  }
+
 }

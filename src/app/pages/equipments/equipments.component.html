@@ -1,17 +1,17 @@
     <h4>设备管理列表</h4>
-    <nz-table #middleTable nzSize="middle" [nzData]="data">
+    <nz-table #equipmentTable nzSize="middle" [nzData]="equipments">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Address</th>
+          <th>id</th>
+          <th>name</th>
+          <th>code</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of middleTable.data">
-          <td>{{ data.name }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
+        <tr *ngFor="let data of equipmentTable.data">
+          <td>{{ data.id }}</td>
+          <td>{{data.name}}</td>
+          <td>{{data.code}}</td>
         </tr>
       </tbody>
     </nz-table>
