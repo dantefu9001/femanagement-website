@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import axios from 'axios';
+import { EquipmentsComponent } from '../equipments.component';
 
 @Component({
   selector: 'app-equipment-search',
@@ -10,6 +10,7 @@ import axios from 'axios';
 })
 export class EquipmentSearchComponent implements OnInit {
   validateForm!: FormGroup;
+  @Input() equipment:EquipmentsComponent;
   controlArray: Array<{ index: number; show: boolean }> = [];
   isCollapse = true;
 
@@ -24,7 +25,8 @@ export class EquipmentSearchComponent implements OnInit {
     this.validateForm.reset();
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, equipment : EquipmentsComponent) {
+    this.equipment = equipment;
   }
 
   ngOnInit(): void {
@@ -37,14 +39,7 @@ export class EquipmentSearchComponent implements OnInit {
 
   search():any{
     console.log(this.validateForm.getRawValue())
+    this.equipment.search();
   }
 
-  private fetchEquipments(api: string): any {
-    console.log("fetching equipments")
-    return new Promise((resolve, reject) => {
-      axios.get(api).then(function (response) {
-        resolve(response);
-      });
-    });
-  }
 }
