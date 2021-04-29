@@ -7,10 +7,19 @@ import axios from 'axios';
 export class EquipmentService {
   constructor() {}
 
-  fetchEquipments(api: string, args: any): any {
+  getDataWithParams(api: string, args: any): any {
     console.log('fetching equipments');
     return new Promise((resolve) => {
-      axios.get(api, { params: args }).then(function (response) {
+      axios.get(api, { params: args }).then((response) => {
+        resolve(response);
+      });
+    });
+  }
+
+  getData(api: string): any {
+    console.log('fetching equipments');
+    return new Promise((resolve) => {
+      axios.get(api).then((response) => {
         resolve(response);
       });
     });

@@ -33,4 +33,8 @@ export class EquipmentSearchComponent implements OnInit {
     const code: string = this.validateForm.get('code')?.value;
     this.equipment.search(name, code);
   }
+
+  deleteRow(): void {
+    this.equipment.deleteEquipmentById();
+  }
 }

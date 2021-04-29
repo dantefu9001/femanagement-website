@@ -9,6 +9,7 @@ import { EquipmentService } from './service/equipment.service';
 })
 export class EquipmentsComponent implements OnInit {
   equipments = Array<Equipment>();
+  idOfSelectedRow = -1;
 
   constructor(private equipmentService: EquipmentService) {}
 
@@ -24,8 +25,22 @@ export class EquipmentsComponent implements OnInit {
       equipmentName: name,
       equipmentCode: code,
     };
-    this.equipmentService.fetchEquipments(api, params).then((result: any) => {
+    this.equipmentService.getDataWithParams(api, params).then((result: any) => {
       this.equipments = result.data;
     });
+  }
+
+  selectData(data: Equipment): void {
+    console.log(data.name);
+    this.idOfSelectedRow = data.id;
+  }
+
+  deleteEquipmentById(): void {
+    if (this.idOfSelectedRow === -1) {
+      console.log('no data');
+    } else {
+      console.log('id:', this.idOfSelectedRow);
+      alert('是否删除？');
+    }
   }
 }
