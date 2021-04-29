@@ -5,41 +5,32 @@ import { EquipmentsComponent } from '../equipments.component';
 @Component({
   selector: 'app-equipment-search',
   templateUrl: './equipment-search.component.html',
-
-  styleUrls: ['./equipment-search.component.scss']
+  styleUrls: ['./equipment-search.component.scss'],
 })
 export class EquipmentSearchComponent implements OnInit {
   validateForm!: FormGroup;
-  @Input() equipment:EquipmentsComponent;
-  controlArray: Array<{ index: number; show: boolean }> = [];
+  @Input() equipment: EquipmentsComponent;
   isCollapse = true;
-
-  toggleCollapse(): void {
-    this.isCollapse = !this.isCollapse;
-    this.controlArray.forEach((c, index) => {
-      c.show = this.isCollapse ? index < 6 : true;
-    });
-  }
 
   resetForm(): void {
     this.validateForm.reset();
   }
 
-  constructor(private fb: FormBuilder, equipment : EquipmentsComponent) {
+  constructor(private fb: FormBuilder, equipment: EquipmentsComponent) {
     this.equipment = equipment;
   }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({});
-    for (let i = 0; i < 3; i++) {
-      this.controlArray.push({ index: i, show: i < 6 });
-      this.validateForm.addControl(`field${i}`, new FormControl());
-    }
+    this.validateForm.addControl('name', new FormControl());
+    this.validateForm.addControl('code', new FormControl());
+    this.validateForm.addControl('id', new FormControl());
   }
 
-  search():any{
-    console.log(this.validateForm.getRawValue())
-    this.equipment.search();
+  search(): any {
+    console.log(this.validateForm.get('name')?.value);
+    const name: string = this.validateForm.get('name')?.value;
+    const code: string = this.validateForm.get('code')?.value;
+    this.equipment.search(name, code);
   }
-
 }
