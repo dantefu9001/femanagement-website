@@ -11,12 +11,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EquipmentGroupComponent } from './equipment-group/equipment-group.component';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { EquipmentEditComponent } from './equipment-edit/equipment-edit.component';
 
 @NgModule({
   declarations: [
     EquipmentsComponent,
     EquipmentSearchComponent,
     EquipmentGroupComponent,
+    EquipmentEditComponent,
   ],
   imports: [
     CommonModule,
@@ -26,8 +29,9 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
     NzFormModule,
     NzListModule,
     NzLayoutModule,
+    NzModalModule,
     EquipmentsRoutingModule,
-    NzMessageModule
-  ]
+    NzMessageModule,
+  ],
 })
 export class EquipmentsModule {}

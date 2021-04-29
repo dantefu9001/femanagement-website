@@ -1,0 +1,36 @@
+
+    <button nz-button nzType="primary" (click)="showModal()">
+      <span>新增</span>
+    </button>
+    <nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="设备新增或编辑"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+      [nzOkLoading]="isOkLoading"
+    >
+    <form nz-form>
+      <div>
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+
+      </div>
+      <div>
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+        <input nz-input type="text" />
+
+      </div>
+    </form>
+    </nz-modal>

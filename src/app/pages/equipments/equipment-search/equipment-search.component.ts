@@ -21,10 +21,11 @@ export class EquipmentSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.validateForm = this.fb.group({});
-    this.validateForm.addControl('name', new FormControl());
-    this.validateForm.addControl('code', new FormControl());
-    this.validateForm.addControl('id', new FormControl());
+    this.validateForm = this.fb.group({
+      name: new FormControl(),
+      code: new FormControl(),
+      id: new FormControl(),
+    });
   }
 
   search(): any {
