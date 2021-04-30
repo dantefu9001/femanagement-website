@@ -13,6 +13,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { EquipmentEditComponent } from './equipment-edit/equipment-edit.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,10 @@ import { EquipmentEditComponent } from './equipment-edit/equipment-edit.componen
     NzModalModule,
     EquipmentsRoutingModule,
     NzMessageModule,
+    NzSelectModule
   ],
+  providers:[
+    EquipmentGroupComponent
+  ]
 })
 export class EquipmentsModule {}

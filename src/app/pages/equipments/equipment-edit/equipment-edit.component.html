@@ -8,29 +8,38 @@
       (nzOnCancel)="handleCancel()"
       (nzOnOk)="handleOk()"
       [nzOkLoading]="isOkLoading"
+      [nzWidth]="800"
     >
-    <form nz-form>
-      <div>
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-
-      </div>
-      <div>
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-        <input nz-input type="text" />
-
-      </div>
-    </form>
+    <form nz-form [formGroup]="equipmentEdit" >
+      <nz-row nz-row [nzGutter]="56">
+        <nz-form-item>
+          <nz-form-label>编号</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="code" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="name" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>设备组</nz-form-label>
+          <nz-form-control>
+            <nz-select name='equipment-group'  [(ngModel)]="equipmentGroups" [ngModelOptions]="{standalone:true}">
+              <nz-option
+                *ngFor="let item of equipmentGroups"
+                [nzLabel]="item.name"
+                [nzValue]="item.name">
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+      
+      </form>
     </nz-modal>
