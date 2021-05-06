@@ -1,29 +1,66 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { EquipmentGroupComponent } from '../equipment-group/equipment-group.component';
-import { EquipmentGroup } from '../model/model';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { EquipmentGroup, SelfDefinedAttribute } from '../model/model';
 import { EquipmentService } from '../service/equipment.service';
 
 @Component({
   selector: 'app-equipment-edit',
   templateUrl: './equipment-edit.component.html'
 })
-export class EquipmentEditComponent implements OnInit, AfterViewInit{
+export class EquipmentEditComponent implements OnInit, AfterViewInit {
+  i = 0;
+  editId: string | null = null;
   isVisible = false;
   isOkLoading = false;
+  equipmentEditForm!: FormGroup
+  listOfData : SelfDefinedAttribute[] = []
   equipmentGroups = Array<EquipmentGroup>();
+  selectedGroup = null;
+  responsibilities = [
+    { "name": "alan" }
+  ];
+  workshops = [
+    { "name": "shop1" }
+  ];
+  areas = [
+    {
+      "name": "area1"
+    }
+  ];
+  process = [
+    { "name": "焊接" }
+  ];
+  stations = [
+    { "name": "焊接" }
+  ];
+  status = [
+    { "name": "待投入" }
+  ]
 
-  equipmentEdit = new FormGroup({
-    name: new FormControl(''),
-    code:  new FormControl(''),
-    id:  new FormControl(''),
-  });
+  
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.fetchEquipmentGroups();
-
+    this.equipmentEditForm = this.fb.group({
+      name: new FormControl(''),
+      code: new FormControl(''),
+      id: new FormControl(''),
+      selectedGroup: new FormControl(''),
+      equipmentModel: new FormControl(''),
+      responsibilities: new FormControl(''),
+      workshops: new FormControl(''),
+      areas: new FormControl(''),
+      specification: new FormControl(''),
+      manufacturer: new FormControl(''),
+      dateOfProduction: new FormControl(''),
+      serialNumber: new FormControl(''),
+      dateOfInstallation: new FormControl(''),
+      dateOfFirstUse: new FormControl(''),
+      expireYears: new FormControl(''),
+      dateOfExpiration: new FormControl(''),
+    });
   }
 
   ngAfterViewInit(): void {
@@ -31,7 +68,7 @@ export class EquipmentEditComponent implements OnInit, AfterViewInit{
     //Add 'implements AfterViewInit' to the class.
   }
 
-  constructor(public equipmentService: EquipmentService){
+  constructor(private fb: FormBuilder, public equipmentService: EquipmentService) {
   }
 
   fetchEquipmentGroups(): void {
@@ -46,14 +83,42 @@ export class EquipmentEditComponent implements OnInit, AfterViewInit{
   }
 
   handleOk(): void {
+    console.log(this.equipmentEditForm.get('selectedGroup'))
     this.isOkLoading = true;
     setTimeout(() => {
       this.isVisible = false;
       this.isOkLoading = false;
     }, 3000);
+    this.equipmentEditForm.reset();
   }
 
   handleCancel(): void {
     this.isVisible = false;
+    this.equipmentEditForm.reset();
+  }
+
+  startEdit(id: string): void {
+    this.editId = id;
+  }
+
+  stopEdit(): void {
+    this.editId = null;
+  }
+
+  addRow(): void {
+    this.listOfData = [
+      ...this.listOfData,
+      {
+        id: `${this.i}`,
+        name: `Edward King ${this.i}`,
+        value: '32',
+        remark: `London, Park Lane no. ${this.i}`
+      }
+    ];
+    this.i++;
+  }
+
+  deleteRow(id: string): void {
+    this.listOfData = this.listOfData.filter(d => d.id !== id);
   }
 }

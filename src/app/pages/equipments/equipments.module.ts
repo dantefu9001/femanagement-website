@@ -14,6 +14,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { EquipmentEditComponent } from './equipment-edit/equipment-edit.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzModalModule,
     EquipmentsRoutingModule,
     NzMessageModule,
-    NzSelectModule
+    NzSelectModule,
+    NzDatePickerModule
   ],
   providers:[
     EquipmentGroupComponent
