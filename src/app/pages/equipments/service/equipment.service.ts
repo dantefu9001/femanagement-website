@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import axios from 'axios';
-import { EquipmentGroup } from '../model/model';
+import {EquipmentGroup} from '../model/model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EquipmentService {
 
-  constructor() {}
+  constructor() {
+  }
 
   getDataWithParams(api: string, args: any): any {
     console.log('fetching equipments');
     return new Promise((resolve) => {
-      axios.get(api, { params: args }).then((response) => {
+      axios.get(api, {params: args}).then((response) => {
         resolve(response);
       });
     });
@@ -27,13 +28,12 @@ export class EquipmentService {
     });
   }
 
-  fetchEquipmentGroups(): Array<EquipmentGroup> {
-    const api = 'http://localhost:8080/equipment-groups';
-    let equipmentGroups = Array<EquipmentGroup>();
-
-    this.getData(api).then((result: any) => {
-      equipmentGroups = result.data;
-    });
-    return equipmentGroups;
+  postData(api: string, arg: any): any {
+    console.log('posting data' + arg);
+    return new Promise((resolve => {
+      axios.post(api, arg).then((response) => {
+        resolve(response);
+      })
+    }))
   }
 }

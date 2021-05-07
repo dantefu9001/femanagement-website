@@ -1,14 +1,8 @@
 <button nz-button nzType="primary" (click)="showModal()">
   <span>新增</span>
 </button>
-<nz-modal
-  [(nzVisible)]="isVisible"
-  nzTitle="设备新增或编辑"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [nzOkLoading]="isOkLoading"
-  [nzWidth]="800"
->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="设备新增或编辑" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading" [nzWidth]="800">
   <span>基础属性</span>
   <form nz-form [formGroup]="equipmentEditForm">
     <nz-row nz-row [nzGutter]="32">
@@ -27,17 +21,9 @@
       <nz-form-item>
         <nz-form-label>设备组</nz-form-label>
         <nz-form-control>
-          <nz-select
-            (ngModelChange)="log($event)"
-            name="equipment-group"
-            [(ngModel)]="selectedGroup"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of equipmentGroups"
-              [nzLabel]="item.name"
-              [nzValue]="item"
-            >
+          <nz-select (ngModelChange)="setGroup($event)" name="equipment-group" [(ngModel)]="selectedGroup"
+                     [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let item of equipmentGroups" [nzLabel]="item.name" [nzValue]="item">
               <ng-template #tpl>
                 {{ item }}
               </ng-template>
@@ -50,16 +36,8 @@
       <nz-form-item>
         <nz-form-label>负责人</nz-form-label>
         <nz-form-control>
-          <nz-select
-            name="responsibilities"
-            [(ngModel)]="responsibilities"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of responsibilities"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
+          <nz-select name="responsibilities"(ngModelChange)="setPerson($event)" [(ngModel)]="selectedPerson" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let item of responsibilities" [nzLabel]="item.name" [nzValue]="item.name">
               <ng-template #tpl>
                 {{ item }}
               </ng-template>
@@ -70,16 +48,8 @@
       <nz-form-item>
         <nz-form-label>车间</nz-form-label>
         <nz-form-control>
-          <nz-select
-            name="workshops"
-            [(ngModel)]="workshops"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of workshops"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
+          <nz-select name="workshops" (ngModelChange)="setWorkshops($event)" [(ngModel)]="selectedWorkshops" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let item of workshops" [nzLabel]="item.name" [nzValue]="item.name">
               <ng-template #tpl>
                 {{ item }}
               </ng-template>
@@ -90,16 +60,8 @@
       <nz-form-item>
         <nz-form-label>区域</nz-form-label>
         <nz-form-control>
-          <nz-select
-            name="areas"
-            [(ngModel)]="areas"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of areas"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
+          <nz-select name="areas" (ngModelChange)="setArea($event)" [(ngModel)]="selectedArea" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let item of areas" [nzLabel]="item.name" [nzValue]="item.name">
               <ng-template #tpl>
                 {{ item }}
               </ng-template>
@@ -112,16 +74,8 @@
       <nz-form-item>
         <nz-form-label>工序</nz-form-label>
         <nz-form-control>
-          <nz-select
-            name="process"
-            [(ngModel)]="process"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of process"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
+          <nz-select name="process" (ngModelChange)="setProcess($event)" [(ngModel)]="selectedProcess" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let item of process" [nzLabel]="item.name" [nzValue]="item.name">
               <ng-template #tpl>
                 {{ item }}
               </ng-template>
@@ -132,16 +86,8 @@
       <nz-form-item>
         <nz-form-label>工位</nz-form-label>
         <nz-form-control>
-          <nz-select
-            name="stations"
-            [(ngModel)]="stations"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of stations"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
+          <nz-select name="stations" (ngModelChange)="setStation($event)" [(ngModel)]="selectedStation" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let item of stations" [nzLabel]="item.name" [nzValue]="item.name">
               <ng-template #tpl>
                 {{ item }}
               </ng-template>
@@ -152,16 +98,8 @@
       <nz-form-item>
         <nz-form-label>状态</nz-form-label>
         <nz-form-control>
-          <nz-select
-            name="status"
-            [(ngModel)]="status"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of status"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
+          <nz-select name="status" (ngModelChange)="setStatus($event)" [(ngModel)]="selectedStatus" [ngModelOptions]="{ standalone: true }">
+            <nz-option *ngFor="let item of status" [nzLabel]="item.name" [nzValue]="item.name">
               <ng-template #tpl>
                 {{ item }}
               </ng-template>
@@ -175,21 +113,13 @@
       <nz-form-item>
         <nz-form-label>型号</nz-form-label>
         <nz-form-control>
-          <input
-            nz-input
-            placeholder="请输入"
-            formControlName="equipmentModel"
-          />
+          <input nz-input placeholder="请输入" formControlName="equipmentModel" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label>规格</nz-form-label>
         <nz-form-control>
-          <input
-            nz-input
-            placeholder="请输入"
-            formControlName="specification"
-          />
+          <input nz-input placeholder="请输入" formControlName="specification" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -256,30 +186,15 @@
         <tbody>
           <tr *ngFor="let data of editRowTable.data" class="editable-row">
             <td>
-              <div
-                class="editable-cell"
-                [hidden]="editId === data.id"
-                (click)="startEdit(data.id)"
-              >
+              <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
                 {{ data.name }}
               </div>
-              <input
-                [hidden]="editId !== data.id"
-                type="text"
-                nz-input
-                [(ngModel)]="data.name"
-                (blur)="stopEdit()"
-              />
+              <input [hidden]="editId !== data.id" type="text" nz-input [(ngModel)]="data.name" (blur)="stopEdit()" />
             </td>
             <td>{{ data.value }}</td>
             <td>{{ data.remark }}</td>
             <td>
-              <a
-                nz-popconfirm
-                nzPopconfirmTitle="Sure to delete?"
-                (nzOnConfirm)="deleteRow(data.id)"
-                >Delete</a
-              >
+              <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a>
             </td>
           </tr>
         </tbody>
