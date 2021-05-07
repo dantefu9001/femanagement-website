@@ -28,6 +28,7 @@
         <nz-form-label>设备组</nz-form-label>
         <nz-form-control>
           <nz-select
+            (ngModelChange)="log($event)"
             name="equipment-group"
             [(ngModel)]="selectedGroup"
             [ngModelOptions]="{ standalone: true }"
@@ -208,19 +209,13 @@
       <nz-form-item>
         <nz-form-label>出厂编号</nz-form-label>
         <nz-form-control>
-          <input
-            nz-input
-            placeholder="请输入"
-            formControlName="serialNumber"
-          />
+          <input nz-input placeholder="请输入" formControlName="serialNumber" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label>安装日期</nz-form-label>
         <nz-form-control>
-          <nz-date-picker
-            formControlName="dateOfInstallation"
-          ></nz-date-picker>
+          <nz-date-picker formControlName="dateOfInstallation"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </nz-row>

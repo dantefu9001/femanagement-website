@@ -7,6 +7,7 @@ export interface Equipment {
 export interface EquipmentGroup {
   id: number;
   name: string;
+  isImport: boolean;
 }
 
 export interface SelfDefinedAttribute{

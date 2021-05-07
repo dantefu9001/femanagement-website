@@ -7,7 +7,7 @@ import { EquipmentService } from '../service/equipment.service';
   selector: 'app-equipment-edit',
   templateUrl: './equipment-edit.component.html'
 })
-export class EquipmentEditComponent implements OnInit, AfterViewInit {
+export class EquipmentEditComponent implements OnInit{
   i = 0;
   editId: string | null = null;
   isVisible = false;
@@ -15,7 +15,8 @@ export class EquipmentEditComponent implements OnInit, AfterViewInit {
   equipmentEditForm!: FormGroup
   listOfData : SelfDefinedAttribute[] = []
   equipmentGroups = Array<EquipmentGroup>();
-  selectedGroup = null;
+  selectedGroup!:EquipmentGroup;
+
   responsibilities = [
     { "name": "alan" }
   ];
@@ -47,11 +48,7 @@ export class EquipmentEditComponent implements OnInit, AfterViewInit {
       name: new FormControl(''),
       code: new FormControl(''),
       id: new FormControl(''),
-      selectedGroup: new FormControl(''),
       equipmentModel: new FormControl(''),
-      responsibilities: new FormControl(''),
-      workshops: new FormControl(''),
-      areas: new FormControl(''),
       specification: new FormControl(''),
       manufacturer: new FormControl(''),
       dateOfProduction: new FormControl(''),
@@ -61,11 +58,6 @@ export class EquipmentEditComponent implements OnInit, AfterViewInit {
       expireYears: new FormControl(''),
       dateOfExpiration: new FormControl(''),
     });
-  }
-
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
   }
 
   constructor(private fb: FormBuilder, public equipmentService: EquipmentService) {
@@ -83,7 +75,7 @@ export class EquipmentEditComponent implements OnInit, AfterViewInit {
   }
 
   handleOk(): void {
-    console.log(this.equipmentEditForm.get('selectedGroup'))
+    console.log(this.equipmentEditForm.get('dateOfExpiration')?.value)
     this.isOkLoading = true;
     setTimeout(() => {
       this.isVisible = false;
@@ -120,5 +112,10 @@ export class EquipmentEditComponent implements OnInit, AfterViewInit {
 
   deleteRow(id: string): void {
     this.listOfData = this.listOfData.filter(d => d.id !== id);
+  }
+
+  log(value:EquipmentGroup):void{
+    console.log(value);
+    this.selectedGroup = value;
   }
 }
