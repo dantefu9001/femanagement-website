@@ -3,24 +3,24 @@ export interface Equipment {
   name: string;
   code: string;
   responsible: string;
-  production_line: string;
+  productionLine: string;
   process: string;
   asset: string;
-  equipment_groups: string;
+  equipmentGroups: string;
   description: string;
-  is_auto_dispatch: string;
+  isAutoDispatch: string;
   status: string;
   model: string;
   manufacturer: string;
   specification: string;
-  serial_number: string;
-  data_of_production: string;
-  date_of_installation: string;
-  date_of_first_use: string;
-  expire_years: string;
-  date_of_expiration: string;
-  custom_attributes: string;
-  is_delete: string;
+  serialNumber: string;
+  dateOfProduction: string;
+  dateOfInstallation: string;
+  dateOfFirstUse: string;
+  expireYears: string;
+  dateOfExpiration: string;
+  customAttributes: string;
+  isDelete: string;
   enterprise: string;
 }
 
