@@ -25,4 +25,8 @@ export class EquipmentGroupComponent implements OnInit {
       this.equipmentGroups = result.data;
     });
   }
+
+  onRightClick($event: MouseEvent, item: any) {
+    console.log($event)
+  }
 }
