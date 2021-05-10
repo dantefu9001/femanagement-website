@@ -1,9 +1,9 @@
 <button nz-button nzType="primary" (click)="showModal()">
-  <span>新增</span>
+  <span>{{title}}</span>
 </button>
 <nz-modal
   [(nzVisible)]="isVisible"
-  nzTitle="设备新增或编辑"
+  nzTitle="{{title}}设备"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzOkLoading]="isOkLoading"
@@ -15,13 +15,13 @@
       <nz-form-item>
         <nz-form-label>编号</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="code" />
+          <input nz-input placeholder="请输入" formControlName="code"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label>名称</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="name" />
+          <input nz-input placeholder="请输入" formControlName="name"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -195,7 +195,7 @@
       <nz-form-item>
         <nz-form-label>厂家</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="manufacturer" />
+          <input nz-input placeholder="请输入" formControlName="manufacturer"/>
         </nz-form-control>
       </nz-form-item>
     </nz-row>
@@ -209,7 +209,7 @@
       <nz-form-item>
         <nz-form-label>出厂编号</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="serialNumber" />
+          <input nz-input placeholder="请输入" formControlName="serialNumber"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -229,7 +229,7 @@
       <nz-form-item>
         <nz-form-label>报废年限</nz-form-label>
         <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="expireYears" />
+          <input nz-input placeholder="请输入" formControlName="expireYears"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -242,46 +242,46 @@
     <span>自定义属性</span>
     <div>
       <button nz-button (click)="addRow()" nzType="primary">Add</button>
-      <br />
-      <br />
+      <br/>
+      <br/>
       <nz-table #editRowTable nzBordered [nzData]="listOfData">
         <thead>
-          <tr>
-            <th nzWidth="30%">Name</th>
-            <th>Value</th>
-            <th>Remark</th>
-            <th>Action</th>
-          </tr>
+        <tr>
+          <th nzWidth="30%">Name</th>
+          <th>Value</th>
+          <th>Remark</th>
+          <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of editRowTable.data" class="editable-row">
-            <td>
-              <div
-                class="editable-cell"
-                [hidden]="editId === data.id"
-                (click)="startEdit(data.id)"
-              >
-                {{ data.name }}
-              </div>
-              <input
-                [hidden]="editId !== data.id"
-                type="text"
-                nz-input
-                [(ngModel)]="data.name"
-                (blur)="stopEdit()"
-              />
-            </td>
-            <td>{{ data.value }}</td>
-            <td>{{ data.remark }}</td>
-            <td>
-              <a
-                nz-popconfirm
-                nzPopconfirmTitle="Sure to delete?"
-                (nzOnConfirm)="deleteRow(data.id)"
-                >Delete</a
-              >
-            </td>
-          </tr>
+        <tr *ngFor="let data of editRowTable.data" class="editable-row">
+          <td>
+            <div
+              class="editable-cell"
+              [hidden]="editId === data.id"
+              (click)="startEdit(data.id)"
+            >
+              {{ data.name }}
+            </div>
+            <input
+              [hidden]="editId !== data.id"
+              type="text"
+              nz-input
+              [(ngModel)]="data.name"
+              (blur)="stopEdit()"
+            />
+          </td>
+          <td>{{ data.value }}</td>
+          <td>{{ data.remark }}</td>
+          <td>
+            <a
+              nz-popconfirm
+              nzPopconfirmTitle="Sure to delete?"
+              (nzOnConfirm)="deleteRow(data.id)"
+            >Delete</a
+            >
+          </td>
+        </tr>
         </tbody>
       </nz-table>
     </div>

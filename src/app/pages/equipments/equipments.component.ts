@@ -9,6 +9,7 @@ import { EquipmentService } from './service/equipment.service';
 })
 export class EquipmentsComponent implements OnInit {
   equipments = Array<Equipment>();
+  selectedEquipment!: Equipment;
   idOfSelectedRow = -1;
 
   constructor(private equipmentService: EquipmentService) {}
@@ -33,6 +34,7 @@ export class EquipmentsComponent implements OnInit {
   selectData(data: Equipment): void {
     console.log(data.name);
     this.idOfSelectedRow = data.id;
+    this.selectedEquipment = data;
   }
 
   deleteEquipmentById(): void {

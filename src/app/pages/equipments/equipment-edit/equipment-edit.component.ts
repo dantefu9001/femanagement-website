@@ -1,27 +1,31 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { EquipmentGroup, SelfDefinedAttribute } from '../model/model';
-import { EquipmentService } from '../service/equipment.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {EquipmentGroup, SelfDefinedAttribute} from '../model/model';
+import {EquipmentService} from '../service/equipment.service';
+import {EquipmentsComponent} from "../equipments.component";
 
 @Component({
   selector: 'app-equipment-edit',
   templateUrl: './equipment-edit.component.html'
 })
-export class EquipmentEditComponent implements OnInit{
+export class EquipmentEditComponent implements OnInit {
+  @Input() title:any;
+  @Input() isEdit = false;
+  @Input() equipmentsComponent :EquipmentsComponent;
   i = 0;
   editId: string | null = null;
   isVisible = false;
   isOkLoading = false;
   equipmentEditForm!: FormGroup
-  listOfData : SelfDefinedAttribute[] = []
+  listOfData: SelfDefinedAttribute[] = []
   equipmentGroups = Array<EquipmentGroup>();
-  selectedGroup!:EquipmentGroup;
+  selectedGroup!: EquipmentGroup;
 
   responsibilities = [
-    { "name": "alan" }
+    {"name": "alan"}
   ];
   workshops = [
-    { "name": "shop1" }
+    {"name": "shop1"}
   ];
   areas = [
     {
@@ -29,16 +33,15 @@ export class EquipmentEditComponent implements OnInit{
     }
   ];
   process = [
-    { "name": "焊接" }
+    {"name": "焊接"}
   ];
   stations = [
-    { "name": "焊接" }
+    {"name": "焊接"}
   ];
   status = [
-    { "name": "待投入" }
+    {"name": "待投入"}
   ]
 
-  
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -60,7 +63,8 @@ export class EquipmentEditComponent implements OnInit{
     });
   }
 
-  constructor(private fb: FormBuilder, public equipmentService: EquipmentService) {
+  constructor(private fb: FormBuilder, public equipmentService: EquipmentService, equipmentsComponent: EquipmentsComponent) {
+    this.equipmentsComponent = equipmentsComponent;
   }
 
   fetchEquipmentGroups(): void {
@@ -72,6 +76,7 @@ export class EquipmentEditComponent implements OnInit{
 
   showModal(): void {
     this.isVisible = true;
+    console.log(this.equipmentsComponent.selectedEquipment);
   }
 
   handleOk(): void {
@@ -114,7 +119,7 @@ export class EquipmentEditComponent implements OnInit{
     this.listOfData = this.listOfData.filter(d => d.id !== id);
   }
 
-  log(value:EquipmentGroup):void{
+  log(value: EquipmentGroup): void {
     console.log(value);
     this.selectedGroup = value;
   }
