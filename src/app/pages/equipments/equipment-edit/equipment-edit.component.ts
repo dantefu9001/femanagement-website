@@ -22,12 +22,9 @@ export class EquipmentEditComponent implements OnInit {
   @Input() title:any;
   @Input() isEdit = false;
   @Input() equipmentsComponent :EquipmentsComponent;
-  i = 0;
-  editId: string | null = null;
   isVisible = false;
   isOkLoading = false;
   equipmentEditForm!: FormGroup
-  selfDefinedAttributes : SelfDefinedAttribute[] = []
   equipmentGroups = Array<EquipmentGroup>();
 
   //mock data
@@ -135,31 +132,6 @@ export class EquipmentEditComponent implements OnInit {
   handleCancel(): void {
     this.isVisible = false;
     this.equipmentEditForm.reset();
-  }
-
-  startEdit(id: string): void {
-    this.editId = id;
-  }
-
-  stopEdit(): void {
-    this.editId = null;
-  }
-
-  addRow(): void {
-    this.selfDefinedAttributes = [
-      ...this.selfDefinedAttributes,
-      {
-        id: `${this.i}`,
-        name: `Edward King ${this.i}`,
-        value: '32',
-        remark: `London, Park Lane no. ${this.i}`,
-      },
-    ];
-    this.i++;
-  }
-
-  deleteRow(id: string): void {
-    this.selfDefinedAttributes = this.selfDefinedAttributes.filter(d => d.id !== id);
   }
 
   setGroup(value: EquipmentGroup): void {
