@@ -16,9 +16,8 @@ export interface Data {
 })
 export class EquipmentParamsTableComponent implements OnInit {
   checked = false;
-  loading = false;
   indeterminate = false;
-  listOfData: ReadonlyArray<Data> = [];
+  listOfData: Array<Data> = [];
   listOfCurrentPageData: ReadonlyArray<Data> = [];
   setOfCheckedId = new Set<number>();
 
@@ -52,18 +51,12 @@ export class EquipmentParamsTableComponent implements OnInit {
   }
 
   deleteRows(): void {
-    this.loading = true;
-    const requestData = this.listOfData.filter(data => this.setOfCheckedId.has(data.id));
-    console.log(requestData);
-    setTimeout(() => {
-      this.setOfCheckedId.clear();
-      this.refreshCheckedStatus();
-      this.loading = false;
-    }, 1000);
+    this.listOfData = this.listOfData.filter(data =>!this.setOfCheckedId.has(data.id));
+    this.checked=false;
   }
 
   ngOnInit(): void {
-    this.listOfData = new Array(2).fill(0).map((_, index) => {
+    this.listOfData = new Array(20).fill(0).map((_, index) => {
       return {
         id: index,
         name: `Edward King ${index}`,
