@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {
   Area,
@@ -13,6 +13,7 @@ import {
 } from '../model/model';
 import {EquipmentService} from '../service/equipment.service';
 import {EquipmentsComponent} from "../equipments.component";
+import {EquipmentAttributesTableComponent} from "./equipment-attributes-table/equipment-attributes-table.component";
 
 @Component({
   selector: 'app-equipment-edit',
@@ -22,6 +23,7 @@ export class EquipmentEditComponent implements OnInit {
   @Input() title:any;
   @Input() isEdit = false;
   @Input() equipmentsComponent :EquipmentsComponent;
+  @ViewChild('attributesTableComponent') attributesTableComponent!: EquipmentAttributesTableComponent;
   isVisible = false;
   isOkLoading = false;
   equipmentEditForm!: FormGroup
@@ -130,6 +132,7 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   handleCancel(): void {
+    console.log(this.attributesTableComponent.selfDefinedAttributes)
     this.isVisible = false;
     this.equipmentEditForm.reset();
   }

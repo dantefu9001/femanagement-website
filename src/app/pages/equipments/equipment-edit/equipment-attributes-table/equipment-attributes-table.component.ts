@@ -1,11 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
-interface ItemData {
-  id: string;
-  name: string;
-  age: string;
-  address: string;
-}
+import {SelfDefinedAttribute} from "../../model/model";
 
 @Component({
   selector: 'app-equipment-attributes-table',
@@ -15,7 +9,7 @@ interface ItemData {
 export class EquipmentAttributesTableComponent implements OnInit {
   i = 0;
   editId: string | null = null;
-  listOfData: ItemData[] = [];
+  selfDefinedAttributes: SelfDefinedAttribute[] = [];
 
   startEdit(id: string): void {
     this.editId = id;
@@ -26,24 +20,22 @@ export class EquipmentAttributesTableComponent implements OnInit {
   }
 
   addRow(): void {
-    this.listOfData = [
-      ...this.listOfData,
+    this.selfDefinedAttributes = [
+      ...this.selfDefinedAttributes,
       {
         id: `${this.i}`,
-        name: `Edward King ${this.i}`,
-        age: '32',
-        address: `London, Park Lane no. ${this.i}`
+        name: ``,
+        value: ``,
+        remark: ``
       }
     ];
     this.i++;
   }
 
   deleteRow(id: string): void {
-    this.listOfData = this.listOfData.filter(d => d.id !== id);
+    this.selfDefinedAttributes = this.selfDefinedAttributes.filter(d => d.id !== id);
   }
 
   ngOnInit(): void {
-    this.addRow();
-    this.addRow();
   }
 }

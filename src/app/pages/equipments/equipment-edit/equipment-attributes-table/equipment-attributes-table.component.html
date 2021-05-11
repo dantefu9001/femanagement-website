@@ -2,29 +2,29 @@
     <button nz-button (click)="addRow()" nzType="primary">Add</button>
     <br />
     <br />
-    <nz-table #editRowTable nzBordered [nzData]="listOfData">
+    <nz-table #editRowTable nzBordered [nzData]="selfDefinedAttributes">
       <thead>
         <tr>
-          <th nzWidth="30%">Name</th>
-          <th>Age</th>
-          <th>Address</th>
-          <th>Action</th>
+          <th nzWidth="30%">名称</th>
+          <th>属性</th>
+          <th>备注</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of editRowTable.data" class="editable-row">
           <td>
-            <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
-              {{ data.name }}
-            </div>
-            <input [hidden]="editId !== data.id" type="text" nz-input [(ngModel)]="data.name" (blur)="stopEdit()" />
+            <input value="{{data.name}}" placeholder="请输入" type="text"  nz-input [(ngModel)]="data.name" (blur)="stopEdit()" (click)="startEdit(data.id)" />
           </td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
           <td>
-            <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a>
+            <input value="{{data.value}}" placeholder="请输入" type="text" nz-input [(ngModel)]="data.value" (blur)="stopEdit()" (click)="startEdit(data.id)" />
+          </td>
+          <td>
+            <input value="{{data.remark}}" placeholder="请输入" type="text" nz-input [(ngModel)]="data.remark" (blur)="stopEdit()" (click)="startEdit(data.id)" />
+          </td>
+          <td>
+            <a nz-popconfirm nzPopconfirmTitle="确定删除吗?" (nzOnConfirm)="deleteRow(data.id)">删除</a>
           </td>
         </tr>
       </tbody>
     </nz-table>
-  
