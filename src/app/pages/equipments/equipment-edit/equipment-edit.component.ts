@@ -12,19 +12,22 @@ import {
   Workshop
 } from '../model/model';
 import {EquipmentService} from '../service/equipment.service';
-
+import {EquipmentsComponent} from "../equipments.component";
 
 @Component({
   selector: 'app-equipment-edit',
   templateUrl: './equipment-edit.component.html',
 })
 export class EquipmentEditComponent implements OnInit {
+  @Input() title:any;
+  @Input() isEdit = false;
+  @Input() equipmentsComponent :EquipmentsComponent;
   i = 0;
   editId: string | null = null;
   isVisible = false;
   isOkLoading = false;
-  equipmentEditForm!: FormGroup;
-  listOfData: SelfDefinedAttribute[] = [];
+  equipmentEditForm!: FormGroup
+  listOfData : SelfDefinedAttribute[] = []
   equipmentGroups = Array<EquipmentGroup>();
 
   //mock data
@@ -36,7 +39,7 @@ export class EquipmentEditComponent implements OnInit {
   status = [{name: '待投入'}];
 
   //选中的对象
-  selectedGroup!: EquipmentGroup;
+  selectedGroup!:EquipmentGroup;
   selectedPerson!: Person;
   selectedWorkshops!: Workshop;
   selectedArea!: Area;
@@ -64,10 +67,8 @@ export class EquipmentEditComponent implements OnInit {
     });
   }
 
-  constructor(
-    private fb: FormBuilder,
-    public equipmentService: EquipmentService
-  ) {
+  constructor(private fb: FormBuilder, public equipmentService: EquipmentService, equipmentsComponent: EquipmentsComponent) {
+    this.equipmentsComponent = equipmentsComponent;
   }
 
   fetchEquipmentGroups(): void {
@@ -116,6 +117,7 @@ export class EquipmentEditComponent implements OnInit {
 
   showModal(): void {
     this.isVisible = true;
+    console.log(this.equipmentsComponent.selectedEquipment);
   }
 
   handleOk(): void {
@@ -152,7 +154,7 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   deleteRow(id: string): void {
-    this.listOfData = this.listOfData.filter((d) => d.id !== id);
+    this.listOfData = this.listOfData.filter(d => d.id !== id);
   }
 
   setGroup(value: EquipmentGroup): void {
