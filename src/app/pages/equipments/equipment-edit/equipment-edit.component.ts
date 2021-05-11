@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {
   Area,
@@ -27,7 +27,7 @@ export class EquipmentEditComponent implements OnInit {
   isVisible = false;
   isOkLoading = false;
   equipmentEditForm!: FormGroup
-  listOfData : SelfDefinedAttribute[] = []
+  selfDefinedAttributes : SelfDefinedAttribute[] = []
   equipmentGroups = Array<EquipmentGroup>();
 
   //mock data
@@ -116,8 +116,13 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   showModal(): void {
-    this.isVisible = true;
-    console.log(this.equipmentsComponent.selectedEquipment);
+    const selectedEquipment = this.equipmentsComponent.selectedEquipment;
+    if(undefined===selectedEquipment && this.isEdit){
+      alert("请选择设备")
+    }else {
+      this.isVisible = true;
+      console.log(this.equipmentsComponent.selectedEquipment);
+    }
   }
 
   handleOk(): void {
@@ -141,8 +146,8 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   addRow(): void {
-    this.listOfData = [
-      ...this.listOfData,
+    this.selfDefinedAttributes = [
+      ...this.selfDefinedAttributes,
       {
         id: `${this.i}`,
         name: `Edward King ${this.i}`,
@@ -154,7 +159,7 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   deleteRow(id: string): void {
-    this.listOfData = this.listOfData.filter(d => d.id !== id);
+    this.selfDefinedAttributes = this.selfDefinedAttributes.filter(d => d.id !== id);
   }
 
   setGroup(value: EquipmentGroup): void {

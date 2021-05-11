@@ -28,7 +28,6 @@
         <nz-form-label>设备组</nz-form-label>
         <nz-form-control>
           <nz-select
-            (ngModelChange)="log($event)"
             name="equipment-group"
             [(ngModel)]="selectedGroup"
             [ngModelOptions]="{ standalone: true }"
@@ -244,7 +243,7 @@
       <button nz-button (click)="addRow()" nzType="primary">Add</button>
       <br />
       <br />
-      <nz-table #editRowTable nzBordered [nzData]="listOfData">
+      <nz-table #editRowTable nzBordered [nzData]="selfDefinedAttributes">
         <thead>
           <tr>
             <th nzWidth="30%">Name</th>
