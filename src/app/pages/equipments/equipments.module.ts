@@ -18,6 +18,7 @@ import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
 import {EquipmentAttributesTableComponent} from './equipment-edit/equipment-attributes-table/equipment-attributes-table.component';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
+import { EquipmentParamsComponent } from './equipment-params/equipment-params.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {NzPopoverModule} from "ng-zorro-antd/popover";
     EquipmentGroupComponent,
     EquipmentEditComponent,
     EquipmentAttributesTableComponent,
+    EquipmentParamsComponent,
   ],
   imports: [
     CommonModule,
