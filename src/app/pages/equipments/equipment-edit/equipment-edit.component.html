@@ -51,7 +51,7 @@
         <nz-form-control>
           <nz-select
             name="responsibilities"
-            [(ngModel)]="responsibilities"
+            [(ngModel)]="selectedPerson"
             [ngModelOptions]="{ standalone: true }"
           >
             <nz-option
@@ -71,7 +71,7 @@
         <nz-form-control>
           <nz-select
             name="workshops"
-            [(ngModel)]="workshops"
+            [(ngModel)]="selectedWorkshops"
             [ngModelOptions]="{ standalone: true }"
           >
             <nz-option
@@ -91,7 +91,7 @@
         <nz-form-control>
           <nz-select
             name="areas"
-            [(ngModel)]="areas"
+            [(ngModel)]="selectedArea"
             [ngModelOptions]="{ standalone: true }"
           >
             <nz-option
@@ -113,7 +113,7 @@
         <nz-form-control>
           <nz-select
             name="process"
-            [(ngModel)]="process"
+            [(ngModel)]="selectedProcess"
             [ngModelOptions]="{ standalone: true }"
           >
             <nz-option
@@ -133,7 +133,7 @@
         <nz-form-control>
           <nz-select
             name="stations"
-            [(ngModel)]="stations"
+            [(ngModel)]="selectedStation"
             [ngModelOptions]="{ standalone: true }"
           >
             <nz-option
@@ -153,7 +153,7 @@
         <nz-form-control>
           <nz-select
             name="status"
-            [(ngModel)]="status"
+            [(ngModel)]="selectedStatus"
             [ngModelOptions]="{ standalone: true }"
           >
             <nz-option
