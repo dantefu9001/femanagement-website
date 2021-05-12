@@ -1,29 +1,21 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {
-  Area,
-  Equipment,
-  EquipmentGroup,
-  Person,
-  Process,
-  SelfDefinedAttribute,
-  Station,
-  Status,
-  Workshop
-} from '../model/model';
+import {Area, Equipment, EquipmentGroup, Person, Process, Station, Status, Workshop} from '../model/model';
 import {EquipmentService} from '../service/equipment.service';
 import {EquipmentsComponent} from "../equipments.component";
 import {EquipmentAttributesTableComponent} from "./equipment-attributes-table/equipment-attributes-table.component";
+import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 
 @Component({
   selector: 'app-equipment-edit',
   templateUrl: './equipment-edit.component.html',
 })
 export class EquipmentEditComponent implements OnInit {
-  @Input() title:any;
+  @Input() title: any;
   @Input() isEdit = false;
-  @Input() equipmentsComponent :EquipmentsComponent;
+  @Input() equipmentsComponent: EquipmentsComponent;
   @ViewChild('attributesTableComponent') attributesTableComponent!: EquipmentAttributesTableComponent;
+  confirmModal?: NzModalRef;
   isVisible = false;
   isOkLoading = false;
   equipmentEditForm!: FormGroup
@@ -38,7 +30,7 @@ export class EquipmentEditComponent implements OnInit {
   status = [{name: '待投入'}];
 
   //选中的对象
-  selectedGroup!:EquipmentGroup;
+  selectedGroup!: EquipmentGroup;
   selectedPerson!: Person;
   selectedWorkshops!: Workshop;
   selectedArea!: Area;
@@ -66,7 +58,10 @@ export class EquipmentEditComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, public equipmentService: EquipmentService, equipmentsComponent: EquipmentsComponent) {
+  constructor(private fb: FormBuilder,
+              private modal: NzModalService,
+              public equipmentService: EquipmentService,
+              equipmentsComponent: EquipmentsComponent) {
     this.equipmentsComponent = equipmentsComponent;
   }
 
@@ -116,19 +111,29 @@ export class EquipmentEditComponent implements OnInit {
 
   showModal(): void {
     const selectedEquipment = this.equipmentsComponent.selectedEquipment;
-    if(undefined===selectedEquipment && this.isEdit){
+    if (undefined === selectedEquipment && this.isEdit) {
       alert("请选择设备")
-    }else {
+    } else {
       this.isVisible = true;
       console.log(this.equipmentsComponent.selectedEquipment);
     }
   }
 
   handleOk(): void {
-    console.log(this.equipmentEditForm.get('dateOfExpiration')?.value);
-    this.isOkLoading = true;
-    this.saveEquipments(this.buildEquipment());
-    this.equipmentEditForm.reset();
+    this.confirmModal = this.modal.confirm({
+      nzTitle: '提示',
+      nzContent: '是否配置设备能力和参数',
+      nzOkText: '配置参数',
+      nzOnOk: () =>
+        console.log("confirm"),
+      nzCancelText: '直接保存',
+      nzOnCancel: () =>
+        console.log('cancelled')
+    });
+    // console.log(this.equipmentEditForm.get('dateOfExpiration')?.value);
+    // this.isOkLoading = true;
+    // this.saveEquipments(this.buildEquipment());
+    // this.equipmentEditForm.reset();
   }
 
   handleCancel(): void {
