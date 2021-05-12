@@ -1,6 +1,7 @@
 <button nz-button nzType="primary" (click)="showModal()">
   <span>{{title}}</span>
 </button>
+<app-equipment-params #equipmentParamsComponent></app-equipment-params>
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="{{title}}设备"

@@ -5,6 +5,7 @@ import {EquipmentService} from '../service/equipment.service';
 import {EquipmentsComponent} from "../equipments.component";
 import {EquipmentAttributesTableComponent} from "./equipment-attributes-table/equipment-attributes-table.component";
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
+import {EquipmentParamsComponent} from "../equipment-params/equipment-params.component";
 
 @Component({
   selector: 'app-equipment-edit',
@@ -15,6 +16,7 @@ export class EquipmentEditComponent implements OnInit {
   @Input() isEdit = false;
   @Input() equipmentsComponent: EquipmentsComponent;
   @ViewChild('attributesTableComponent') attributesTableComponent!: EquipmentAttributesTableComponent;
+  @ViewChild('equipmentParamsComponent') equipmentParamsComponent!: EquipmentParamsComponent;
   confirmModal?: NzModalRef;
   isVisible = false;
   isOkLoading = false;
@@ -124,8 +126,9 @@ export class EquipmentEditComponent implements OnInit {
       nzTitle: '提示',
       nzContent: '是否配置设备能力和参数',
       nzOkText: '配置参数',
-      nzOnOk: () =>
-        console.log("confirm"),
+      nzOnOk: () => {
+        this.equipmentParamsComponent.showModal();
+      },
       nzCancelText: '直接保存',
       nzOnCancel: () =>
         console.log('cancelled')
