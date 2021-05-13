@@ -22,6 +22,7 @@ import {EquipmentParamsComponent} from './equipment-params/equipment-params.comp
 import {EquipmentParamsTableComponent} from './equipment-params/equipment-params-table/equipment-params-table.component';
 import { EquipmentEditUploadPicComponent } from './equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component';
 import {NzUploadModule} from "ng-zorro-antd/upload";
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {NzUploadModule} from "ng-zorro-antd/upload";
     NzMessageModule,
     NzSelectModule,
     NzDatePickerModule,
-    NzUploadModule
+    NzUploadModule,
+    NzCheckboxModule
   ],
   providers: [
     EquipmentGroupComponent

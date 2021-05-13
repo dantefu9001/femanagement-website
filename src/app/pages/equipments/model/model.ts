@@ -6,9 +6,9 @@ export interface Equipment {
   productionLine: string;
   process: string;
   asset: string;
-  equipmentGroups: string;
+  equipmentGroup: string;
   description: string;
-  isAutoDispatch: string;
+  isAutoDispatch: number;
   status: string;
   model: string;
   manufacturer: string;
