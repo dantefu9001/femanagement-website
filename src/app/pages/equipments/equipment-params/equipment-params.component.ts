@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Observable, Observer} from 'rxjs';
@@ -10,6 +10,7 @@ import {Observable, Observer} from 'rxjs';
   styleUrls: ['./equipment-params.component.scss']
 })
 export class EquipmentParamsComponent {
+  @Input() isEdit = false;
   isVisible = false;
   isOkLoading = false;
   paramsForm: FormGroup;

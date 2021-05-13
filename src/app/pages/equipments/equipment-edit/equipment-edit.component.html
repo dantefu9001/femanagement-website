@@ -1,7 +1,7 @@
 <button nz-button nzType="primary" (click)="showModal()">
   <span>{{title}}</span>
 </button>
-<app-equipment-params #equipmentParamsComponent></app-equipment-params>
+<app-equipment-params [isEdit]="isEdit" #equipmentParamsComponent></app-equipment-params>
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="{{title}}设备"
@@ -13,6 +13,7 @@
 >
   <span>基础属性</span>
   <form nz-form [formGroup]="equipmentEditForm">
+    <app-equipment-edit-upload-pic></app-equipment-edit-upload-pic>
     <nz-row nz-row [nzGutter]="32">
       <nz-form-item>
         <nz-form-label>编号</nz-form-label>

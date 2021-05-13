@@ -20,6 +20,8 @@ import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {NzPopoverModule} from "ng-zorro-antd/popover";
 import {EquipmentParamsComponent} from './equipment-params/equipment-params.component';
 import {EquipmentParamsTableComponent} from './equipment-params/equipment-params-table/equipment-params-table.component';
+import { EquipmentEditUploadPicComponent } from './equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component';
+import {NzUploadModule} from "ng-zorro-antd/upload";
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import {EquipmentParamsTableComponent} from './equipment-params/equipment-params
     EquipmentAttributesTableComponent,
     EquipmentParamsComponent,
     EquipmentParamsTableComponent,
+    EquipmentEditUploadPicComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +48,8 @@ import {EquipmentParamsTableComponent} from './equipment-params/equipment-params
     EquipmentsRoutingModule,
     NzMessageModule,
     NzSelectModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzUploadModule
   ],
   providers: [
     EquipmentGroupComponent
