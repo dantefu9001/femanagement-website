@@ -50,7 +50,7 @@
     </div>
     <div nz-row [nzGutter]="8">
       <div nz-row *ngFor="let item of malfunctionLevels">
-        <nz-list-item (mouseover)="show(item)" (mouseleave)="hide(item)">
+        <nz-list-item (mouseover)="showIcon(item)" (mouseleave)="hideIcon(item)">
           <nz-card class="malfunctionTypeCard" nzSize="small" style="text-align: center;background-color: #b9b9b9">
             {{item.name}}
           </nz-card>
