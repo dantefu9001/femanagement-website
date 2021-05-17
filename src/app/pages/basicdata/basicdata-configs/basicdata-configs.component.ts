@@ -1,67 +1,90 @@
 import {Component} from '@angular/core';
 
-import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Observable, Observer} from 'rxjs';
+class MalfunctionType {
+  name: string;
+  hideButton: boolean;
+
+  constructor(name: string, hideButton: boolean) {
+    this.name = name;
+    this.hideButton = hideButton;
+  }
+}
+
+class MalfunctionLevel extends MalfunctionType {
+  desc: string;
+
+  constructor(name: string, hideButton: boolean, desc: string) {
+    super(name, hideButton);
+    this.desc = desc;
+  }
+}
 
 @Component({
   selector: 'app-basicdata-configs',
   templateUrl: './basicdata-configs.component.html',
 
-  styleUrls: ['./basicdata-configs.component.css']
+  styleUrls: ['./basicdata-configs.component.scss']
 })
 export class BasicdataConfigsComponent {
-  validateForm: FormGroup;
 
-  submitForm(value: { userName: string; email: string; password: string; confirm: string; comment: string }): void {
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsDirty();
-      this.validateForm.controls[key].updateValueAndValidity();
-    }
-    console.log(value);
+  isEasyMode: boolean = false;
+  isDisabled: boolean = false;
+  isAutoDispatch: boolean = false;
+  enableValidate: boolean = false;
+  enableAlarm: boolean = false;
+  malfunctionTypes: Array<MalfunctionType> = [{
+    name: '操作不当',
+    hideButton: true
+  }];
+
+  malfunctionLevels: Array<MalfunctionLevel> = [{
+    name: '一级故障',
+    hideButton: true,
+    desc: '很严重的故障'
+  }]
+  newMalfunctionType!: string;
+  waitTime!: string;
+  pauseTime!: string;
+  dispatchTime!: string;
+  newMalfunctionLevel!: string;
+  enableEquipmentManagement: boolean = false;
+
+
+  unableAutoDispatchAndValidate() {
+    this.isAutoDispatch = false;
+    this.enableValidate = false;
   }
 
-  resetForm(e: MouseEvent): void {
-    e.preventDefault();
-    this.validateForm.reset();
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsPristine();
-      this.validateForm.controls[key].updateValueAndValidity();
+  addNewMalfunctionType($event: KeyboardEvent) {
+    if ($event.code == 'Enter') {
+      console.log(this.newMalfunctionType);
+      this.malfunctionTypes.push(new MalfunctionType(this.newMalfunctionType, true));
+      this.newMalfunctionType = '';
     }
   }
 
-  validateConfirmPassword(): void {
-    setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
+  addNewMalfunctionLevel($event: KeyboardEvent) {
+    if ($event.code == 'Enter') {
+      console.log(this.newMalfunctionLevel);
+      this.malfunctionLevels.push(new MalfunctionLevel(this.newMalfunctionLevel, true, ''));
+      this.newMalfunctionLevel = '';
+    }
   }
 
-  userNameAsyncValidator = (control: FormControl) =>
-    new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({error: true, duplicated: true});
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
-    });
+  showIcon(item: MalfunctionType) {
+    item.hideButton = false;
+  }
 
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return {error: true, required: true};
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return {confirm: true, error: true};
-    }
-    return {};
-  };
+  hideIcon(item: MalfunctionType) {
+    item.hideButton = true;
+  }
 
-  constructor(private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
-      userName: ['', [Validators.required], [this.userNameAsyncValidator]],
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required]],
-      confirm: ['', [this.confirmValidator]],
-      comment: ['', [Validators.required]]
-    });
+  deleteType(item: MalfunctionType) {
+    console.log("delete");
+    this.malfunctionTypes = this.malfunctionTypes.filter(p => p.name != item.name);
+  }
+
+  deleteLevel(item: MalfunctionLevel) {
+    this.malfunctionLevels = this.malfunctionLevels.filter(p => p.name != item.name);
   }
 }

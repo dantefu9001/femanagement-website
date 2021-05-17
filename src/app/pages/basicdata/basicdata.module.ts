@@ -16,11 +16,13 @@ import {NzUploadModule} from "ng-zorro-antd/upload";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {BasicdataRoutingModule} from "./basicdata-routing.module";
 import {NzSwitchModule} from "ng-zorro-antd/switch";
+import {NzCardModule} from "ng-zorro-antd/card";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 
 @NgModule({
   declarations: [
-    BasicdataConfigsComponent
+    BasicdataConfigsComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,9 @@ import {NzSwitchModule} from "ng-zorro-antd/switch";
     NzDatePickerModule,
     NzUploadModule,
     NzCheckboxModule,
+    NzSwitchModule,
+    NzCardModule,
+    NzIconModule
   ]
 })
 export class BasicdataModule { }
