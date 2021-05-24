@@ -12,17 +12,17 @@
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="设备" nzIcon="dashboard">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/equipments">设备管理</a>
           </li>
-          <!-- <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
-          </li> -->
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/equipments-summary">设备管理小结</a>
+          </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+      <li nz-submenu nzOpen nzTitle="基础" nzIcon="form">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/basic-data">基础数据</a>

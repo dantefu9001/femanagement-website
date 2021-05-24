@@ -1,0 +1,73 @@
+<form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
+  <div nz-row [nzGutter]="56">
+    <nz-form-item>
+      <nz-form-label>类型</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="type"
+          [(ngModel)]="selectedType"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option
+            *ngFor="let item of summaryTypes"
+            [nzLabel]="item.name"
+            [nzValue]="item.value"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>组织</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="groups"
+          [(ngModel)]="selectedGroup"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option
+            *ngFor="let item of groups"
+            [nzLabel]="item.name"
+            [nzValue]="item.name"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>时间</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="dateOfSummary"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item>
+      <nz-form-label>人员</nz-form-label>
+      <nz-form-control>
+        <input nz-input [value]="personnel.name" [disabled]="true"/>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row>
+      <div nz-row>
+        <nz-form-item>
+          <nz-form-label>小结</nz-form-label>
+          <nz-form-control nzSpan="16">
+            <textarea rows="5" placeholder="请输入文本" [(ngModel)]="summary"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-col [nzSpan]="24" class="search-area">
+      <button nz-button [nzType]="'primary'">新增</button>
+    </div>
+  </div>
+</form>
