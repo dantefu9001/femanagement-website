@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {EquipmentsSummary} from "../equipments/model/model";
+import {EquipmentService} from "../equipments/service/equipment.service";
 
 export interface Data {
   id: number;
@@ -21,6 +23,9 @@ export class EquipmentsSummaryComponent implements OnInit {
   listOfData: ReadonlyArray<Data> = [];
   listOfCurrentPageData: ReadonlyArray<Data> = [];
   setOfCheckedId = new Set<number>();
+
+  summaryList!: Array<EquipmentsSummary>
+
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -62,15 +67,17 @@ export class EquipmentsSummaryComponent implements OnInit {
     }, 1000);
   }
 
+  constructor(public equipmentService: EquipmentService) {
+  }
+
   ngOnInit(): void {
-    this.listOfData = new Array(100).fill(0).map((_, index) => {
-      return {
-        id: index,
-        name: `Edward King ${index}`,
-        age: 32,
-        address: `London, Park Lane no. ${index}`,
-        disabled: index % 2 === 0
-      };
+   this.getEquipmentSummary();
+  }
+
+  getEquipmentSummary():void{
+    const api = 'http://localhost:8080/equipments-summary';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.summaryList = result.data;
     });
   }
 }

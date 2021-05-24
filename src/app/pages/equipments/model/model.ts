@@ -66,3 +66,12 @@ export interface Status {
   value: string;
   id: string;
 }
+
+export interface EquipmentsSummary {
+  id:number;
+  type: string;
+  group: number;
+  summaryTime: string;
+  personnel: number;
+  summary: string;
+}

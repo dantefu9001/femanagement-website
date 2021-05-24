@@ -10,27 +10,33 @@
       #rowSelectionTable
       nzShowPagination
       nzShowSizeChanger
-      [nzData]="listOfData"
+      [nzData]="summaryList"
       (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
     >
       <thead>
         <tr>
           <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Address</th>
+          <th>序号</th>
+          <th>类型</th>
+          <th>人员</th>
+          <th>组织</th>
+          <th>时间</th>
+          <th>内容</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of rowSelectionTable.data">
+        <tr *ngFor="let data of rowSelectionTable.data;let i = index">
           <td
             [nzChecked]="setOfCheckedId.has(data.id)"
-            [nzDisabled]="data.disabled"
             (nzCheckedChange)="onItemChecked(data.id, $event)"
           ></td>
-          <td>{{ data.name }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
+          <td>{{ i+1 }}</td>
+          <td>{{ data.type }}</td>
+          <td>{{ data.personnel }}</td>
+          <td>{{ data.group }}</td>
+          <td>{{ data.summaryTime }}</td>
+          <td>{{ data.summary }}</td>
+
         </tr>
       </tbody>
     </nz-table>

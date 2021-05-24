@@ -1,10 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {Person} from "../../equipments/model/model";
+import {EquipmentsSummary, Person} from "../../equipments/model/model";
+import {EquipmentService} from "../../equipments/service/equipment.service";
 
 interface Group {
   name: string,
   id: number
+}
+
+interface summaryType {
+  name:string,
+  value:string
 }
 
 @Component({
@@ -14,13 +20,16 @@ interface Group {
   styleUrls: ['./equipments-summary-add.component.scss']
 })
 export class EquipmentsSummaryAddComponent implements OnInit {
-  validateForm!: FormGroup;
-  controlArray: Array<{ index: number; show: boolean }> = [];
+  summaryForm!: FormGroup;
+  summary!: string;
+
   selectedGroup!: Group;
   groups: Array<Group> = [
     {id: 1, name: '设备组1'},
     {id: 2, name: '设备组2'}
   ];
+
+  selectedType! : summaryType;
   summaryTypes = [{
     name: '月总结',
     value: 'monthly'
@@ -28,21 +37,33 @@ export class EquipmentsSummaryAddComponent implements OnInit {
     name: '周总结',
     value: 'weekly'
   }];
-  selectedType = this.summaryTypes[0];
   personnel: Person= {
     id:'0',
     name:'张三'
   };
-  summary!: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(public fb: FormBuilder, public equipmentService: EquipmentService) {
+
   }
 
   ngOnInit(): void {
-    this.validateForm = this.fb.group({});
-    for (let i = 0; i < 10; i++) {
-      this.controlArray.push({index: i, show: i < 6});
-      this.validateForm.addControl(`field${i}`, new FormControl());
+    this.summaryForm = this.fb.group({
+      "dateOfSummary":[null],
+      "summary":new FormControl('')
+    })
+  }
+
+  addEquipmentSummary(): void{
+    let equipmentsSummary = {
+      type: this.selectedType,
+      group:this.selectedGroup,
+      personnel: this.personnel.id,
+      summaryTime:this.summaryForm.get('dateOfSummary')?.value,
+      summary: this.summaryForm.get('summary')?.value
     }
+    const api = 'http://localhost:8080/equipments-summary';
+    this.equipmentService.postData(api, equipmentsSummary).then((result: any) => {
+      console.log(result);
+    })
   }
 }
