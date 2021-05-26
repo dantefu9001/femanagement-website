@@ -76,8 +76,10 @@ export class EquipmentsSummaryComponent implements OnInit {
 
   getEquipmentSummary():void{
     const api = 'http://localhost:8080/equipments-summary';
+    this.loading=true;
     this.equipmentService.getData(api).then((result: any) => {
       this.summaryList = result.data;
+      this.loading=false;
     });
   }
 }
