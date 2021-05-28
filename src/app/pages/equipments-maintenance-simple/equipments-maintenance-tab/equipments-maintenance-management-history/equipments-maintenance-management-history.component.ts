@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup} from "@angular/forms";
 
 interface ItemData {
   id: number;
@@ -39,6 +40,7 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
   listOfCurrentPageData: ReadonlyArray<ItemData> = [];
   listOfData: ReadonlyArray<ItemData> = [];
   setOfCheckedId = new Set<number>();
+  searchForm!: FormGroup;
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -77,5 +79,17 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
         address: `London, Park Lane no. ${index}`
       };
     });
+  }
+
+  search() {
+
+  }
+
+  view() {
+
+  }
+
+  export() {
+
   }
 }

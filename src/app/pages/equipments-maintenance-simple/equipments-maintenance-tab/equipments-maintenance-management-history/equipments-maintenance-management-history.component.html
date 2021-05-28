@@ -1,5 +1,42 @@
+<form nz-form [formGroup]="searchForm" class="ant-advanced-search-form">
+  <nz-row nz-row [nzGutter]="56">
+    <nz-form-item>
+      <nz-form-label>设备组</nz-form-label>
+      <nz-form-control>
+        <input nz-input value="" placeholder="请输入" formControlName="equipmentGroup"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>设备</nz-form-label>
+      <nz-form-control>
+        <input nz-input value="" placeholder="请输入" formControlName="equipment"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>提交时间</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="startDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>至</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="endDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="search-area">
+      <button nz-button nzType="'primary'" (click)="search()">查询</button>
+    </div>
+    <div class="edit-area">
+      <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
+      <button nz-button nzType="'primary'" (click)="export()">导出</button>
+    </div>
+  </nz-row>
 
-    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+</form>
+
+
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
       <thead>
         <tr>
           <th
@@ -22,4 +59,3 @@
         </tr>
       </tbody>
     </nz-table>
-  

@@ -5,7 +5,7 @@ import {EquipmentsMaintenanceSimpleRoutingModule} from './equipments-maintenance
 import {EquipmentsMaintenanceRecordComponent} from './equipments-maintenance-record/equipments-maintenance-record.component';
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzGridModule} from "ng-zorro-antd/grid";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {EquipmentMaintenanceRecordEditComponent} from './equipments-maintenance-record/equipment-maintenance-record-edit/equipment-maintenance-record-edit.component';
 import {NzModalModule} from "ng-zorro-antd/modal";
@@ -13,6 +13,8 @@ import {EquipmentsMaintenanceManagementUnfinishedComponent} from './equipments-m
 import {EquipmentsMaintenanceManagementHistoryComponent} from './equipments-maintenance-tab/equipments-maintenance-management-history/equipments-maintenance-management-history.component';
 import {EquipmentsMaintenanceTabComponent} from './equipments-maintenance-tab/equipments-maintenance-tab.component';
 import {NzTabsModule} from "ng-zorro-antd/tabs";
+import {NzFormModule} from "ng-zorro-antd/form";
+import {NzSelectModule} from "ng-zorro-antd/select";
 
 
 @NgModule({
@@ -31,7 +33,10 @@ import {NzTabsModule} from "ng-zorro-antd/tabs";
     ReactiveFormsModule,
     NzDatePickerModule,
     NzModalModule,
-    NzTabsModule
+    NzTabsModule,
+    NzFormModule,
+    NzSelectModule,
+    FormsModule
   ]
 })
 export class EquipmentsMaintenanceSimpleModule {

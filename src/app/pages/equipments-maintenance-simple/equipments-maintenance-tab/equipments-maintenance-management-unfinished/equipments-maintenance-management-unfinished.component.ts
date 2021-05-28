@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 interface ItemData {
   id: number;
@@ -39,6 +40,15 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
   listOfCurrentPageData: ReadonlyArray<ItemData> = [];
   listOfData: ReadonlyArray<ItemData> = [];
   setOfCheckedId = new Set<number>();
+  searchForm!: FormGroup;
+  types = [{
+    name: '新增',
+    value: 'new'
+  }, {
+    name: '待审核',
+    value: 'toBeChecked'
+  }];
+  selectedType = this.types[0].name;
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -68,7 +78,17 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
+  constructor(public fb: FormBuilder) {
+  }
+
   ngOnInit(): void {
+    this.searchForm = this.fb.group({
+      "equipmentGroup": new FormControl(''),
+      "equipment": new FormControl(''),
+      "startDate": [null],
+      "endDate": [null],
+      "type": new FormControl('')
+    });
     this.listOfData = new Array(200).fill(0).map((_, index) => {
       return {
         id: index,
@@ -77,5 +97,25 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
         address: `London, Park Lane no. ${index}`
       };
     });
+  }
+
+  search() {
+
+  }
+
+  report() {
+
+  }
+
+  view() {
+
+  }
+
+  deprecate() {
+
+  }
+
+  check() {
+
   }
 }
