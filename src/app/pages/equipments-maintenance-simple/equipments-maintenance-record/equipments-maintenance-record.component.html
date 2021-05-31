@@ -48,16 +48,24 @@
       [nzIndeterminate]="indeterminate"
       (nzCheckedChange)="onAllChecked($event)"
     ></th>
-    <th>Name</th>
-    <th>Age</th>
-    <th>Address</th>
+    <th>编号</th>
+    <th>车间</th>
+    <th>设备</th>
+    <th>非设备</th>
+    <th>故障时间</th>
+    <th>描述</th>
+    <th>维修人员</th>
+    <th>故障判定</th>
+    <th>评价</th>
+    <th>状态</th>
+
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of rowSelectionTable.data">
     <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-    <td>{{ data.name }}</td>
     <td>{{ data.age }}</td>
+    <td>{{ data.name }}</td>
     <td>{{ data.address }}</td>
   </tr>
   </tbody>
