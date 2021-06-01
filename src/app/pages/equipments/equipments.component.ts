@@ -35,7 +35,7 @@ export class EquipmentsComponent implements OnInit {
   selectData(data: Equipment): void {
     console.log(data.name);
     this.idOfSelectedRow = data.id;
-    if (this.selectedEquipment !== undefined) {
+    if (this.selectedEquipment !== undefined && data.id != this.selectedEquipment.id) {
       this.selectedEquipment.isSelected = false;
     }
     this.selectedEquipment = data;
