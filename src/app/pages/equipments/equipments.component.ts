@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Equipment } from './model/model';
-import { EquipmentService } from './service/equipment.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Equipment} from './model/model';
+import {EquipmentService} from './service/equipment.service';
 
 @Component({
   selector: 'app-equipments',
@@ -12,7 +12,8 @@ export class EquipmentsComponent implements OnInit {
   selectedEquipment!: Equipment;
   idOfSelectedRow = -1;
 
-  constructor(private equipmentService: EquipmentService) {}
+  constructor(private equipmentService: EquipmentService) {
+  }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -34,7 +35,11 @@ export class EquipmentsComponent implements OnInit {
   selectData(data: Equipment): void {
     console.log(data.name);
     this.idOfSelectedRow = data.id;
+    if (this.selectedEquipment !== undefined) {
+      this.selectedEquipment.isSelected = false;
+    }
     this.selectedEquipment = data;
+    data.isSelected = !data.isSelected;
   }
 
   deleteEquipmentById(): void {

@@ -85,6 +85,7 @@ export class EquipmentEditComponent implements OnInit {
 
   buildEquipment(): Equipment {
     return {
+      isSelected:false,
       asset: "",
       customAttributes: "",
       dateOfProduction: this.equipmentEditForm.get('dateOfProduction')?.value?.toISOString(),

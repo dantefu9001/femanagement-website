@@ -5,7 +5,7 @@
 </nz-sider>
 <div>
   <app-equipment-search></app-equipment-search>
-  <nz-table #equipmentTable nzSize="middle" [nzData]="equipments" >
+  <nz-table #equipmentTable nzSize="middle" [nzData]="equipments">
     <thead>
       <tr>
         <th>编号</th>
@@ -22,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of equipmentTable.data" (click)="selectData(data)">
+      <tr *ngFor="let data of equipmentTable.data" (click)="selectData(data)" [className]="data.isSelected?'selectedEquipment':''">
         <td>{{ data.code }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.equipmentGroup }}</td>

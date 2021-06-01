@@ -1,4 +1,5 @@
 export interface Equipment {
+  isSelected:boolean,
   id: number;
   name: string;
   code: string;
