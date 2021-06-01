@@ -1,0 +1,15 @@
+
+    <button nz-button nzType="primary" (click)="showModal()">
+      <span>报工</span>
+    </button>
+    <nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="维修报工"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+      [nzOkLoading]="isOkLoading"
+      [nzWidth]="800"
+    >
+      <app-equipments-maintenance-job-booking-form></app-equipments-maintenance-job-booking-form>
+      <app-equipments-maintenance-job-booking-table></app-equipments-maintenance-job-booking-table>
+    </nz-modal>

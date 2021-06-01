@@ -15,6 +15,9 @@ import {EquipmentsMaintenanceTabComponent} from './equipments-maintenance-tab/eq
 import {NzTabsModule} from "ng-zorro-antd/tabs";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import { EquipmentsMaintenanceJobBookingModalComponent } from './equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-modal.component';
+import { EquipmentsMaintenanceJobBookingFormComponent } from './equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-form/equipments-maintenance-job-booking-form.component';
+import { EquipmentsMaintenanceJobBookingTableComponent } from './equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-table/equipments-maintenance-job-booking-table.component';
 
 
 @NgModule({
@@ -24,6 +27,9 @@ import {NzSelectModule} from "ng-zorro-antd/select";
     EquipmentsMaintenanceManagementUnfinishedComponent,
     EquipmentsMaintenanceManagementHistoryComponent,
     EquipmentsMaintenanceTabComponent,
+    EquipmentsMaintenanceJobBookingModalComponent,
+    EquipmentsMaintenanceJobBookingFormComponent,
+    EquipmentsMaintenanceJobBookingTableComponent,
   ],
   imports: [
     CommonModule,

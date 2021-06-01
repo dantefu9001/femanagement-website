@@ -71,7 +71,7 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listOfData = new Array(200).fill(0).map((_, index) => {
+    this.listOfData = new Array(7).fill(0).map((_, index) => {
       return {
         id: index,
         name: `Edward King ${index}`,
