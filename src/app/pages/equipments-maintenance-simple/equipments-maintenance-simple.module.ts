@@ -31,6 +31,9 @@ import { EquipmentsMaintenanceJobBookingTableComponent } from './equipments-main
     EquipmentsMaintenanceJobBookingFormComponent,
     EquipmentsMaintenanceJobBookingTableComponent,
   ],
+  exports: [
+    EquipmentsMaintenanceRecordComponent
+  ],
   imports: [
     CommonModule,
     EquipmentsMaintenanceSimpleRoutingModule,

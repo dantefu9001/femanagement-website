@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'equipments-maintenance',
     loadChildren: () => import('./pages/equipments-maintenance-simple/equipments-maintenance-simple.module').then(m => m.EquipmentsMaintenanceSimpleModule)
+  },
+  {
+    path: 'equipments-maintenance-standard',
+    loadChildren: () => import('./pages/equipments-maintenance-standard/equipments-maintenance-standard.module').then(m => m.EquipmentsMaintenanceStandardModule)
   }
 ];
 
