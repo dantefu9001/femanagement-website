@@ -1,15 +1,16 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {Area, Equipment, EquipmentGroup, Person, Process, Station, Status, Workshop} from '../model/model';
-import {EquipmentService} from '../service/equipment.service';
 import {EquipmentsComponent} from "../equipments.component";
 import {EquipmentAttributesTableComponent} from "./equipment-attributes-table/equipment-attributes-table.component";
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {EquipmentParamsComponent} from "../equipment-params/equipment-params.component";
+import {Area, Equipment, EquipmentGroup, Person, Process, Station, Status, Workshop} from "../../../model/model";
+import {EquipmentService} from "../../../service/equipment.service";
 
 @Component({
   selector: 'app-equipment-edit',
   templateUrl: './equipment-edit.component.html',
+  styleUrls: ['./equipment-edit.component.scss']
 })
 export class EquipmentEditComponent implements OnInit {
   @Input() title: any;
@@ -47,16 +48,16 @@ export class EquipmentEditComponent implements OnInit {
     this.equipmentEditForm = this.fb.group({
       name: new FormControl(''),
       code: new FormControl(''),
-      id: new FormControl(''),
       equipmentModel: new FormControl(''),
       specification: new FormControl(''),
       manufacturer: new FormControl(''),
       dateOfProduction: [null],
       serialNumber: new FormControl(''),
-      dateOfInstallation: new FormControl(''),
-      dateOfFirstUse: new FormControl(''),
+      dateOfInstallation:  [null],
+      dateOfFirstUse:  [null],
       expireYears: new FormControl(''),
-      dateOfExpiration: new FormControl(''),
+      dateOfExpiration: [null],
+      description: new FormControl('')
     });
   }
 
@@ -89,25 +90,25 @@ export class EquipmentEditComponent implements OnInit {
       asset: "",
       customAttributes: "",
       dateOfProduction: this.equipmentEditForm.get('dateOfProduction')?.value?.toISOString(),
-      dateOfExpiration: this.equipmentEditForm.get('dateOfExpiration')?.value?.toString(),
-      dateOfFirstUse: this.equipmentEditForm.get('dateOfFirstUse')?.value?.toString(),
-      dateOfInstallation: this.equipmentEditForm.get('dateOfInstallation')?.value?.toString(),
-      description: "",
+      dateOfExpiration: this.equipmentEditForm.get('dateOfExpiration')?.value?.toISOString(),
+      dateOfFirstUse: this.equipmentEditForm.get('dateOfFirstUse')?.value?.toISOString(),
+      dateOfInstallation: this.equipmentEditForm.get('dateOfInstallation')?.value?.toISOString(),
+      description: this.equipmentEditForm.get('name')?.value,
       enterprise: "",
-      equipmentGroup: "",
-      expireYears: "",
+      equipmentGroup: this.selectedGroup?.name,
+      expireYears: this.equipmentEditForm.get('expireYears')?.value,
       isAutoDispatch: 0,
       isDelete: "0",
-      manufacturer: "",
-      model: "",
+      manufacturer: this.equipmentEditForm.get('manufacturer')?.value,
+      model: this.equipmentEditForm.get('model')?.value,
       process: this.selectedProcess?.name,
       productionLine: "",
       responsible: this.selectedPerson?.name,
-      serialNumber: "",
-      specification: "",
-      status: '',
-      id: 18,
-      name: '',
+      serialNumber: this.equipmentEditForm.get('serialNumber')?.value,
+      specification: this.equipmentEditForm.get('specification')?.value,
+      status: this.selectedStatus?.value,
+      id:0,
+      name: this.equipmentEditForm.get('name')?.value,
       code: this.equipmentEditForm.get('code')?.value
     };
   }
@@ -131,13 +132,13 @@ export class EquipmentEditComponent implements OnInit {
         this.equipmentParamsComponent.showModal();
       },
       nzCancelText: '直接保存',
-      nzOnCancel: () =>
-        console.log('cancelled')
+      nzOnCancel: () => {
+        console.log(this.equipmentEditForm.get('dateOfExpiration')?.value);
+        this.isOkLoading = true;
+        this.saveEquipments(this.buildEquipment());
+        this.equipmentEditForm.reset();
+      }
     });
-    // console.log(this.equipmentEditForm.get('dateOfExpiration')?.value);
-    // this.isOkLoading = true;
-    // this.saveEquipments(this.buildEquipment());
-    // this.equipmentEditForm.reset();
   }
 
   handleCancel(): void {

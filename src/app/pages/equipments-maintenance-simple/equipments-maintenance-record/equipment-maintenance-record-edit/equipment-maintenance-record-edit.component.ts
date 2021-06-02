@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Area, Person, Process, Workshop} from "../../../equipments/model/model";
+import {Area, Person, Process, Workshop} from "../../../../model/model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({

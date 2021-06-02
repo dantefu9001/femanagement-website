@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {EquipmentsSummary} from "../equipments/model/model";
-import {EquipmentService} from "../equipments/service/equipment.service";
+import {EquipmentsSummary} from "../../model/model";
+import {EquipmentService} from "../../service/equipment.service";
 
 export interface Data {
   id: number;

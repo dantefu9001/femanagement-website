@@ -1,5 +1,5 @@
-<button nz-button nzType="primary" (click)="showModal()">
-  <span>{{title}}</span>
+<button class="edit-button" nz-button nzType="primary" (click)="showModal()" style="margin-left: 8px">
+  {{title}}
 </button>
 <app-equipment-params [isEdit]="isEdit" #equipmentParamsComponent></app-equipment-params>
 <nz-modal
@@ -9,239 +9,262 @@
   (nzOnOk)="handleOk()"
   nzOkText="保存"
   [nzOkLoading]="isOkLoading"
-  [nzWidth]="800"
+  [nzWidth]="900"
 >
   <span>基础属性</span>
+  <br/>
   <form nz-form [formGroup]="equipmentEditForm">
-    <app-equipment-edit-upload-pic></app-equipment-edit-upload-pic>
-    <nz-row nz-row [nzGutter]="32">
-      <nz-form-item>
-        <nz-form-label>编号</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="code"/>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>名称</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="name"/>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>设备组</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            name="equipment-group"
-            [(ngModel)]="selectedGroup"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of equipmentGroups"
-              [nzLabel]="item.name"
-              [nzValue]="item"
-            >
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
+    <nz-row>
+      <app-equipment-edit-upload-pic></app-equipment-edit-upload-pic>
+      <div class="basic">
+        <nz-row nz-row [nzGutter]="32">
+          <nz-form-item>
+            <nz-form-label>编号</nz-form-label>
+            <nz-form-control>
+              <input nz-input placeholder="请输入" formControlName="code"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input placeholder="请输入" formControlName="name"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>设备组</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="equipment-group"
+                [(ngModel)]="selectedGroup"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of equipmentGroups"
+                  [nzLabel]="item.name"
+                  [nzValue]="item"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-row>
+        <nz-row nz-row [nzGutter]="32">
+          <nz-form-item>
+            <nz-form-label>负责人</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="responsibilities"
+                [(ngModel)]="selectedPerson"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of responsibilities"
+                  [nzLabel]="item.name"
+                  [nzValue]="item.name"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>车间</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="workshops"
+                [(ngModel)]="selectedWorkshops"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of workshops"
+                  [nzLabel]="item.name"
+                  [nzValue]="item.name"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>区域</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="areas"
+                [(ngModel)]="selectedArea"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of areas"
+                  [nzLabel]="item.name"
+                  [nzValue]="item.name"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-row>
+        <nz-row nz-row [nzGutter]="32">
+          <nz-form-item>
+            <nz-form-label>工序</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="process"
+                [(ngModel)]="selectedProcess"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of process"
+                  [nzLabel]="item.name"
+                  [nzValue]="item.name"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>工位</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="stations"
+                [(ngModel)]="selectedStation"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of stations"
+                  [nzLabel]="item.name"
+                  [nzValue]="item.name"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>状态</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="status"
+                [(ngModel)]="selectedStatus"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of status"
+                  [nzLabel]="item.name"
+                  [nzValue]="item.name"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-row>
+        <nz-row nz-row [nzGutter]="32">
+          <nz-form-item>
+            <nz-form-label>描述</nz-form-label>
+            <nz-form-control>
+              <input nz-input placeholder="请输入" formControlName="description" style="width: 328px"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <a>设备说明书上传</a>
+          </nz-form-item>
+          <nz-form-item>
+            <a>维修保养手册上传</a>
+          </nz-form-item>
+        </nz-row>
+      </div>
     </nz-row>
-    <nz-row nz-row [nzGutter]="32">
-      <nz-form-item>
-        <nz-form-label>负责人</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            name="responsibilities"
-            [(ngModel)]="selectedPerson"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of responsibilities"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>车间</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            name="workshops"
-            [(ngModel)]="selectedWorkshops"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of workshops"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>区域</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            name="areas"
-            [(ngModel)]="selectedArea"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of areas"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-row>
-    <nz-row nz-row [nzGutter]="32">
-      <nz-form-item>
-        <nz-form-label>工序</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            name="process"
-            [(ngModel)]="selectedProcess"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of process"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>工位</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            name="stations"
-            [(ngModel)]="selectedStation"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of stations"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>状态</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            name="status"
-            [(ngModel)]="selectedStatus"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <nz-option
-              *ngFor="let item of status"
-              [nzLabel]="item.name"
-              [nzValue]="item.name"
-            >
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-row>
+    <br/>
     <span>扩展属性</span>
-    <nz-row nzGutter="32">
-      <nz-form-item>
-        <nz-form-label>型号</nz-form-label>
-        <nz-form-control>
-          <input
-            nz-input
-            placeholder="请输入"
-            formControlName="equipmentModel"
-          />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>规格</nz-form-label>
-        <nz-form-control>
-          <input
-            nz-input
-            placeholder="请输入"
-            formControlName="specification"
-          />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>厂家</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="manufacturer"/>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-row>
-    <nz-row nzGutter="32">
-      <nz-form-item>
-        <nz-form-label>出厂日期</nz-form-label>
-        <nz-form-control>
-          <nz-date-picker formControlName="dateOfProduction"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>出厂编号</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="serialNumber"/>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>安装日期</nz-form-label>
-        <nz-form-control>
-          <nz-date-picker formControlName="dateOfInstallation"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-row>
-    <nz-row nzGutter="32">
-      <nz-form-item>
-        <nz-form-label>首次使用</nz-form-label>
-        <nz-form-control>
-          <nz-date-picker formControlName="dateOfFirstUse"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>报废年限</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="expireYears"/>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>报废期限</nz-form-label>
-        <nz-form-control>
-          <nz-date-picker formControlName="dateOfExpiration"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-row>
-    <div>
+    <div class="extra">
+      <nz-row nzGutter="32">
+        <nz-form-item>
+          <nz-form-label>型号</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              placeholder="请输入"
+              formControlName="equipmentModel"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>规格</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              placeholder="请输入"
+              formControlName="specification"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>厂家</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="manufacturer"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+      <nz-row nzGutter="32">
+        <nz-form-item>
+          <nz-form-label>出厂日期</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker formControlName="dateOfProduction"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>出厂编号</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="serialNumber"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>安装日期</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker formControlName="dateOfInstallation"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+      <nz-row nzGutter="32">
+        <nz-form-item>
+          <nz-form-label>首次使用</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker formControlName="dateOfFirstUse"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>报废年限</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="expireYears"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>报废期限</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker formControlName="dateOfExpiration"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+    </div>
+    <div class="self-defined">
+      <span>自定义属性</span>
       <app-equipment-attributes-table #attributesTableComponent></app-equipment-attributes-table>
     </div>
   </form>

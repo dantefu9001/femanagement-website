@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { EquipmentGroup } from '../model/model';
-import { EquipmentService } from '../service/equipment.service';
+import { EquipmentGroup } from '../../../model/model';
+import { EquipmentService } from '../../../service/equipment.service';
 
 @Component({
   selector: 'app-equipment-group',

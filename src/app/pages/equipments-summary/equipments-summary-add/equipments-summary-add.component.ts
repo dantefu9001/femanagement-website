@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {Person} from "../../equipments/model/model";
-import {EquipmentService} from "../../equipments/service/equipment.service";
+import {Person} from "../../../model/model";
+import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentsSummaryComponent} from "../equipments-summary.component";
 
 interface Group {

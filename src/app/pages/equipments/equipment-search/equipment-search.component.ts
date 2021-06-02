@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { EquipmentsComponent } from '../equipments.component';
-import {Equipment} from "../model/model";
+import {Equipment} from "../../../model/model";
 
 @Component({
   selector: 'app-equipment-search',
@@ -22,17 +22,18 @@ export class EquipmentSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
+      workshop: new FormControl(),
+      responsible: new FormControl(),
       name: new FormControl(),
-      code: new FormControl(),
-      id: new FormControl(),
     });
   }
 
   search(): any {
     console.log(this.validateForm.get('name')?.value);
     const name: string = this.validateForm.get('name')?.value;
-    const code: string = this.validateForm.get('code')?.value;
-    this.equipmentsComponent.search(name, code);
+    const workshop: string = this.validateForm.get('workshop')?.value;
+    const responsible: string = this.validateForm.get('responsible')?.value
+    this.equipmentsComponent.search(name, workshop);
   }
 
   deleteRow(): void {

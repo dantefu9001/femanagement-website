@@ -1,21 +1,21 @@
 <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
   <nz-row nz-row [nzGutter]="56">
     <nz-form-item>
+      <nz-form-label>车间</nz-form-label>
+      <nz-form-control>
+        <input nz-input value="" placeholder="请输入" formControlName="workshop" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>负责人</nz-form-label>
+      <nz-form-control>
+        <input nz-input value="" placeholder="请输入" formControlName="responsible" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
       <nz-form-label>名称</nz-form-label>
       <nz-form-control>
-        <input nz-input value="" placeholder="请输入" formControlName="name" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label>编码</nz-form-label>
-      <nz-form-control>
-        <input nz-input value="" placeholder="请输入" formControlName="code" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label>id</nz-form-label>
-      <nz-form-control>
-        <input nz-input placeholder="请输入" formControlName="id" />
+        <input nz-input placeholder="请输入" formControlName="name" />
       </nz-form-control>
     </nz-form-item>
     <div class="search-area">

@@ -4,7 +4,8 @@ import {getBase64} from "../../../../common/utils";
 
 @Component({
   selector: 'app-equipment-edit-upload-pic',
-  templateUrl: './equipment-edit-upload-pic.component.html'
+  templateUrl: './equipment-edit-upload-pic.component.html',
+  styleUrls: ['./equipment-edit-upload-pic.component.scss']
 })
 export class EquipmentEditUploadPicComponent {
   fileList: NzUploadFile[] = [

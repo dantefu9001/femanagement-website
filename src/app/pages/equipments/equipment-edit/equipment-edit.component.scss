@@ -1,8 +1,45 @@
 [nz-input] {
-    margin-right: 100px;
-    margin-left: 100px;
-  }
+  width: 120px;
+}
 
-[nz-select] {
-  width:20px;
+nz-form-item nz-select {
+  width: 120px;
+}
+
+nz-form-label {
+  text-align: left;
+  width: 64px;
+  margin-right: 8px;
+  margin-left: 16px;
+}
+
+label {
+  text-align: left;
+  width: 64px;
+  margin-right: 8px;
+  margin-left: 16px;
+}
+
+nz-date-picker {
+  width: 120px;
+}
+
+a {
+  padding-top: 4px;
+  margin-right: 8px;
+  margin-left: 16px;
+  text-align: end
+}
+
+.extra nz-form-item {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.extra [nz-input] {
+  width: 150px;
+}
+
+.extra nz-date-picker{
+  width: 150px;
 }

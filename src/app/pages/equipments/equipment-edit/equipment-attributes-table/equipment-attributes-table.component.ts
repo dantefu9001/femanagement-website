@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SelfDefinedAttribute} from "../../model/model";
+import {SelfDefinedAttribute} from "../../../../model/model";
 
 @Component({
   selector: 'app-equipment-attributes-table',

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Equipment} from './model/model';
-import {EquipmentService} from './service/equipment.service';
+import {Equipment} from '../../model/model';
+import {EquipmentService} from '../../service/equipment.service';
 
 @Component({
   selector: 'app-equipments',
