@@ -3,9 +3,8 @@
       <button nz-button nzType="primary" [disabled]="setOfCheckedId.size === 0" nzLoading="loading" (click)="deleteRows()">
         移除
       </button>
-      <span>Selected {{ setOfCheckedId.size }} items</span>
     </div>
-    <nz-table
+    <nz-table style="width: 110%;table-layout: auto"
       #rowSelectionTable
       nzShowPagination
       nzShowSizeChanger
@@ -15,9 +14,13 @@
       <thead>
         <tr>
           <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Address</th>
+          <th>编号</th>
+          <th>参数</th>
+          <th>类型</th>
+          <th>上限</th>
+          <th>下限</th>
+          <th>默认值</th>
+          <th>单位</th>
         </tr>
       </thead>
       <tbody>

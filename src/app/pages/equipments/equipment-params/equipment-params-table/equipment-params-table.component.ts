@@ -11,7 +11,6 @@ export interface Data {
 @Component({
   selector: 'app-equipment-params-table',
   templateUrl: './equipment-params-table.component.html',
-
   styleUrls: ['./equipment-params-table.component.scss']
 })
 export class EquipmentParamsTableComponent implements OnInit {
@@ -56,7 +55,7 @@ export class EquipmentParamsTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listOfData = new Array(20).fill(0).map((_, index) => {
+    this.listOfData = new Array(5).fill(0).map((_, index) => {
       return {
         id: index,
         name: `Edward King ${index}`,

@@ -7,61 +7,69 @@
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzOkLoading]="isOkLoading"
-  [nzWidth]="800"
+  [nzWidth]="732"
 >
-  <span>新增数采配置</span>
-  <form nz-form [formGroup]="paramsForm" >
-    <button (click)="addParam()" nz-button nzType="'primary'">新增</button>
-    <button (click)="deleteParams()" nz-button nzType="'primary'">重置</button>
-    <nz-row nz-row [nzGutter]="56">
-      <nz-form-item>
-        <nz-form-label>编号</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="code" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>参数</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="param" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>类型</nz-form-label>
-        <nz-form-control>
-          <nz-select name='equipment-param-types'  [(ngModel)]="selectedEquipmentType" [ngModelOptions]="{standalone:true}">
-            <nz-option
-              *ngFor="let item of equipmentParamTypes"
-              [nzLabel]="item"
-              [nzValue]="item">
-              <ng-template #tpl>
-                {{ item }}
-              </ng-template>
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-row>
-    <nz-row nz-row [nzGutter]="56">
-      v<nz-form-item>
-      <nz-form-label>单位</nz-form-label>
-      <nz-form-control>
-        <input nz-input placeholder="请输入" formControlName="unit" />
-      </nz-form-control>
-    </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>上限</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="max" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>下限</nz-form-label>
-        <nz-form-control>
-          <input nz-input placeholder="请输入" formControlName="min" />
-        </nz-form-control>
-      </nz-form-item>
-    </nz-row>
+
+  <form nz-form [formGroup]="paramsForm">
+    <div class="edit-area">
+      <nz-row [nzGutter]="56">
+        <span>新增数采配置</span>
+        <div class="buttons">
+          <button (click)="addParam()" nz-button nzType="'primary'">新增</button>
+          <button (click)="deleteParams()" nz-button nzType="'primary'">重置</button>
+        </div>
+      </nz-row>
+      <nz-row nz-row [nzGutter]="56">
+        <nz-form-item>
+          <nz-form-label>编号</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="code"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>参数</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="param"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>类型</nz-form-label>
+          <nz-form-control>
+            <nz-select name='equipment-param-types' [(ngModel)]="selectedEquipmentType"
+                       [ngModelOptions]="{standalone:true}">
+              <nz-option
+                *ngFor="let item of equipmentParamTypes"
+                [nzLabel]="item"
+                [nzValue]="item">
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+      <nz-row nz-row [nzGutter]="56">
+        <nz-form-item>
+          <nz-form-label>单位</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="unit"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>上限</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="max"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>下限</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="min"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+    </div>
     <app-equipment-params-table></app-equipment-params-table>
   </form>
 </nz-modal>
