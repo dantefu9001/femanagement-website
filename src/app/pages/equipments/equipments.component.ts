@@ -16,8 +16,6 @@ export class EquipmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.search('', '');
   }
 
@@ -32,6 +30,15 @@ export class EquipmentsComponent implements OnInit {
     });
   }
 
+  deleteEquipmentById(): void {
+    if (this.idOfSelectedRow === -1) {
+      console.log('no data');
+    } else {
+      console.log('id:', this.idOfSelectedRow);
+      alert('是否删除？');
+    }
+  }
+
   selectData(data: Equipment): void {
     console.log(data.name);
     this.idOfSelectedRow = data.id;
@@ -40,14 +47,5 @@ export class EquipmentsComponent implements OnInit {
     }
     this.selectedEquipment = data;
     data.isSelected = !data.isSelected;
-  }
-
-  deleteEquipmentById(): void {
-    if (this.idOfSelectedRow === -1) {
-      console.log('no data');
-    } else {
-      console.log('id:', this.idOfSelectedRow);
-      alert('是否删除？');
-    }
   }
 }

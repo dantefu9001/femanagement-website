@@ -40,6 +40,7 @@ export class EquipmentEditComponent implements OnInit {
   selectedProcess!: Process;
   selectedStation!: Station;
   selectedStatus!: Status;
+  private selectedEquipment!: Equipment;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -76,16 +77,29 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   saveEquipments(equipment: Equipment) {
-    const api = 'http://localhost:8080/equipments';
-    this.equipmentService.postData(api, equipment).then((result: any) => {
-      console.log(result);
-      this.isVisible = false;
-      this.isOkLoading = false;
-    })
+    if (this.isEdit) {
+      const api = 'http://localhost:8080/equipments/update';
+      this.equipmentService.postData(api, equipment).then((result: any) => {
+        console.log(result);
+        this.isVisible = false;
+        this.isOkLoading = false;
+      })
+    }else{
+      const api = 'http://localhost:8080/equipments';
+      this.equipmentService.postData(api, equipment).then((result: any) => {
+        console.log(result);
+        this.isVisible = false;
+        this.isOkLoading = false;
+      })
+    }
+
   }
 
   buildEquipment(): Equipment {
     return {
+      id: this.isEdit ? this.selectedEquipment.id : -1,
+      name: this.equipmentEditForm.get('name')?.value,
+      code: this.equipmentEditForm.get('code')?.value,
       isSelected:false,
       asset: "",
       customAttributes: "",
@@ -107,20 +121,27 @@ export class EquipmentEditComponent implements OnInit {
       serialNumber: this.equipmentEditForm.get('serialNumber')?.value,
       specification: this.equipmentEditForm.get('specification')?.value,
       status: this.selectedStatus?.value,
-      id:0,
-      name: this.equipmentEditForm.get('name')?.value,
-      code: this.equipmentEditForm.get('code')?.value
     };
   }
 
   showModal(): void {
-    const selectedEquipment = this.equipmentsComponent.selectedEquipment;
-    if (undefined === selectedEquipment && this.isEdit) {
-      alert("请选择设备")
-    } else {
+    this.selectedEquipment = this.equipmentsComponent.selectedEquipment;
+    if (this.isEdit) {
+      if (undefined === this.selectedEquipment) {
+        alert("请选择设备");
+      }
+      this.setupEquipment(this.selectedEquipment)
+    }
       this.isVisible = true;
       console.log(this.equipmentsComponent.selectedEquipment);
-    }
+
+  }
+
+  private setupEquipment(selectedEquipment: Equipment) {
+    this.equipmentEditForm.setControl('code', new FormControl(selectedEquipment.code));
+    this.equipmentEditForm.setControl('name', new FormControl(selectedEquipment.name));
+    this.equipmentEditForm.setControl('dateOfProduction', new FormControl(selectedEquipment.dateOfProduction));
+
   }
 
   handleOk(): void {
@@ -139,40 +160,16 @@ export class EquipmentEditComponent implements OnInit {
         this.equipmentEditForm.reset();
       }
     });
+    this.clearSelectedData();
   }
 
   handleCancel(): void {
     console.log(this.attributesTableComponent.selfDefinedAttributes)
     this.isVisible = false;
     this.equipmentEditForm.reset();
+    this.clearSelectedData();
   }
 
-  setGroup(value: EquipmentGroup): void {
-    this.selectedGroup = value;
-    console.log(this.selectedGroup);
-  }
-
-  setPerson(value: Person) {
-    this.selectedPerson = value;
-  }
-
-  setWorkshops(value: Workshop) {
-    this.selectedWorkshops = value;
-  }
-
-  setArea(value: Area) {
-    this.selectedArea = value;
-  }
-
-  setProcess(value: Process) {
-    this.selectedProcess = value;
-  }
-
-  setStation(value: Station) {
-    this.selectedStation = value;
-  }
-
-  setStatus(value: Status) {
-    this.selectedStatus = value;
+  clearSelectedData(): void{
   }
 }

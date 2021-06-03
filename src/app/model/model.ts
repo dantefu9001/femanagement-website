@@ -15,11 +15,11 @@ export interface Equipment {
   manufacturer: string;
   specification: string;
   serialNumber: string;
-  dateOfProduction: string;
-  dateOfInstallation: string;
-  dateOfFirstUse: string;
+  dateOfProduction: Date;
+  dateOfInstallation: Date;
+  dateOfFirstUse: Date;
+  dateOfExpiration: Date;
   expireYears: string;
-  dateOfExpiration: string;
   customAttributes: string;
   isDelete: string;
   enterprise: string;
