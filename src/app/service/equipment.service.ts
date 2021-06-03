@@ -36,4 +36,13 @@ export class EquipmentService {
       })
     }))
   }
+
+  deleteData(api: string):any {
+    console.log('deleting data');
+    return new Promise((resolve => {
+      axios.delete(api).then((response)=>{
+        resolve(response);
+      })
+    }))
+  }
 }

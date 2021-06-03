@@ -31,11 +31,15 @@ export class EquipmentsComponent implements OnInit {
   }
 
   deleteEquipmentById(): void {
+    let api = 'http://localhost:8080/equipments/';
     if (this.idOfSelectedRow === -1) {
       console.log('no data');
     } else {
       console.log('id:', this.idOfSelectedRow);
-      alert('是否删除？');
+      api+=this.idOfSelectedRow
+      this.equipmentService.deleteData(api).then((result:any)=>{
+        this.search('', '');
+      })
     }
   }
 

@@ -226,7 +226,7 @@
         <nz-form-item>
           <nz-form-label>出厂日期</nz-form-label>
           <nz-form-control>
-            <nz-date-picker formControlName="dateOfProduction"></nz-date-picker>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="dateOfProduction" formControlName="dateOfProduction"></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>

@@ -40,7 +40,8 @@ export class EquipmentEditComponent implements OnInit {
   selectedProcess!: Process;
   selectedStation!: Station;
   selectedStatus!: Status;
-  private selectedEquipment!: Equipment;
+  selectedEquipment!: Equipment;
+  dateOfProduction!: Date;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -83,6 +84,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
+        this.equipmentsComponent.search('', '');
       })
     }else{
       const api = 'http://localhost:8080/equipments';
@@ -90,6 +92,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
+        this.equipmentsComponent.search('', '');
       })
     }
 
@@ -103,7 +106,7 @@ export class EquipmentEditComponent implements OnInit {
       isSelected:false,
       asset: "",
       customAttributes: "",
-      dateOfProduction: this.equipmentEditForm.get('dateOfProduction')?.value?.toISOString(),
+      dateOfProduction: this.dateOfProduction,
       dateOfExpiration: this.equipmentEditForm.get('dateOfExpiration')?.value?.toISOString(),
       dateOfFirstUse: this.equipmentEditForm.get('dateOfFirstUse')?.value?.toISOString(),
       dateOfInstallation: this.equipmentEditForm.get('dateOfInstallation')?.value?.toISOString(),

@@ -1,3 +1,5 @@
+import DateTimeFormat = Intl.DateTimeFormat;
+
 export interface Equipment {
   isSelected:boolean,
   id: number;
