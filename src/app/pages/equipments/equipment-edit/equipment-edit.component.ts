@@ -6,6 +6,7 @@ import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {EquipmentParamsComponent} from "../equipment-params/equipment-params.component";
 import {Area, Equipment, EquipmentGroup, Person, Process, Station, Status, Workshop} from "../../../model/model";
 import {EquipmentService} from "../../../service/equipment.service";
+import {EquipmentEditUploadPicComponent} from "./equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 
 @Component({
   selector: 'app-equipment-edit',
@@ -18,6 +19,7 @@ export class EquipmentEditComponent implements OnInit {
   @Input() equipmentsComponent: EquipmentsComponent;
   @ViewChild('attributesTableComponent') attributesTableComponent!: EquipmentAttributesTableComponent;
   @ViewChild('equipmentParamsComponent') equipmentParamsComponent!: EquipmentParamsComponent;
+  @ViewChild('equipmentEditUploadPicComponent') equipmentEditUploadPicComponent!:EquipmentEditUploadPicComponent;
   confirmModal?: NzModalRef;
   isVisible = false;
   isOkLoading = false;
@@ -101,6 +103,7 @@ export class EquipmentEditComponent implements OnInit {
   buildEquipment(): Equipment {
     return {
       id: this.isEdit ? this.selectedEquipment.id : -1,
+      picture:this.equipmentEditUploadPicComponent.fileList[0].response.data,
       name: this.equipmentEditForm.get('name')?.value,
       code: this.equipmentEditForm.get('code')?.value,
       isSelected:false,

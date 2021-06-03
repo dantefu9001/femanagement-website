@@ -1,8 +1,9 @@
-import DateTimeFormat = Intl.DateTimeFormat;
+import {NzUploadFile} from "ng-zorro-antd/upload";
 
 export interface Equipment {
   isSelected:boolean,
   id: number;
+  picture: string
   name: string;
   code: string;
   responsible: string;
