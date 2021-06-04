@@ -16,13 +16,13 @@
         padding-top: 80px;
       }
 
-      [nz-form-label] {
+      nz-form-label {
         overflow: visible;
+        margin-left: 8px;
       }
 
       button {
         margin-left: 8px;
-        margin-right: 8px;
       }
 
       .collapse {
@@ -32,11 +32,13 @@
 
       .search-area {
         text-align: right;
+        margin-top: 2px;
       }
 
 
       .edit-area {
         text-align: right;
+        margin-top: 2px;
         //padding-left: 150px;
       }
 

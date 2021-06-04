@@ -24,6 +24,7 @@ import { EquipmentEditUploadPicComponent } from './equipment-edit/equipment-edit
 import {NzUploadModule} from "ng-zorro-antd/upload";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {QRCodeModule} from "angular2-qrcode";
+import { EquipmentTagComponent } from './equipment-tag/equipment-tag.component';
 
 @NgModule({
   declarations: [
@@ -35,26 +36,27 @@ import {QRCodeModule} from "angular2-qrcode";
     EquipmentParamsComponent,
     EquipmentParamsTableComponent,
     EquipmentEditUploadPicComponent,
+    EquipmentTagComponent,
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NzTableModule,
-        NzPopconfirmModule,
-        NzPopoverModule,
-        NzFormModule,
-        NzListModule,
-        NzLayoutModule,
-        NzModalModule,
-        EquipmentsRoutingModule,
-        NzMessageModule,
-        NzSelectModule,
-        NzDatePickerModule,
-        NzUploadModule,
-        NzCheckboxModule,
-        QRCodeModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzTableModule,
+    NzPopconfirmModule,
+    NzPopoverModule,
+    NzFormModule,
+    NzListModule,
+    NzLayoutModule,
+    NzModalModule,
+    EquipmentsRoutingModule,
+    NzMessageModule,
+    NzSelectModule,
+    NzDatePickerModule,
+    NzUploadModule,
+    NzCheckboxModule,
+    QRCodeModule,
+  ],
   providers: [
     EquipmentGroupComponent
   ]

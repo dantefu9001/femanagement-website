@@ -1,0 +1,45 @@
+<button nz-button nzType="'primary'" (click)="showModal()"><span>生成标识码</span></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="设备标识牌" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" >
+  <ng-container *nzModalContent>
+    <form>
+      <nz-row>
+        <nz-col>
+          <nz-form-item>
+            <nz-form-label>设备名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input [disabled]="true" [ngModel]="name" [ngModelOptions]="{standalone:true}"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>规格型号</nz-form-label>
+            <nz-form-control>
+              <input nz-input [disabled]="true" [ngModel]="model" [ngModelOptions]="{standalone:true}"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>安装地点</nz-form-label>
+            <nz-form-control>
+              <input nz-input [disabled]="true" [ngModel]="location" [ngModelOptions]="{standalone:true}"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>启用时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input [disabled]="true" [ngModel]="activateTime" [ngModelOptions]="{standalone:true}"/>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>设备编号</nz-form-label>
+            <nz-form-control>
+              <input nz-input [disabled]="true" [ngModel]="equipmentCode" [ngModelOptions]="{standalone:true}"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-layout>
+          <img src="../../../../assets/logo.png" width="180px" height="65px">
+          <qr-code [value]="qrCodeInfo" [size]=195></qr-code>
+        </nz-layout>
+      </nz-row>
+    </form>
+  </ng-container>
+</nz-modal>
