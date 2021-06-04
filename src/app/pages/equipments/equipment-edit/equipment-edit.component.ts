@@ -43,10 +43,10 @@ export class EquipmentEditComponent implements OnInit {
   selectedStation!: Station;
   selectedStatus!: Status;
   selectedEquipment!: Equipment;
-  dateOfProduction!: Date;
-  dateOfExpiration!:Date;
-  dateOfFirstUse!:Date;
-  dateOfInstallation!:Date;
+  productionDate!: Date;
+  expirationDate!:Date;
+  firstUseDate!:Date;
+  installationDate!:Date;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -109,10 +109,10 @@ export class EquipmentEditComponent implements OnInit {
       picture:this.equipmentEditUploadPicComponent.fileList[0]?.response?.data,
       name: this.equipmentEditForm.get('name')?.value,
       code: this.equipmentEditForm.get('code')?.value,
-      dateOfProduction: this.dateOfProduction,
-      dateOfExpiration: this.dateOfExpiration,
-      dateOfFirstUse: this.dateOfFirstUse,
-      dateOfInstallation: this.dateOfInstallation,
+      dateOfProduction: this.productionDate,
+      dateOfExpiration: this.expirationDate,
+      dateOfFirstUse: this.firstUseDate,
+      dateOfInstallation: this.installationDate,
       description: this.equipmentEditForm.get('description')?.value,
       expiresYears: this.equipmentEditForm.get('expiresYears')?.value,
       manufacturer: this.equipmentEditForm.get('manufacturer')?.value,

@@ -1,7 +1,5 @@
-import {NzUploadFile} from "ng-zorro-antd/upload";
-
 export interface Equipment {
-  isSelected:boolean,
+  isSelected: boolean,
   id: number;
   picture: string
   name: string;
@@ -72,7 +70,7 @@ export interface Status {
 }
 
 export interface EquipmentsSummary {
-  id:number;
+  id: number;
   type: string;
   group: number;
   summaryTime: string;

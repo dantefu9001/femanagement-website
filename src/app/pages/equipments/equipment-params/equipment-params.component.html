@@ -16,7 +16,7 @@
         <span>新增数采配置</span>
         <div class="buttons">
           <button (click)="addParam()" nz-button nzType="'primary'">新增</button>
-          <button (click)="deleteParams()" nz-button nzType="'primary'">重置</button>
+          <button (click)="resetForm()" nz-button nzType="'primary'">重置</button>
         </div>
       </nz-row>
       <nz-row nz-row [nzGutter]="56">
@@ -70,6 +70,6 @@
         </nz-form-item>
       </nz-row>
     </div>
-    <app-equipment-params-table></app-equipment-params-table>
+    <app-equipment-params-table #equipmentParamsTableComponent [equipmentId]="equipmentId"></app-equipment-params-table>
   </form>
 </nz-modal>

@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
-export interface Data {
+export interface Param {
   id: number;
-  name: string;
-  age: number;
-  address: string;
+  equipmentId: number;
+  code: string;
+  param: string;
+  type: string;
+  max: string;
+  min: string;
+  defaultValue: string;
+  unit: string;
   disabled: boolean;
 }
 
@@ -14,10 +19,11 @@ export interface Data {
   styleUrls: ['./equipment-params-table.component.scss']
 })
 export class EquipmentParamsTableComponent implements OnInit {
+  @Input() equipmentId!: number;
   checked = false;
   indeterminate = false;
-  listOfData: Array<Data> = [];
-  listOfCurrentPageData: ReadonlyArray<Data> = [];
+  listOfData: Array<Param> = [];
+  listOfCurrentPageData: ReadonlyArray<Param> = [];
   setOfCheckedId = new Set<number>();
 
   updateCheckedSet(id: number, checked: boolean): void {
@@ -28,15 +34,15 @@ export class EquipmentParamsTableComponent implements OnInit {
     }
   }
 
-  onCurrentPageDataChange(listOfCurrentPageData: ReadonlyArray<Data>): void {
+  onCurrentPageDataChange(listOfCurrentPageData: ReadonlyArray<Param>): void {
     this.listOfCurrentPageData = listOfCurrentPageData;
     this.refreshCheckedStatus();
   }
 
   refreshCheckedStatus(): void {
-    const listOfEnabledData = this.listOfCurrentPageData.filter(({ disabled }) => !disabled);
-    this.checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId.has(id));
-    this.indeterminate = listOfEnabledData.some(({ id }) => this.setOfCheckedId.has(id)) && !this.checked;
+    const listOfEnabledData = this.listOfCurrentPageData.filter(({disabled}) => !disabled);
+    this.checked =this.listOfData.length>0 && listOfEnabledData.every(({id}) => this.setOfCheckedId.has(id));
+    this.indeterminate = listOfEnabledData.some(({id}) => this.setOfCheckedId.has(id)) && !this.checked;
   }
 
   onItemChecked(id: number, checked: boolean): void {
@@ -45,24 +51,22 @@ export class EquipmentParamsTableComponent implements OnInit {
   }
 
   onAllChecked(checked: boolean): void {
-    this.listOfCurrentPageData.filter(({ disabled }) => !disabled).forEach(({ id }) => this.updateCheckedSet(id, checked));
+    this.listOfCurrentPageData.filter(({disabled}) => !disabled).forEach(({id}) => this.updateCheckedSet(id, checked));
     this.refreshCheckedStatus();
   }
 
+  addRow(param: Param) {
+    this.listOfData = [
+      ...this.listOfData,
+      param
+    ];
+  }
+
   deleteRows(): void {
-    this.listOfData = this.listOfData.filter(data =>!this.setOfCheckedId.has(data.id));
-    this.checked=false;
+    this.listOfData = this.listOfData.filter(data => !this.setOfCheckedId.has(data.id));
+    this.checked = false;
   }
 
   ngOnInit(): void {
-    this.listOfData = new Array(5).fill(0).map((_, index) => {
-      return {
-        id: index,
-        name: `Edward King ${index}`,
-        age: 32,
-        address: `London, Park Lane no. ${index}`,
-        disabled: false
-      };
-    });
   }
 }

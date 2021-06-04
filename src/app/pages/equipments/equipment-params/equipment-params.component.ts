@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
-import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Observable, Observer} from 'rxjs';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {EquipmentParamsTableComponent, Param} from "./equipment-params-table/equipment-params-table.component";
 
 @Component({
   selector: 'app-equipment-params',
@@ -9,23 +9,21 @@ import {Observable, Observer} from 'rxjs';
 
   styleUrls: ['./equipment-params.component.scss']
 })
-export class EquipmentParamsComponent {
+export class EquipmentParamsComponent implements OnInit {
   @Input() isEdit = false;
-  isVisible = false;
-  isOkLoading = false;
-  paramsForm: FormGroup;
+  @Input() equipmentId! :number;
+  @ViewChild("equipmentParamsTableComponent") equipmentParamsTableComponent!: EquipmentParamsTableComponent;
   equipmentParamTypes: string[] = [
     '振动', '电压', '电流'
   ];
+  isVisible = false;
+  isOkLoading = false;
+  paramsForm!: FormGroup;
+  counter = 0;
   selectedEquipmentType: string = this.equipmentParamTypes[0];
 
-  constructor(private fb: FormBuilder) {
+  ngOnInit(): void {
     this.paramsForm = this.fb.group({
-      // userName: ['', [Validators.required], [this.userNameAsyncValidator]],
-      // email: ['', [Validators.email, Validators.required]],
-      // password: ['', [Validators.required]],
-      // confirm: ['', [this.confirmValidator]],
-      // comment: ['', [Validators.required]]
       code: '',
       param: '',
       type: this.selectedEquipmentType,
@@ -35,12 +33,17 @@ export class EquipmentParamsComponent {
     });
   }
 
+  constructor(public fb: FormBuilder) {
+  }
+
   handleOk(): void {
+    //save
     this.isVisible = false;
   }
 
   handleCancel(): void {
     this.isVisible = false;
+    this.resetForm();
   }
 
   showModal(): void {
@@ -48,10 +51,23 @@ export class EquipmentParamsComponent {
   }
 
   addParam() {
-
+    let param = {
+      id:this.counter ++,
+      equipmentId:this.equipmentId,
+      code: this.paramsForm.get('code')?.value,
+      param: this.paramsForm.get('param')?.value,
+      type: this.paramsForm.get('type')?.value,
+      max: this.paramsForm.get('max')?.value,
+      min:this.paramsForm.get('min')?.value,
+      unit:this.paramsForm.get('unit')?.value,
+      defaultValue:'',
+      disabled:false
+    } as Param
+    this.equipmentParamsTableComponent.addRow(param)
   }
 
-  deleteParams() {
-
+  resetForm() {
+    this.paramsForm.reset();
+    this.selectedEquipmentType = this.equipmentParamTypes[0];
   }
 }
