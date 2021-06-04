@@ -44,6 +44,9 @@ export class EquipmentEditComponent implements OnInit {
   selectedStatus!: Status;
   selectedEquipment!: Equipment;
   dateOfProduction!: Date;
+  dateOfExpiration!:Date;
+  dateOfFirstUse!:Date;
+  dateOfInstallation!:Date;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -55,13 +58,13 @@ export class EquipmentEditComponent implements OnInit {
       equipmentModel: new FormControl(''),
       specification: new FormControl(''),
       manufacturer: new FormControl(''),
-      dateOfProduction: [null],
       serialNumber: new FormControl(''),
+      expiresYears: new FormControl(''),
+      description: new FormControl(''),
+      dateOfProduction: [null],
       dateOfInstallation:  [null],
       dateOfFirstUse:  [null],
-      expireYears: new FormControl(''),
       dateOfExpiration: [null],
-      description: new FormControl('')
     });
   }
 
@@ -103,30 +106,30 @@ export class EquipmentEditComponent implements OnInit {
   buildEquipment(): Equipment {
     return {
       id: this.isEdit ? this.selectedEquipment.id : -1,
-      picture:this.equipmentEditUploadPicComponent.fileList[0].response.data,
+      picture:this.equipmentEditUploadPicComponent.fileList[0]?.response?.data,
       name: this.equipmentEditForm.get('name')?.value,
       code: this.equipmentEditForm.get('code')?.value,
-      isSelected:false,
-      asset: "",
-      customAttributes: "",
       dateOfProduction: this.dateOfProduction,
-      dateOfExpiration: this.equipmentEditForm.get('dateOfExpiration')?.value?.toISOString(),
-      dateOfFirstUse: this.equipmentEditForm.get('dateOfFirstUse')?.value?.toISOString(),
-      dateOfInstallation: this.equipmentEditForm.get('dateOfInstallation')?.value?.toISOString(),
-      description: this.equipmentEditForm.get('name')?.value,
-      enterprise: "",
-      equipmentGroup: this.selectedGroup?.name,
-      expireYears: this.equipmentEditForm.get('expireYears')?.value,
-      isAutoDispatch: 0,
-      isDelete: "0",
+      dateOfExpiration: this.dateOfExpiration,
+      dateOfFirstUse: this.dateOfFirstUse,
+      dateOfInstallation: this.dateOfInstallation,
+      description: this.equipmentEditForm.get('description')?.value,
+      expiresYears: this.equipmentEditForm.get('expiresYears')?.value,
       manufacturer: this.equipmentEditForm.get('manufacturer')?.value,
-      model: this.equipmentEditForm.get('model')?.value,
-      process: this.selectedProcess?.name,
-      productionLine: "",
-      responsible: this.selectedPerson?.name,
+      model: this.equipmentEditForm.get('equipmentModel')?.value,
       serialNumber: this.equipmentEditForm.get('serialNumber')?.value,
       specification: this.equipmentEditForm.get('specification')?.value,
+      equipmentGroup: this.selectedGroup?.name,
+      process: this.selectedProcess?.name,
+      station: this.selectedStation?.name,
+      workshop: this.selectedWorkshops?.name,
+      responsible: this.selectedPerson?.name,
       status: this.selectedStatus?.value,
+      isSelected:false,
+      isAutoDispatch: 0,
+      isDelete: "0",
+      customAttributes: "",
+      enterprise: "",
     };
   }
 
@@ -147,6 +150,22 @@ export class EquipmentEditComponent implements OnInit {
     this.equipmentEditForm.setControl('code', new FormControl(selectedEquipment.code));
     this.equipmentEditForm.setControl('name', new FormControl(selectedEquipment.name));
     this.equipmentEditForm.setControl('dateOfProduction', new FormControl(selectedEquipment.dateOfProduction));
+    this.equipmentEditForm.setControl('dateOfExpiration', new FormControl(selectedEquipment.dateOfExpiration));
+    this.equipmentEditForm.setControl('dateOfFirstUse', new FormControl(selectedEquipment.dateOfFirstUse));
+    this.equipmentEditForm.setControl('dateOfInstallation', new FormControl(selectedEquipment.dateOfInstallation));
+    this.equipmentEditForm.setControl('description', new FormControl(selectedEquipment.description));
+    this.equipmentEditForm.setControl('expiresYears', new FormControl(selectedEquipment.expiresYears));
+    this.equipmentEditForm.setControl('manufacturer', new FormControl(selectedEquipment.manufacturer));
+    this.equipmentEditForm.setControl('equipmentModel', new FormControl(selectedEquipment.model));
+    this.equipmentEditForm.setControl('serialNumber', new FormControl(selectedEquipment.serialNumber));
+    this.equipmentEditForm.setControl('specification', new FormControl(selectedEquipment.specification));
+    this.equipmentEditForm.setControl('equipmentGroup', new FormControl(selectedEquipment.equipmentGroup));
+    this.equipmentEditForm.setControl('process', new FormControl(selectedEquipment.process));
+    this.equipmentEditForm.setControl('station', new FormControl(selectedEquipment.station));
+    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
+    this.equipmentEditForm.setControl('responsible', new FormControl(selectedEquipment.responsible));
+    this.equipmentEditForm.setControl('status', new FormControl(selectedEquipment.status));
+    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
 
   }
 

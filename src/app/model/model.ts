@@ -7,9 +7,9 @@ export interface Equipment {
   name: string;
   code: string;
   responsible: string;
-  productionLine: string;
-  process: string;
-  asset: string;
+  workshop: string;//车间
+  process: string;//工序
+  station: string;//工位
   equipmentGroup: string;
   description: string;
   isAutoDispatch: number;
@@ -22,7 +22,7 @@ export interface Equipment {
   dateOfInstallation: Date;
   dateOfFirstUse: Date;
   dateOfExpiration: Date;
-  expireYears: string;
+  expiresYears: string;
   customAttributes: string;
   isDelete: string;
   enterprise: string;
