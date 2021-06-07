@@ -19,7 +19,7 @@ export class EquipmentEditComponent implements OnInit {
   @Input() equipmentsComponent: EquipmentsComponent;
   @ViewChild('attributesTableComponent') attributesTableComponent!: EquipmentAttributesTableComponent;
   @ViewChild('equipmentParamsComponent') equipmentParamsComponent!: EquipmentParamsComponent;
-  @ViewChild('equipmentEditUploadPicComponent') equipmentEditUploadPicComponent!:EquipmentEditUploadPicComponent;
+  @ViewChild('equipmentEditUploadPicComponent') equipmentEditUploadPicComponent!: EquipmentEditUploadPicComponent;
   confirmModal?: NzModalRef;
   isVisible = false;
   isOkLoading = false;
@@ -27,11 +27,11 @@ export class EquipmentEditComponent implements OnInit {
   equipmentGroups = Array<EquipmentGroup>();
 
   //mock data
-  responsibilities = [{name: 'alan'}];
-  workshops = [{name: 'shop1'}];
-  areas = [{name: 'area1'}];
-  process = [{name: '焊接'}];
-  stations = [{name: '焊接'}];
+  responsibilities = Array<Person>();
+  productionLine = Array<Workshop>();
+  areas =Array<Area>();
+  process = Array<Process>();
+  asset =Array<Station>();
   status = [{name: '待投入'}];
 
   //选中的对象
@@ -44,14 +44,12 @@ export class EquipmentEditComponent implements OnInit {
   selectedStatus!: Status;
   selectedEquipment!: Equipment;
   productionDate!: Date;
-  expirationDate!:Date;
-  firstUseDate!:Date;
-  installationDate!:Date;
+  expirationDate!: Date;
+  firstUseDate!: Date;
+  installationDate!: Date;
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.fetchEquipmentGroups();
+    // this.getDropDowns();
     this.equipmentEditForm = this.fb.group({
       name: new FormControl(''),
       code: new FormControl(''),
@@ -62,8 +60,8 @@ export class EquipmentEditComponent implements OnInit {
       expiresYears: new FormControl(''),
       description: new FormControl(''),
       dateOfProduction: [null],
-      dateOfInstallation:  [null],
-      dateOfFirstUse:  [null],
+      dateOfInstallation: [null],
+      dateOfFirstUse: [null],
       dateOfExpiration: [null],
     });
   }
@@ -75,13 +73,6 @@ export class EquipmentEditComponent implements OnInit {
     this.equipmentsComponent = equipmentsComponent;
   }
 
-  fetchEquipmentGroups(): void {
-    const api = 'http://localhost:8080/equipment-groups';
-    this.equipmentService.getData(api).then((result: any) => {
-      this.equipmentGroups = result.data;
-    });
-  }
-
   saveEquipments(equipment: Equipment) {
     if (this.isEdit) {
       const api = 'http://localhost:8080/equipments/update';
@@ -91,7 +82,7 @@ export class EquipmentEditComponent implements OnInit {
         this.isOkLoading = false;
         this.equipmentsComponent.search('', '');
       })
-    }else{
+    } else {
       const api = 'http://localhost:8080/equipments';
       this.equipmentService.postData(api, equipment).then((result: any) => {
         console.log(result);
@@ -103,37 +94,8 @@ export class EquipmentEditComponent implements OnInit {
 
   }
 
-  buildEquipment(): Equipment {
-    return {
-      id: this.isEdit ? this.selectedEquipment.id : -1,
-      picture:this.equipmentEditUploadPicComponent.fileList[0]?.response?.data,
-      name: this.equipmentEditForm.get('name')?.value,
-      code: this.equipmentEditForm.get('code')?.value,
-      dateOfProduction: this.productionDate,
-      dateOfExpiration: this.expirationDate,
-      dateOfFirstUse: this.firstUseDate,
-      dateOfInstallation: this.installationDate,
-      description: this.equipmentEditForm.get('description')?.value,
-      expiresYears: this.equipmentEditForm.get('expiresYears')?.value,
-      manufacturer: this.equipmentEditForm.get('manufacturer')?.value,
-      model: this.equipmentEditForm.get('equipmentModel')?.value,
-      serialNumber: this.equipmentEditForm.get('serialNumber')?.value,
-      specification: this.equipmentEditForm.get('specification')?.value,
-      equipmentGroup: this.selectedGroup?.name,
-      process: this.selectedProcess?.name,
-      station: this.selectedStation?.name,
-      workshop: this.selectedWorkshops?.name,
-      responsible: this.selectedPerson?.name,
-      status: this.selectedStatus?.value,
-      isSelected:false,
-      isAutoDispatch: 0,
-      isDelete: "0",
-      customAttributes: "",
-      enterprise: "",
-    };
-  }
-
   showModal(): void {
+    this.getDropDowns();
     this.selectedEquipment = this.equipmentsComponent.selectedEquipment;
     if (this.isEdit) {
       if (undefined === this.selectedEquipment) {
@@ -141,32 +103,16 @@ export class EquipmentEditComponent implements OnInit {
       }
       this.setupEquipment(this.selectedEquipment)
     }
-      this.isVisible = true;
-      console.log(this.equipmentsComponent.selectedEquipment);
-
+    this.isVisible = true;
+    console.log(this.equipmentsComponent.selectedEquipment);
   }
 
-  private setupEquipment(selectedEquipment: Equipment) {
-    this.equipmentEditForm.setControl('code', new FormControl(selectedEquipment.code));
-    this.equipmentEditForm.setControl('name', new FormControl(selectedEquipment.name));
-    this.equipmentEditForm.setControl('dateOfProduction', new FormControl(selectedEquipment.dateOfProduction));
-    this.equipmentEditForm.setControl('dateOfExpiration', new FormControl(selectedEquipment.dateOfExpiration));
-    this.equipmentEditForm.setControl('dateOfFirstUse', new FormControl(selectedEquipment.dateOfFirstUse));
-    this.equipmentEditForm.setControl('dateOfInstallation', new FormControl(selectedEquipment.dateOfInstallation));
-    this.equipmentEditForm.setControl('description', new FormControl(selectedEquipment.description));
-    this.equipmentEditForm.setControl('expiresYears', new FormControl(selectedEquipment.expiresYears));
-    this.equipmentEditForm.setControl('manufacturer', new FormControl(selectedEquipment.manufacturer));
-    this.equipmentEditForm.setControl('equipmentModel', new FormControl(selectedEquipment.model));
-    this.equipmentEditForm.setControl('serialNumber', new FormControl(selectedEquipment.serialNumber));
-    this.equipmentEditForm.setControl('specification', new FormControl(selectedEquipment.specification));
-    this.equipmentEditForm.setControl('equipmentGroup', new FormControl(selectedEquipment.equipmentGroup));
-    this.equipmentEditForm.setControl('process', new FormControl(selectedEquipment.process));
-    this.equipmentEditForm.setControl('station', new FormControl(selectedEquipment.station));
-    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
-    this.equipmentEditForm.setControl('responsible', new FormControl(selectedEquipment.responsible));
-    this.equipmentEditForm.setControl('status', new FormControl(selectedEquipment.status));
-    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
-
+  private getDropDowns() {
+    this.fetchEquipmentGroups();
+    this.fetchPersonnel();
+    this.fetchWorkshop();
+    this.fetchProcess();
+    this.fetchAsset();
   }
 
   handleOk(): void {
@@ -195,6 +141,95 @@ export class EquipmentEditComponent implements OnInit {
     this.clearSelectedData();
   }
 
-  clearSelectedData(): void{
+  clearSelectedData(): void {
+  }
+
+  fetchEquipmentGroups(): void {
+    const api = 'http://localhost:8080/equipment-groups';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.equipmentGroups = result.data;
+    });
+  }
+
+  fetchPersonnel(): void {
+    const api = 'http://localhost:8080/personnel/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.responsibilities = result.data;
+    })
+  }
+
+  fetchWorkshop(): void {
+    const api = 'http://localhost:8080/production-line/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.productionLine = result.data;
+    })
+  }
+
+  fetchProcess(): void {
+    const api = 'http://localhost:8080/process/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.process = result.data;
+    })
+  }
+
+  fetchAsset(): void {
+    const api = 'http://localhost:8080/asset/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.asset = result.data;
+    })
+  }
+
+  buildEquipment(): Equipment {
+    return {
+      id: this.isEdit ? this.selectedEquipment.id : -1,
+      picture: this.equipmentEditUploadPicComponent.fileList[0]?.response?.data,
+      name: this.equipmentEditForm.get('name')?.value,
+      code: this.equipmentEditForm.get('code')?.value,
+      dateOfProduction: this.productionDate,
+      dateOfExpiration: this.expirationDate,
+      dateOfFirstUse: this.firstUseDate,
+      dateOfInstallation: this.installationDate,
+      description: this.equipmentEditForm.get('description')?.value,
+      expiresYears: this.equipmentEditForm.get('expiresYears')?.value,
+      manufacturer: this.equipmentEditForm.get('manufacturer')?.value,
+      model: this.equipmentEditForm.get('equipmentModel')?.value,
+      serialNumber: this.equipmentEditForm.get('serialNumber')?.value,
+      specification: this.equipmentEditForm.get('specification')?.value,
+      equipmentGroup: this.selectedGroup?.name,
+      process: this.selectedProcess?.name,
+      station: this.selectedStation?.name,
+      workshop: this.selectedWorkshops?.name,
+      responsible: this.selectedPerson?.name,
+      status: this.selectedStatus?.value,
+      isSelected: false,
+      isAutoDispatch: 0,
+      isDelete: "0",
+      customAttributes: "",
+      enterprise: "",
+    };
+  }
+
+
+  private setupEquipment(selectedEquipment: Equipment) {
+    this.equipmentEditForm.setControl('code', new FormControl(selectedEquipment.code));
+    this.equipmentEditForm.setControl('name', new FormControl(selectedEquipment.name));
+    this.equipmentEditForm.setControl('dateOfProduction', new FormControl(selectedEquipment.dateOfProduction));
+    this.equipmentEditForm.setControl('dateOfExpiration', new FormControl(selectedEquipment.dateOfExpiration));
+    this.equipmentEditForm.setControl('dateOfFirstUse', new FormControl(selectedEquipment.dateOfFirstUse));
+    this.equipmentEditForm.setControl('dateOfInstallation', new FormControl(selectedEquipment.dateOfInstallation));
+    this.equipmentEditForm.setControl('description', new FormControl(selectedEquipment.description));
+    this.equipmentEditForm.setControl('expiresYears', new FormControl(selectedEquipment.expiresYears));
+    this.equipmentEditForm.setControl('manufacturer', new FormControl(selectedEquipment.manufacturer));
+    this.equipmentEditForm.setControl('equipmentModel', new FormControl(selectedEquipment.model));
+    this.equipmentEditForm.setControl('serialNumber', new FormControl(selectedEquipment.serialNumber));
+    this.equipmentEditForm.setControl('specification', new FormControl(selectedEquipment.specification));
+    this.equipmentEditForm.setControl('equipmentGroup', new FormControl(selectedEquipment.equipmentGroup));
+    this.equipmentEditForm.setControl('process', new FormControl(selectedEquipment.process));
+    this.equipmentEditForm.setControl('station', new FormControl(selectedEquipment.station));
+    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
+    this.equipmentEditForm.setControl('responsible', new FormControl(selectedEquipment.responsible));
+    this.equipmentEditForm.setControl('status', new FormControl(selectedEquipment.status));
+    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
+
   }
 }

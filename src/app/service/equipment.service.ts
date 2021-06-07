@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import axios from 'axios';
-import {EquipmentGroup} from '../model/model';
+import {EquipmentGroup, Person} from '../model/model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,12 +37,14 @@ export class EquipmentService {
     }))
   }
 
-  deleteData(api: string):any {
+  deleteData(api: string): any {
     console.log('deleting data');
     return new Promise((resolve => {
-      axios.delete(api).then((response)=>{
+      axios.delete(api).then((response) => {
         resolve(response);
       })
     }))
   }
+
+
 }

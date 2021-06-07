@@ -82,7 +82,7 @@
                 [ngModelOptions]="{ standalone: true }"
               >
                 <nz-option
-                  *ngFor="let item of workshops"
+                  *ngFor="let item of productionLine"
                   [nzLabel]="item.name"
                   [nzValue]="item.name"
                 >
@@ -144,7 +144,7 @@
                 [ngModelOptions]="{ standalone: true }"
               >
                 <nz-option
-                  *ngFor="let item of stations"
+                  *ngFor="let item of asset"
                   [nzLabel]="item.name"
                   [nzValue]="item.name"
                 >
