@@ -4,11 +4,11 @@ export interface Equipment {
   picture: string
   name: string;
   code: string;
-  responsible: string;
-  productionLine: string;//车间
-  process: string;//工序
-  asset: string;//工位
-  equipmentGroup: string;
+  responsible: Person;
+  productionLine: ProductionLine;//车间
+  process: Process;//工序
+  asset: Asset;//工位
+  equipmentGroup: EquipmentGroup;
   description: string;
   isAutoDispatch: number;
   status: string;

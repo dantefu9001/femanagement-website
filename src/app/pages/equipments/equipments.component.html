@@ -25,11 +25,11 @@
       <tr *ngFor="let data of equipmentTable.data" (click)="selectData(data)" [className]="data.isSelected?'selectedEquipment':''">
         <td>{{ data.code }}</td>
         <td>{{ data.name }}</td>
-        <td>{{ data.equipmentGroup }}</td>
-        <td>{{ data.responsible }}</td>
-        <td>{{ data.productionLine }}</td>
-        <td>{{ data.process }}</td>
-        <td>{{ data.asset }}</td>
+        <td>{{ data.equipmentGroup?.name }}</td>
+        <td>{{ data.responsible?.name }}</td>
+        <td>{{ data.productionLine?.name }}</td>
+        <td>{{ data.process?.name }}</td>
+        <td>{{ data.asset?.name }}</td>
         <td>{{ data.description }}</td>
         <td><span nz-checkbox [nzChecked]="data.isAutoDispatch==1" [nzDisabled]="true"></span></td>
         <td>{{ data.status }}</td>

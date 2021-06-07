@@ -4,7 +4,7 @@ import {EquipmentsComponent} from "../equipments.component";
 import {EquipmentAttributesTableComponent} from "./equipment-attributes-table/equipment-attributes-table.component";
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {EquipmentParamsComponent} from "../equipment-params/equipment-params.component";
-import {Area, Equipment, EquipmentGroup, Person, Process, Asset, Status, ProductionLine} from "../../../model/model";
+import {Area, Asset, Equipment, EquipmentGroup, Person, Process, ProductionLine, Status} from "../../../model/model";
 import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentEditUploadPicComponent} from "./equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 
@@ -32,7 +32,12 @@ export class EquipmentEditComponent implements OnInit {
   areas = Array<Area>();
   process = Array<Process>();
   asset = Array<Asset>();
-  status = [{name: '待投入'}];
+  status: Array<Status> = [
+    {
+      id: '1',
+      value: '待投入'
+    }
+  ];
 
   //选中的对象
   selectedGroup!: EquipmentGroup;
@@ -194,11 +199,11 @@ export class EquipmentEditComponent implements OnInit {
       model: this.equipmentEditForm.get('equipmentModel')?.value,
       serialNumber: this.equipmentEditForm.get('serialNumber')?.value,
       specification: this.equipmentEditForm.get('specification')?.value,
-      equipmentGroup: this.selectedGroup?.name,
-      process: this.selectedProcess?.id,
-      asset: this.selectedAsset?.id,
-      productionLine: this.selectedProductionLine?.id,
-      responsible: this.selectedPerson?.id,
+      equipmentGroup: this.selectedGroup,
+      process: this.selectedProcess,
+      asset: this.selectedAsset,
+      productionLine: this.selectedProductionLine,
+      responsible: this.selectedPerson,
       status: this.selectedStatus?.value,
       isSelected: false,
       isAutoDispatch: 0,
@@ -223,14 +228,11 @@ export class EquipmentEditComponent implements OnInit {
     this.equipmentEditForm.setControl('serialNumber', new FormControl(selectedEquipment.serialNumber));
     this.equipmentEditForm.setControl('specification', new FormControl(selectedEquipment.specification));
     this.equipmentEditForm.setControl('equipmentGroup', new FormControl(selectedEquipment.equipmentGroup));
-    this.equipmentEditForm.setControl('process', new FormControl(this.process.find(a => a.id == selectedEquipment.process)));
-    this.equipmentEditForm.setControl('station', new FormControl(this.asset.find(a => a.id == selectedEquipment.asset)));
-    // this.equipmentEditForm.setControl('workshop', new FormControl(this.productionLine.find(a=>a.id==selectedEquipment.productionLine)));
-    this.selectedProductionLine = this.productionLine.find(a => a.id == selectedEquipment.productionLine)!;
-    this.selectedPerson = this.responsibilities.find(p => p.id == selectedEquipment.responsible)!;
-    this.selectedProcess = this.process.find(p => p.id == selectedEquipment.process)!;
-    this.selectedAsset = this.asset.find(a => a.id == selectedEquipment.asset)!
-    this.equipmentEditForm.setControl('responsible', new FormControl(this.responsibilities.find(a => a.id == selectedEquipment.responsible)));
-    this.equipmentEditForm.setControl('status', new FormControl(selectedEquipment.status));
+    this.selectedGroup = this.equipmentGroups.find(g => g.id == selectedEquipment.equipmentGroup?.id)!;
+    this.selectedProductionLine = this.productionLine.find(a => a.id == selectedEquipment.productionLine?.id)!;
+    this.selectedPerson = this.responsibilities.find(p => p.id == selectedEquipment.responsible?.id)!;
+    this.selectedProcess = this.process.find(p => p.id == selectedEquipment.process?.id)!;
+    this.selectedAsset = this.asset.find(a => a.id == selectedEquipment.asset?.id)!
+    this.selectedStatus = this.status.find(s => s.id == selectedEquipment.status)!;
   }
 }

@@ -26,7 +26,7 @@ export class EquipmentTagComponent {
     this.selectedEquipment = this.equipmentsComponent.selectedEquipment;
     this.name = this.selectedEquipment.name!;
     this.model = this.selectedEquipment.specification + this.selectedEquipment.model;
-    this.location = this.selectedEquipment.productionLine! + this.selectedEquipment.process!;
+    this.location = this.selectedEquipment.productionLine!.name + this.selectedEquipment.process!.name;
     this.activateTime = this.selectedEquipment.dateOfFirstUse;
     this.equipmentCode = this.selectedEquipment.code;
     this.qrCodeInfo = JSON.stringify({
