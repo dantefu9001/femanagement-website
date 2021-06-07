@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Area, Person, Process, Workshop} from "../../../../model/model";
+import {Area, Person, Process, ProductionLine} from "../../../../model/model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
@@ -11,8 +11,8 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit{
   isOkLoading = false;
   selectedPerson!: Person;
   personnel!: Array<Person>;
-  selectedWorkshops!: Workshop;
-  workshops!: Array<Workshop>;
+  selectedWorkshops!: ProductionLine;
+  workshops!: Array<ProductionLine>;
   selectedArea!: Area;
   areas!: Array<Area>;
   selectedProcess!: Process;

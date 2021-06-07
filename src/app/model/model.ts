@@ -5,9 +5,9 @@ export interface Equipment {
   name: string;
   code: string;
   responsible: string;
-  workshop: string;//车间
+  productionLine: string;//车间
   process: string;//工序
-  station: string;//工位
+  asset: string;//工位
   equipmentGroup: string;
   description: string;
   isAutoDispatch: number;
@@ -44,7 +44,7 @@ export interface Person {
   name: string;
 }
 
-export interface Workshop {
+export interface ProductionLine {
   id: string,
   name: string;
 }
@@ -59,7 +59,7 @@ export interface Process {
   name: string;
 }
 
-export interface Station {
+export interface Asset {
   id: string;
   name: string;
 }

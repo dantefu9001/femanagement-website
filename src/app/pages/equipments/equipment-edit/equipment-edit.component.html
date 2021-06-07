@@ -64,7 +64,7 @@
                 <nz-option
                   *ngFor="let item of responsibilities"
                   [nzLabel]="item.name"
-                  [nzValue]="item.name"
+                  [nzValue]="item"
                 >
                   <ng-template #tpl>
                     {{ item }}
@@ -78,13 +78,13 @@
             <nz-form-control>
               <nz-select
                 name="workshops"
-                [(ngModel)]="selectedWorkshops"
+                [(ngModel)]="selectedProductionLine"
                 [ngModelOptions]="{ standalone: true }"
               >
                 <nz-option
                   *ngFor="let item of productionLine"
                   [nzLabel]="item.name"
-                  [nzValue]="item.name"
+                  [nzValue]="item"
                 >
                   <ng-template #tpl>
                     {{ item }}
@@ -104,7 +104,7 @@
                 <nz-option
                   *ngFor="let item of areas"
                   [nzLabel]="item.name"
-                  [nzValue]="item.name"
+                  [nzValue]="item"
                 >
                   <ng-template #tpl>
                     {{ item }}
@@ -126,7 +126,7 @@
                 <nz-option
                   *ngFor="let item of process"
                   [nzLabel]="item.name"
-                  [nzValue]="item.name"
+                  [nzValue]="item"
                 >
                   <ng-template #tpl>
                     {{ item }}
@@ -140,13 +140,13 @@
             <nz-form-control>
               <nz-select
                 name="stations"
-                [(ngModel)]="selectedStation"
+                [(ngModel)]="selectedAsset"
                 [ngModelOptions]="{ standalone: true }"
               >
                 <nz-option
                   *ngFor="let item of asset"
                   [nzLabel]="item.name"
-                  [nzValue]="item.name"
+                  [nzValue]="item"
                 >
                   <ng-template #tpl>
                     {{ item }}

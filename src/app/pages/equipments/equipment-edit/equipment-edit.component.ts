@@ -4,7 +4,7 @@ import {EquipmentsComponent} from "../equipments.component";
 import {EquipmentAttributesTableComponent} from "./equipment-attributes-table/equipment-attributes-table.component";
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {EquipmentParamsComponent} from "../equipment-params/equipment-params.component";
-import {Area, Equipment, EquipmentGroup, Person, Process, Station, Status, Workshop} from "../../../model/model";
+import {Area, Equipment, EquipmentGroup, Person, Process, Asset, Status, ProductionLine} from "../../../model/model";
 import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentEditUploadPicComponent} from "./equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 
@@ -28,19 +28,19 @@ export class EquipmentEditComponent implements OnInit {
 
   //mock data
   responsibilities = Array<Person>();
-  productionLine = Array<Workshop>();
-  areas =Array<Area>();
+  productionLine = Array<ProductionLine>();
+  areas = Array<Area>();
   process = Array<Process>();
-  asset =Array<Station>();
+  asset = Array<Asset>();
   status = [{name: '待投入'}];
 
   //选中的对象
   selectedGroup!: EquipmentGroup;
   selectedPerson!: Person;
-  selectedWorkshops!: Workshop;
+  selectedProductionLine!: ProductionLine;
   selectedArea!: Area;
   selectedProcess!: Process;
-  selectedStation!: Station;
+  selectedAsset!: Asset;
   selectedStatus!: Status;
   selectedEquipment!: Equipment;
   productionDate!: Date;
@@ -49,7 +49,7 @@ export class EquipmentEditComponent implements OnInit {
   installationDate!: Date;
 
   ngOnInit(): void {
-    // this.getDropDowns();
+    this.getDropDowns();
     this.equipmentEditForm = this.fb.group({
       name: new FormControl(''),
       code: new FormControl(''),
@@ -95,7 +95,6 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   showModal(): void {
-    this.getDropDowns();
     this.selectedEquipment = this.equipmentsComponent.selectedEquipment;
     if (this.isEdit) {
       if (undefined === this.selectedEquipment) {
@@ -196,10 +195,10 @@ export class EquipmentEditComponent implements OnInit {
       serialNumber: this.equipmentEditForm.get('serialNumber')?.value,
       specification: this.equipmentEditForm.get('specification')?.value,
       equipmentGroup: this.selectedGroup?.name,
-      process: this.selectedProcess?.name,
-      station: this.selectedStation?.name,
-      workshop: this.selectedWorkshops?.name,
-      responsible: this.selectedPerson?.name,
+      process: this.selectedProcess?.id,
+      asset: this.selectedAsset?.id,
+      productionLine: this.selectedProductionLine?.id,
+      responsible: this.selectedPerson?.id,
       status: this.selectedStatus?.value,
       isSelected: false,
       isAutoDispatch: 0,
@@ -224,12 +223,14 @@ export class EquipmentEditComponent implements OnInit {
     this.equipmentEditForm.setControl('serialNumber', new FormControl(selectedEquipment.serialNumber));
     this.equipmentEditForm.setControl('specification', new FormControl(selectedEquipment.specification));
     this.equipmentEditForm.setControl('equipmentGroup', new FormControl(selectedEquipment.equipmentGroup));
-    this.equipmentEditForm.setControl('process', new FormControl(selectedEquipment.process));
-    this.equipmentEditForm.setControl('station', new FormControl(selectedEquipment.station));
-    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
-    this.equipmentEditForm.setControl('responsible', new FormControl(selectedEquipment.responsible));
+    this.equipmentEditForm.setControl('process', new FormControl(this.process.find(a => a.id == selectedEquipment.process)));
+    this.equipmentEditForm.setControl('station', new FormControl(this.asset.find(a => a.id == selectedEquipment.asset)));
+    // this.equipmentEditForm.setControl('workshop', new FormControl(this.productionLine.find(a=>a.id==selectedEquipment.productionLine)));
+    this.selectedProductionLine = this.productionLine.find(a => a.id == selectedEquipment.productionLine)!;
+    this.selectedPerson = this.responsibilities.find(p => p.id == selectedEquipment.responsible)!;
+    this.selectedProcess = this.process.find(p => p.id == selectedEquipment.process)!;
+    this.selectedAsset = this.asset.find(a => a.id == selectedEquipment.asset)!
+    this.equipmentEditForm.setControl('responsible', new FormControl(this.responsibilities.find(a => a.id == selectedEquipment.responsible)));
     this.equipmentEditForm.setControl('status', new FormControl(selectedEquipment.status));
-    this.equipmentEditForm.setControl('workshop', new FormControl(selectedEquipment.workshop));
-
   }
 }
