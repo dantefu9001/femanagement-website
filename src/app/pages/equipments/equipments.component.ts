@@ -36,8 +36,8 @@ export class EquipmentsComponent implements OnInit {
       console.log('no data');
     } else {
       console.log('id:', this.idOfSelectedRow);
-      api+=this.idOfSelectedRow
-      this.equipmentService.deleteData(api).then((result:any)=>{
+      api += this.idOfSelectedRow
+      this.equipmentService.deleteData(api).then((result: any) => {
         this.search('', '');
       })
     }
@@ -49,7 +49,11 @@ export class EquipmentsComponent implements OnInit {
     if (this.selectedEquipment !== undefined && data.id != this.selectedEquipment.id) {
       this.selectedEquipment.isSelected = false;
     }
-    this.selectedEquipment = data;
     data.isSelected = !data.isSelected;
+    if (data.isSelected) {
+      this.selectedEquipment = data;
+    }else {
+      this.selectedEquipment = undefined!
+    }
   }
 }

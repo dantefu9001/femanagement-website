@@ -4,7 +4,17 @@ import {EquipmentsComponent} from "../equipments.component";
 import {EquipmentAttributesTableComponent} from "./equipment-attributes-table/equipment-attributes-table.component";
 import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
 import {EquipmentParamsComponent} from "../equipment-params/equipment-params.component";
-import {Area, Asset, Equipment, EquipmentGroup, Person, Process, ProductionLine, Status} from "../../../model/model";
+import {
+  Area,
+  Asset,
+  Equipment,
+  EquipmentGroup,
+  Person,
+  Process,
+  ProductionLine,
+  SelfDefinedAttribute,
+  Status
+} from "../../../model/model";
 import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentEditUploadPicComponent} from "./equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 
@@ -25,8 +35,6 @@ export class EquipmentEditComponent implements OnInit {
   isOkLoading = false;
   equipmentEditForm!: FormGroup
   equipmentGroups = Array<EquipmentGroup>();
-
-  //mock data
   responsibilities = Array<Person>();
   productionLine = Array<ProductionLine>();
   areas = Array<Area>();
@@ -52,6 +60,9 @@ export class EquipmentEditComponent implements OnInit {
   expirationDate!: Date;
   firstUseDate!: Date;
   installationDate!: Date;
+
+  //自定义属性:
+  selfDefinedAttributes!: SelfDefinedAttribute[] ;
 
   ngOnInit(): void {
     this.getDropDowns();
@@ -208,7 +219,7 @@ export class EquipmentEditComponent implements OnInit {
       isSelected: false,
       isAutoDispatch: 0,
       isDelete: "0",
-      customAttributes: "",
+      customAttributes: JSON.stringify(this.attributesTableComponent.selfDefinedAttributes),
       enterprise: "",
     };
   }
@@ -234,5 +245,6 @@ export class EquipmentEditComponent implements OnInit {
     this.selectedProcess = this.process.find(p => p.id == selectedEquipment.process?.id)!;
     this.selectedAsset = this.asset.find(a => a.id == selectedEquipment.asset?.id)!
     this.selectedStatus = this.status.find(s => s.id == selectedEquipment.status)!;
+    this.attributesTableComponent.selfDefinedAttributes = JSON.parse(selectedEquipment.customAttributes) as SelfDefinedAttribute[]
   }
 }
