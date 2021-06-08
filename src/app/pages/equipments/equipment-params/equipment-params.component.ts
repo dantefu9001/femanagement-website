@@ -2,6 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {EquipmentParamsTableComponent, Param} from "./equipment-params-table/equipment-params-table.component";
+import {EquipmentsComponent} from "../equipments.component";
+import {EquipmentService} from "../../../service/equipment.service";
 
 @Component({
   selector: 'app-equipment-params',
@@ -11,15 +13,16 @@ import {EquipmentParamsTableComponent, Param} from "./equipment-params-table/equ
 })
 export class EquipmentParamsComponent implements OnInit {
   @Input() isEdit = false;
-  @Input() equipmentId! :number;
+  @Input() equipmentsComponent: EquipmentsComponent
   @ViewChild("equipmentParamsTableComponent") equipmentParamsTableComponent!: EquipmentParamsTableComponent;
+
+  equipmentId!: number;
   equipmentParamTypes: string[] = [
     '振动', '电压', '电流'
   ];
   isVisible = false;
   isOkLoading = false;
   paramsForm!: FormGroup;
-  counter = 0;
   selectedEquipmentType: string = this.equipmentParamTypes[0];
 
   ngOnInit(): void {
@@ -33,13 +36,15 @@ export class EquipmentParamsComponent implements OnInit {
     });
   }
 
-  constructor(public fb: FormBuilder) {
+  constructor(public fb: FormBuilder, equipmentsComponent: EquipmentsComponent,
+              public equipmentService: EquipmentService) {
+    this.equipmentsComponent = equipmentsComponent;
   }
 
   handleOk(): void {
-    //save
     this.isVisible = false;
   }
+
 
   handleCancel(): void {
     this.isVisible = false;
@@ -47,23 +52,36 @@ export class EquipmentParamsComponent implements OnInit {
   }
 
   showModal(): void {
-    this.isVisible = true;
+    if (undefined !== this.equipmentsComponent.selectedEquipment) {
+      this.equipmentId = this.equipmentsComponent.selectedEquipment.id;
+      this.equipmentParamsTableComponent.search(this.equipmentId);
+      this.isVisible = true;
+    } else {
+      alert("请选择设备")
+    }
   }
 
   addParam() {
     let param = {
-      id:this.counter ++,
-      equipmentId:this.equipmentId,
+      id:  this.equipmentParamsTableComponent.listOfData.length,
+      equipmentId: this.equipmentsComponent.selectedEquipment.id,
       code: this.paramsForm.get('code')?.value,
       param: this.paramsForm.get('param')?.value,
       type: this.paramsForm.get('type')?.value,
       max: this.paramsForm.get('max')?.value,
-      min:this.paramsForm.get('min')?.value,
-      unit:this.paramsForm.get('unit')?.value,
-      defaultValue:'',
-      disabled:false
+      min: this.paramsForm.get('min')?.value,
+      unit: this.paramsForm.get('unit')?.value,
+      defaultValue: '',
+      disabled: false
     } as Param
-    this.equipmentParamsTableComponent.addRow(param)
+    this.saveParams(param);
+  }
+
+  private saveParams(param: Param) {
+    const api = 'http://localhost:8080/equipment-params';
+    this.equipmentService.postData(api, param).then(() => {
+      this.equipmentParamsTableComponent.search(this.equipmentId);
+    });
   }
 
   resetForm() {

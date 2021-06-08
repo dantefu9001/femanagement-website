@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {EquipmentService} from "../../../../service/equipment.service";
 
 export interface Param {
   id: number;
@@ -41,7 +42,7 @@ export class EquipmentParamsTableComponent implements OnInit {
 
   refreshCheckedStatus(): void {
     const listOfEnabledData = this.listOfCurrentPageData.filter(({disabled}) => !disabled);
-    this.checked =this.listOfData.length>0 && listOfEnabledData.every(({id}) => this.setOfCheckedId.has(id));
+    this.checked = this.listOfData.length > 0 && listOfEnabledData.every(({id}) => this.setOfCheckedId.has(id));
     this.indeterminate = listOfEnabledData.some(({id}) => this.setOfCheckedId.has(id)) && !this.checked;
   }
 
@@ -55,18 +56,32 @@ export class EquipmentParamsTableComponent implements OnInit {
     this.refreshCheckedStatus();
   }
 
-  addRow(param: Param) {
-    this.listOfData = [
-      ...this.listOfData,
-      param
-    ];
-  }
-
   deleteRows(): void {
-    this.listOfData = this.listOfData.filter(data => !this.setOfCheckedId.has(data.id));
-    this.checked = false;
+    const api = 'http://localhost:8080/equipment-params/delete';
+    let params = {
+      "ids":Array.from(this.setOfCheckedId),
+      "equipmentId": this.equipmentId
+    }
+    this.equipmentService.postData(api, params).then(() => {
+      this.search(this.equipmentId);
+      this.checked = false;
+    })
   }
 
   ngOnInit(): void {
+  }
+
+  constructor(public equipmentService: EquipmentService) {
+  }
+
+  search(equipmentId: number): void {
+    let param = {
+      "equipmentId":equipmentId
+    }
+    const api = 'http://localhost:8080/equipment-params/list';
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+      this.listOfData = result.data;
+      this.checked=false;
+    })
   }
 }

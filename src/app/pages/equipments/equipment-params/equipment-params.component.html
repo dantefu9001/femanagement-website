@@ -4,6 +4,7 @@
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="参数配置"
+  [nzOkText]="'保存'"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzOkLoading]="isOkLoading"

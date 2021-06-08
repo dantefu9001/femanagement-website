@@ -1,8 +1,7 @@
 <button class="edit-button" nz-button nzType="primary" (click)="showModal()" style="margin-left: 8px">
   {{title}}
 </button>
-<app-equipment-params [isEdit]="isEdit" #equipmentParamsComponent
-                      [equipmentId]="selectedEquipment?selectedEquipment.id:-1"></app-equipment-params>
+<app-equipment-params [isEdit]="isEdit" #equipmentParamsComponent></app-equipment-params>
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="{{title}}设备"

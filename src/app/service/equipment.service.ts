@@ -46,5 +46,13 @@ export class EquipmentService {
     }))
   }
 
+  deleteDataWithParams(api: string, params: any): any {
+    console.log('deleting data');
+    return new Promise((resolve => {
+      axios.delete(api, params).then((response) => {
+        resolve(response);
+      })
+    }))
+  }
 
 }
