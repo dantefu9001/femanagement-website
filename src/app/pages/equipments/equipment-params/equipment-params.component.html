@@ -8,7 +8,7 @@
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzOkLoading]="isOkLoading"
-  [nzWidth]="732"
+  [nzWidth]="700"
 >
 
   <form nz-form [formGroup]="paramsForm">
@@ -70,7 +70,8 @@
           </nz-form-control>
         </nz-form-item>
       </nz-row>
+      <app-equipment-params-table #equipmentParamsTableComponent [equipmentId]="equipmentId"
+                                  [onIndexPage]="false"></app-equipment-params-table>
     </div>
-    <app-equipment-params-table #equipmentParamsTableComponent [equipmentId]="equipmentId"></app-equipment-params-table>
   </form>
 </nz-modal>

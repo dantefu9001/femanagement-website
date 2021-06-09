@@ -1,12 +1,14 @@
 <h4>设备管理列表</h4>
 <nz-layout class="equipment-management">
-<nz-sider class="equipment-group" nzTheme="light" >
-  <app-equipment-group></app-equipment-group>
-</nz-sider>
-<div>
-  <app-equipment-search></app-equipment-search>
-  <nz-table #equipmentTable nzSize="middle" [nzData]="equipments">
-    <thead>
+  <nz-sider class="equipment-group" nzTheme="light">
+    <app-equipment-group></app-equipment-group>
+  </nz-sider>
+  <div style="width: 95%;margin-right: 4px">
+    <app-equipment-search></app-equipment-search>
+    <nz-table #equipmentTable [nzScroll]="scrollJson"
+              nzShowSizeChanger
+              nzBordered="true" nzSize="middle" [nzData]="equipments" style="margin-bottom:10px; height: auto;">
+      <thead>
       <tr>
         <th>编号</th>
         <th>名称</th>
@@ -20,9 +22,10 @@
         <th>状态</th>
 
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of equipmentTable.data" (click)="selectData(data)" [className]="data.isSelected?'selectedEquipment':''">
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of equipmentTable.data" (click)="selectData(data)"
+          [className]="data.isSelected?'selectedEquipment':''">
         <td>{{ data.code }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.equipmentGroup?.name }}</td>
@@ -35,7 +38,12 @@
         <td>{{ data.status }}</td>
 
       </tr>
-    </tbody>
-  </nz-table>
-</div>
+      </tbody>
+    </nz-table>
+    <h4>{{PARAM_TEXT}}</h4>
+    <app-equipment-params-table #equipmentParamsTableComponent
+                                [onIndexPage]="true" style="width: auto;height: 270px;">
+
+    </app-equipment-params-table>
+  </div>
 </nz-layout>

@@ -20,12 +20,16 @@ export interface Param {
   styleUrls: ['./equipment-params-table.component.scss']
 })
 export class EquipmentParamsTableComponent implements OnInit {
+  @Input() onIndexPage = false;
   @Input() equipmentId!: number;
   checked = false;
   indeterminate = false;
   listOfData: Array<Param> = [];
   listOfCurrentPageData: ReadonlyArray<Param> = [];
   setOfCheckedId = new Set<number>();
+  scrollJson = {
+    y:"110px"
+  };
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {

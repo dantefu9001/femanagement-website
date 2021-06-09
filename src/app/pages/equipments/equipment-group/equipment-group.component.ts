@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { EquipmentGroup } from '../../../model/model';
-import { EquipmentService } from '../../../service/equipment.service';
+import {Component, OnInit} from '@angular/core';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {EquipmentGroup} from '../../../model/model';
+import {EquipmentService} from '../../../service/equipment.service';
 
 @Component({
   selector: 'app-equipment-group',
   templateUrl: './equipment-group.component.html',
+  styleUrls: ['./equipment-group.component.scss']
 })
 export class EquipmentGroupComponent implements OnInit {
   equipmentGroups = Array<EquipmentGroup>();
@@ -13,7 +14,8 @@ export class EquipmentGroupComponent implements OnInit {
   constructor(
     public msg: NzMessageService,
     public equipmentService: EquipmentService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.fetchEquipmentGroups();

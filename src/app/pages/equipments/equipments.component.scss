@@ -1,15 +1,32 @@
+nz-layout {
+  background-color: white;
+}
 
-      h4 {
-        margin-bottom: 16px;
-      }
-    .equipment-group{
-      margin-right: 10px;
-    }
+h4 {
+  margin-bottom: 16px;
+}
 
-    .selectedEquipment{
-      background-color: cadetblue;
-    }
+.equipment-group {
+  margin-right: 10px;
+}
 
-    button {
-      margin-right: 8px;
-    }
+.selectedEquipment {
+  background-color: cadetblue;
+}
+
+button {
+  margin-right: 8px;
+}
+
+.equipment-management {
+  width: auto;
+}
+
+div nz-table {
+  height: 1000px;
+}
+
+nz-pagination {
+  width: auto;
+  background-color: white;
+}

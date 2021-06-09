@@ -1,24 +1,23 @@
 <div class="send-request">
-  <button nz-button nzType="primary" [disabled]="setOfCheckedId.size === 0" nzLoading="loading" (click)="deleteRows()">
+  <button nz-button nzType="primary" [hidden]="onIndexPage" [disabled]="setOfCheckedId.size === 0" nzLoading="loading" (click)="deleteRows()">
     移除
   </button>
 </div>
-<nz-table style="width: 110%;table-layout: auto"
+<nz-table style="width: 120%"
           #rowSelectionTable
-          nzShowPagination
-          nzShowSizeChanger
           [nzData]="listOfData"
           (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+          [nzScroll]="scrollJson"
 >
-  <thead>
+  <thead style="width: auto">
   <tr>
-    <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
+    <th [nzDisabled]="onIndexPage" [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
     <th>编号</th>
     <th>参数</th>
     <th>类型</th>
     <th>上限</th>
     <th>下限</th>
-    <th>默认值</th>
+    <th [nzBreakWord]="false">默认值</th>
     <th>单位</th>
   </tr>
   </thead>
@@ -26,7 +25,7 @@
   <tr *ngFor="let data of rowSelectionTable.data">
     <td
       [nzChecked]="setOfCheckedId.has(data.id)"
-      [nzDisabled]="data.disabled"
+      [nzDisabled]="onIndexPage"
       (nzCheckedChange)="onItemChecked(data.id, $event)"
     ></td>
     <td>{{ data.code }}</td>

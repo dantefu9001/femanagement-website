@@ -11,7 +11,6 @@ export class EquipmentService {
   }
 
   getDataWithParams(api: string, args: any): any {
-    console.log('fetching equipments');
     return new Promise((resolve) => {
       axios.get(api, {params: args}).then((response) => {
         resolve(response);
@@ -20,7 +19,6 @@ export class EquipmentService {
   }
 
   getData(api: string): any {
-    console.log('fetching equipments');
     return new Promise((resolve) => {
       axios.get(api).then((response) => {
         resolve(response);
@@ -29,7 +27,6 @@ export class EquipmentService {
   }
 
   postData(api: string, arg: any): any {
-    console.log('posting data' + arg);
     return new Promise((resolve => {
       axios.post(api, arg).then((response) => {
         resolve(response);
@@ -38,21 +35,10 @@ export class EquipmentService {
   }
 
   deleteData(api: string): any {
-    console.log('deleting data');
     return new Promise((resolve => {
       axios.delete(api).then((response) => {
         resolve(response);
       })
     }))
   }
-
-  deleteDataWithParams(api: string, params: any): any {
-    console.log('deleting data');
-    return new Promise((resolve => {
-      axios.delete(api, params).then((response) => {
-        resolve(response);
-      })
-    }))
-  }
-
 }

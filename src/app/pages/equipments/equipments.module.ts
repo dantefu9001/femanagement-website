@@ -60,7 +60,8 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     NzIconModule,
   ],
   providers: [
-    EquipmentGroupComponent
+    EquipmentGroupComponent,
+    EquipmentParamsTableComponent
   ]
 })
 export class EquipmentsModule {
