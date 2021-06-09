@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
+import {Component} from '@angular/core';
+import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
 import {getBase64} from "../../../../common/utils";
 
 @Component({
@@ -8,17 +8,22 @@ import {getBase64} from "../../../../common/utils";
   styleUrls: ['./equipment-edit-upload-pic.component.scss']
 })
 export class EquipmentEditUploadPicComponent {
-  fileList: NzUploadFile[] = [
 
-  ];
-  previewImage: string | undefined = '';
-  previewVisible = false;
+  url!: string;
+  loading = false;
 
-  handlePreview = async (file: NzUploadFile) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj!);
+  handleChange(info: { file: NzUploadFile }) {
+    switch (info.file.status) {
+      case 'uploading':
+        this.loading = true;
+        break;
+      case 'done':
+        this.loading = false;
+        this.url = "http://localhost:8080/equipments/pic/" + info.file.response.data;
+        break;
+      case 'error':
+        this.loading = false;
+        break;
     }
-    this.previewImage = file.url || file.preview;
-    this.previewVisible = true;
-  };
+  }
 }

@@ -25,6 +25,7 @@ import {NzUploadModule} from "ng-zorro-antd/upload";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {QRCodeModule} from "angular2-qrcode";
 import { EquipmentTagComponent } from './equipment-tag/equipment-tag.component';
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { EquipmentTagComponent } from './equipment-tag/equipment-tag.component';
     NzUploadModule,
     NzCheckboxModule,
     QRCodeModule,
+    NzIconModule,
   ],
   providers: [
     EquipmentGroupComponent

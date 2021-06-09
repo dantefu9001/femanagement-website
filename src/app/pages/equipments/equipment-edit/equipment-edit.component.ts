@@ -197,7 +197,7 @@ export class EquipmentEditComponent implements OnInit {
   buildEquipment(): Equipment {
     return {
       id: this.isEdit ? this.selectedEquipment.id : -1,
-      picture: this.equipmentEditUploadPicComponent.fileList[0]?.response?.data,
+      picture: this.equipmentEditUploadPicComponent.url!,
       name: this.equipmentEditForm.get('name')?.value,
       code: this.equipmentEditForm.get('code')?.value,
       dateOfProduction: this.productionDate,
@@ -246,5 +246,6 @@ export class EquipmentEditComponent implements OnInit {
     this.selectedAsset = this.asset.find(a => a.id == selectedEquipment.asset?.id)!
     this.selectedStatus = this.status.find(s => s.id == selectedEquipment.status)!;
     this.attributesTableComponent.selfDefinedAttributes = JSON.parse(selectedEquipment.customAttributes) as SelfDefinedAttribute[]
+    this.equipmentEditUploadPicComponent.url = this.selectedEquipment.picture!;
   }
 }
