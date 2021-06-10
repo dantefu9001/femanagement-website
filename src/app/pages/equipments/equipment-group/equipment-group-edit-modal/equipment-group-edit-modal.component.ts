@@ -6,7 +6,8 @@ import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd/dropd
 
 @Component({
   selector: 'app-equipment-group-edit-modal',
-  templateUrl: './equipment-group-edit-modal.component.html'
+  templateUrl: './equipment-group-edit-modal.component.html',
+  styleUrls: ['./equipment-group-edit-modal.component.scss']
 })
 export class EquipmentGroupEditModalComponent implements OnInit {
   isVisible = false;
@@ -19,6 +20,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
 
 
   showModal(editType: string): void {
+    this.editType = editType;
     switch (editType) {
       case 'add':
         this.modalString = '新增'
@@ -78,6 +80,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
       name: this.groupEditForm.get('name')?.value
     }
     this.equipmentService.postData(api, param).then((result: any) => {
+      this.getGroups();
       this.isOkLoading = false;
       this.isVisible = false;
     });
@@ -90,6 +93,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
       name: this.groupEditForm.get('name')?.value
     }
     this.equipmentService.postData(api, param).then((result: any) => {
+      this.getGroups();
       this.isOkLoading = false;
       this.isVisible = false;
     });
@@ -101,6 +105,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
       id: this.selectedGroup?.id
     }
     this.equipmentService.postData(api, param).then((result: any) => {
+      this.getGroups();
       this.isOkLoading = false;
       this.isVisible = false;
     });
