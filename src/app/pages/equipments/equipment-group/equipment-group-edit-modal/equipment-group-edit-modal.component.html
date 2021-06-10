@@ -1,0 +1,23 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="设备组编辑"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+  [nzOkText]="modalString"
+>
+  <form nz-form [formGroup]="groupEditForm">
+    <nz-form-item>
+      <nz-form-label [hidden]="editType=='delete'">名称</nz-form-label>
+      <nz-form-control>
+        <h3 [hidden]="editType!='delete'">是否删除{{selectedGroup.name}}?</h3>
+        <input
+          [hidden]="editType=='delete'"
+          [value]="editType=='edit'&&selectedGroup?selectedGroup.name:''"
+          nz-input
+          formControlName="name"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

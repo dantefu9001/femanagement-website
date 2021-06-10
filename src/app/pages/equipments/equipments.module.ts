@@ -26,6 +26,8 @@ import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {QRCodeModule} from "angular2-qrcode";
 import { EquipmentTagComponent } from './equipment-tag/equipment-tag.component';
 import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import { EquipmentGroupEditModalComponent } from './equipment-group/equipment-group-edit-modal/equipment-group-edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     EquipmentParamsTableComponent,
     EquipmentEditUploadPicComponent,
     EquipmentTagComponent,
+    EquipmentGroupEditModalComponent,
   ],
   imports: [
     CommonModule,
@@ -58,10 +61,12 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     NzCheckboxModule,
     QRCodeModule,
     NzIconModule,
+    NzDropDownModule,
   ],
   providers: [
     EquipmentGroupComponent,
-    EquipmentParamsTableComponent
+    EquipmentParamsTableComponent,
+    EquipmentGroupEditModalComponent,
   ]
 })
 export class EquipmentsModule {

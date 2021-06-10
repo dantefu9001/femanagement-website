@@ -30,6 +30,7 @@ export interface EquipmentGroup {
   id: number;
   name: string;
   isImport: boolean;
+  isSelected: boolean;
 }
 
 export interface SelfDefinedAttribute {

@@ -1,8 +1,20 @@
 <h4>设备管理列表</h4>
 <nz-layout class="equipment-management">
-  <nz-sider class="equipment-group" nzTheme="light">
-    <app-equipment-group></app-equipment-group>
+  <nz-sider class="equipment-group" nzTheme="light" (contextmenu)="contextMenu($event, menu)">
+    <nz-list nzBordered>
+      <nz-list-item *ngFor="let item of equipmentGroups" (click)="selectGroup(item)" class="{{item.isSelected?'selectedGroup':''}}">
+        <span >{{ item.name }}</span>
+      </nz-list-item>
+    </nz-list>
   </nz-sider>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item (click)="addGroup()">新增</li>
+      <li nz-menu-item [hidden]="!selectedGroup" (click)="editGroup()">编辑</li>
+      <li nz-menu-item [hidden]="!selectedGroup" (click)="deleteGroup()">删除</li>
+    </ul>
+  </nz-dropdown-menu>
+  <app-equipment-group-edit-modal [selectedGroup]="selectedGroup!" #equipmentGroupEditModalComponent></app-equipment-group-edit-modal>
   <div style="width: 95%;margin-right: 4px">
     <app-equipment-search></app-equipment-search>
     <nz-table #equipmentTable [nzScroll]="scrollJson"
