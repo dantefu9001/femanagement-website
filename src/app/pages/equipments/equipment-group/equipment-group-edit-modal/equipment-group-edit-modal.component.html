@@ -1,3 +1,16 @@
+<nz-list nzBordered class="equipment-group" nzTheme="light" (contextmenu)="contextMenu($event, menu)" style="height: 800px;">
+  <nz-list-item *ngFor="let item of equipmentGroups" (click)="selectGroup(item)"
+                class="{{item.isSelected?'selectedGroup':''}}">
+    <span>{{ item.name }}</span>
+  </nz-list-item>
+</nz-list>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="showModal('add')">新增</li>
+    <li nz-menu-item [hidden]="!selectedGroup" (click)="showModal('edit')">编辑</li>
+    <li nz-menu-item [hidden]="!selectedGroup" (click)="showModal('delete')">删除</li>
+  </ul>
+</nz-dropdown-menu>
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="设备组编辑"
@@ -10,7 +23,7 @@
     <nz-form-item>
       <nz-form-label [hidden]="editType=='delete'">名称</nz-form-label>
       <nz-form-control>
-        <h3 [hidden]="editType!='delete'">是否删除{{selectedGroup.name}}?</h3>
+        <h3 [hidden]="editType!='delete'">是否删除{{selectedGroup?.name}}?</h3>
         <input
           [hidden]="editType=='delete'"
           [value]="editType=='edit'&&selectedGroup?selectedGroup.name:''"

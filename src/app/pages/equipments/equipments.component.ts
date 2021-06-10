@@ -23,7 +23,7 @@ export class EquipmentsComponent implements OnInit {
   equipmentGroups!: Array<EquipmentGroup>;
   selectedGroup!: EquipmentGroup;
 
-  constructor(private nzContextMenuService: NzContextMenuService,
+  constructor(
               equipmentGroupEditModalComponent: EquipmentGroupEditModalComponent,
               private equipmentService: EquipmentService,
               equipmentParamsTableComponent: EquipmentParamsTableComponent) {
@@ -33,7 +33,7 @@ export class EquipmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.search('', '');
-    this.fetchEquipmentGroups();
+    this.equipmentGroups = this.equipmentGroupEditModalComponent.equipmentGroups;
   }
 
   search(name: string, code: string): void {
@@ -60,13 +60,7 @@ export class EquipmentsComponent implements OnInit {
     }
   }
 
-  fetchEquipmentGroups(): void {
-    const api = 'http://localhost:8080/equipment-groups';
-    this.equipmentService.getData(api).then((result: any) => {
-      this.equipmentGroups = result.data;
-      this.selectedGroup = this.equipmentGroups[0]
-    });
-  }
+
 
   selectData(data: Equipment): void {
     this.idOfSelectedRow = data.id;
@@ -85,33 +79,5 @@ export class EquipmentsComponent implements OnInit {
     }
   }
 
-  contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent) {
-    this.nzContextMenuService.create($event, menu);
-  }
 
-  resetSelectedGroup() {
-    this.selectedGroup = this.equipmentGroups[0];
-  }
-
-  addGroup() {
-    this.equipmentGroupEditModalComponent.editType = 'add';
-    this.equipmentGroupEditModalComponent.showModal();
-  }
-
-  deleteGroup() {
-    this.equipmentGroupEditModalComponent.editType = 'delete';
-    this.equipmentGroupEditModalComponent.showModal();
-  }
-
-  editGroup() {
-    this.equipmentGroupEditModalComponent.editType = 'edit';
-    this.equipmentGroupEditModalComponent.showModal();
-  }
-
-  selectGroup(item: EquipmentGroup) {
-    console.log(item.name);
-    this.selectedGroup.isSelected = false;
-    this.selectedGroup = item;
-    this.selectedGroup.isSelected = true;
-  }
 }
