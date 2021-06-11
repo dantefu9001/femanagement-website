@@ -62,7 +62,7 @@ export class EquipmentEditComponent implements OnInit {
   installationDate!: Date;
 
   //自定义属性:
-  selfDefinedAttributes!: SelfDefinedAttribute[] ;
+  selfDefinedAttributes!: SelfDefinedAttribute[];
 
   ngOnInit(): void {
     this.getDropDowns();
@@ -96,7 +96,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
-        this.equipmentsComponent.search('', '','');
+        this.equipmentsComponent.search('', '', '', this.equipmentsComponent.selectedGroup?.id);
       })
     } else {
       const api = 'http://localhost:8080/equipments';
@@ -104,7 +104,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
-        this.equipmentsComponent.search('', '','');
+        this.equipmentsComponent.search('', '', '', this.equipmentsComponent.selectedGroup?.id);
       })
     }
 

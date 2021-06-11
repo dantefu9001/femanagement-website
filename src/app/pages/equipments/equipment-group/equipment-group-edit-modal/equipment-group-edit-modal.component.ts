@@ -78,7 +78,8 @@ export class EquipmentGroupEditModalComponent implements OnInit {
       this.equipmentGroups = result.data;
       this.selectedGroup = this.equipmentGroups[0]
       this.selectedGroup.isSelected = true;
-      this.equipmentsComponent.search('','','')
+      this.equipmentsComponent.selectedGroup = this.selectedGroup;
+      this.equipmentsComponent.search('','','',this.selectedGroup?.id)
     });
   }
 
@@ -123,15 +124,12 @@ export class EquipmentGroupEditModalComponent implements OnInit {
     this.nzContextMenuService.create($event, menu);
   }
 
-  resetSelectedGroup() {
-    this.selectedGroup = this.equipmentGroups[0];
-  }
-
   selectGroup(item: EquipmentGroup) {
     console.log(item.name);
     this.selectedGroup.isSelected = false;
     this.selectedGroup = item;
     this.selectedGroup.isSelected = true;
-    this.equipmentsComponent.search('', '', '');
+    this.equipmentsComponent.selectedGroup = this.selectedGroup;
+    this.equipmentsComponent.search('', '', '',this.selectedGroup?.id);
   }
 }

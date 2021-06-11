@@ -33,7 +33,7 @@ export class EquipmentSearchComponent implements OnInit {
     const name: string = this.validateForm.get('name')?.value;
     const workshop: string = this.validateForm.get('workshop')?.value;
     const responsible: string = this.validateForm.get('responsible')?.value
-    this.equipmentsComponent.search(name, responsible, workshop);
+    this.equipmentsComponent.search(name, responsible, workshop,this.equipmentsComponent.selectedGroup?.id);
   }
 
   deleteRow(): void {

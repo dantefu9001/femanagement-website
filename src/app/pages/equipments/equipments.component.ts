@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Equipment} from '../../model/model';
+import {Equipment, EquipmentGroup} from '../../model/model';
 import {EquipmentService} from '../../service/equipment.service';
 import {EquipmentParamsTableComponent} from "./equipment-params/equipment-params-table/equipment-params-table.component";
 
@@ -17,6 +17,7 @@ export class EquipmentsComponent implements OnInit {
     y: "300px"
   };
   PARAM_TEXT: string = '请从上表中选择所要查看的数据';
+  selectedGroup!: EquipmentGroup;
 
   constructor(
     private equipmentService: EquipmentService,
@@ -27,12 +28,13 @@ export class EquipmentsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  search(name: string, responsible: string,workshop: string ): void {
+  search(name: string, responsible: string, workshop: string, group: number): void {
     const api = 'http://localhost:8080/equipments';
     const params = {
       name: name,
       responsible: responsible,
-      workshop: workshop
+      workshop: workshop,
+      group: group
     };
     this.equipmentService.getDataWithParams(api, params).then((result: any) => {
       this.equipments = result.data;
@@ -47,7 +49,7 @@ export class EquipmentsComponent implements OnInit {
       console.log('id:', this.idOfSelectedRow);
       api += this.idOfSelectedRow
       this.equipmentService.deleteData(api).then((result: any) => {
-        this.search('', '','');
+        this.search('', '', '', this.selectedGroup?.id);
       })
     }
   }
