@@ -28,7 +28,7 @@ export class EquipmentParamsTableComponent implements OnInit {
   listOfCurrentPageData: ReadonlyArray<Param> = [];
   setOfCheckedId = new Set<number>();
   scrollJson = {
-    y:"110px"
+    y:"130px"
   };
 
   updateCheckedSet(id: number, checked: boolean): void {

@@ -19,15 +19,17 @@ button {
 }
 
 .equipment-management {
-  width: auto;
+  display: flex;
 }
 
 div nz-table {
-  height: 1000px;
+  display: flex;
+
 }
 
 nz-pagination {
-  width: auto;
+  display: flex;
+
   background-color: white;
 }
 
