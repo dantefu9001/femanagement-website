@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { EquipmentsComponent } from '../equipments.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {EquipmentsComponent} from '../equipments.component';
 import {Equipment} from "../../../model/model";
 
 @Component({
@@ -33,7 +33,7 @@ export class EquipmentSearchComponent implements OnInit {
     const name: string = this.validateForm.get('name')?.value;
     const workshop: string = this.validateForm.get('workshop')?.value;
     const responsible: string = this.validateForm.get('responsible')?.value
-    this.equipmentsComponent.search(name, workshop);
+    this.equipmentsComponent.search(name, responsible, workshop);
   }
 
   deleteRow(): void {

@@ -3,6 +3,7 @@ import {EquipmentGroup} from "../../../../model/model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
+import {EquipmentsComponent} from "../../equipments.component";
 
 @Component({
   selector: 'app-equipment-group-edit-modal',
@@ -10,6 +11,7 @@ import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd/dropd
   styleUrls: ['./equipment-group-edit-modal.component.scss']
 })
 export class EquipmentGroupEditModalComponent implements OnInit {
+  @Input() equipmentsComponent: EquipmentsComponent
   isVisible = false;
   isOkLoading = false;
   modalString: string = '新增';
@@ -18,6 +20,21 @@ export class EquipmentGroupEditModalComponent implements OnInit {
   groupEditForm!: FormGroup;
   equipmentGroups!: Array<EquipmentGroup>;
 
+  constructor(equipmentsComponent: EquipmentsComponent,
+              private fb: FormBuilder,
+              private equipmentService: EquipmentService,
+              private nzContextMenuService: NzContextMenuService,) {
+    this.equipmentsComponent = equipmentsComponent;
+  }
+
+  ngOnInit(): void {
+    this.groupEditForm = this.fb.group(
+      {
+        name: new FormControl('')
+      }
+    );
+    this.getGroups();
+  }
 
   showModal(editType: string): void {
     this.editType = editType;
@@ -54,23 +71,14 @@ export class EquipmentGroupEditModalComponent implements OnInit {
     this.isVisible = false;
   }
 
-  constructor(private fb: FormBuilder, private equipmentService: EquipmentService, private nzContextMenuService: NzContextMenuService,) {
-  }
-
-  ngOnInit(): void {
-    this.groupEditForm = this.fb.group(
-      {
-        name: new FormControl('')
-      }
-    );
-    this.getGroups();
-  }
 
   getGroups(): void {
     const api = 'http://localhost:8080/equipment-groups';
     this.equipmentService.getData(api).then((result: any) => {
       this.equipmentGroups = result.data;
       this.selectedGroup = this.equipmentGroups[0]
+      this.selectedGroup.isSelected = true;
+      this.equipmentsComponent.search('','','')
     });
   }
 
@@ -124,5 +132,6 @@ export class EquipmentGroupEditModalComponent implements OnInit {
     this.selectedGroup.isSelected = false;
     this.selectedGroup = item;
     this.selectedGroup.isSelected = true;
+    this.equipmentsComponent.search('', '', '');
   }
 }

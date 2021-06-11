@@ -96,7 +96,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
-        this.equipmentsComponent.search('', '');
+        this.equipmentsComponent.search('', '','');
       })
     } else {
       const api = 'http://localhost:8080/equipments';
@@ -104,7 +104,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
-        this.equipmentsComponent.search('', '');
+        this.equipmentsComponent.search('', '','');
       })
     }
 

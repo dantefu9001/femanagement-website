@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Equipment, EquipmentGroup} from '../../model/model';
+import {Equipment} from '../../model/model';
 import {EquipmentService} from '../../service/equipment.service';
 import {EquipmentParamsTableComponent} from "./equipment-params/equipment-params-table/equipment-params-table.component";
-import {NzContextMenuService, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
-import {EquipmentGroupEditModalComponent} from "./equipment-group/equipment-group-edit-modal/equipment-group-edit-modal.component";
 
 @Component({
   selector: 'app-equipments',
@@ -12,7 +10,6 @@ import {EquipmentGroupEditModalComponent} from "./equipment-group/equipment-grou
 })
 export class EquipmentsComponent implements OnInit {
   @ViewChild('equipmentParamsTableComponent') equipmentParamsTableComponent: EquipmentParamsTableComponent;
-  @ViewChild('equipmentGroupEditModalComponent') equipmentGroupEditModalComponent: EquipmentGroupEditModalComponent
   equipments = Array<Equipment>();
   selectedEquipment!: Equipment;
   idOfSelectedRow = -1;
@@ -20,27 +17,22 @@ export class EquipmentsComponent implements OnInit {
     y: "300px"
   };
   PARAM_TEXT: string = '请从上表中选择所要查看的数据';
-  equipmentGroups!: Array<EquipmentGroup>;
-  selectedGroup!: EquipmentGroup;
 
   constructor(
-              equipmentGroupEditModalComponent: EquipmentGroupEditModalComponent,
-              private equipmentService: EquipmentService,
-              equipmentParamsTableComponent: EquipmentParamsTableComponent) {
+    private equipmentService: EquipmentService,
+    equipmentParamsTableComponent: EquipmentParamsTableComponent) {
     this.equipmentParamsTableComponent = equipmentParamsTableComponent;
-    this.equipmentGroupEditModalComponent = equipmentGroupEditModalComponent;
   }
 
   ngOnInit(): void {
-    this.search('', '');
-    this.equipmentGroups = this.equipmentGroupEditModalComponent.equipmentGroups;
   }
 
-  search(name: string, code: string): void {
+  search(name: string, responsible: string,workshop: string ): void {
     const api = 'http://localhost:8080/equipments';
     const params = {
-      equipmentName: name,
-      equipmentCode: code,
+      name: name,
+      responsible: responsible,
+      workshop: workshop
     };
     this.equipmentService.getDataWithParams(api, params).then((result: any) => {
       this.equipments = result.data;
@@ -55,11 +47,10 @@ export class EquipmentsComponent implements OnInit {
       console.log('id:', this.idOfSelectedRow);
       api += this.idOfSelectedRow
       this.equipmentService.deleteData(api).then((result: any) => {
-        this.search('', '');
+        this.search('', '','');
       })
     }
   }
-
 
 
   selectData(data: Equipment): void {
@@ -78,6 +69,4 @@ export class EquipmentsComponent implements OnInit {
       this.PARAM_TEXT = '请从上表中选择所要查看的数据';
     }
   }
-
-
 }
