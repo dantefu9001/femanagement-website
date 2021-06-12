@@ -1,42 +1,57 @@
+<div>
+  <a (click)="search('weekly')">周小结</a>
+  |
+  <a (click)="search('monthly')">月小结</a>
+</div>
+<app-equipments-summary-add></app-equipments-summary-add>
 
-    <app-equipments-summary-add></app-equipments-summary-add>
-    <div class="send-request">
-      <button nz-button nzType="primary" [disabled]="setOfCheckedId.size === 0" [nzLoading]="loading" (click)="sendRequest()">
-        Send Request
-      </button>
-      <span>Selected {{ setOfCheckedId.size }} items</span>
-    </div>
-    <nz-table
-      #rowSelectionTable
-      nzShowPagination
-      nzShowSizeChanger
-      [nzData]="summaryList"
-      (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-    >
-      <thead>
-        <tr>
-          <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
-          <th>序号</th>
-          <th>类型</th>
-          <th>人员</th>
-          <th>组织</th>
-          <th>时间</th>
-          <th>内容</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of rowSelectionTable.data;let i = index">
-          <td
-            [nzChecked]="setOfCheckedId.has(data.id)"
-            (nzCheckedChange)="onItemChecked(data.id, $event)"
-          ></td>
-          <td>{{ i+1 }}</td>
-          <td>{{ data.type }}</td>
-          <td>{{ data.personnel }}</td>
-          <td>{{ data.group }}</td>
-          <td>{{ data.summaryTime }}</td>
-          <td>{{ data.summary }}</td>
+<div class="edit-area">
+  <input nz-input placeholder="请输入内容" [(ngModel)]="summary"/>
+  <nz-space>
+    <button nz-button [nzType]="'primary'" (click)="search(this.summaryType)">
+      查询
+    </button>
+    <button nz-button [nzType]="'primary'" (click)="edit()">
+      编辑
+    </button>
+    <button nz-button [nzType]="'primary'" (click)="delete()">
+      删除
+    </button>
+  </nz-space>
+</div>
 
-        </tr>
-      </tbody>
-    </nz-table>
+<nz-table
+  #rowSelectionTable
+  nzShowPagination
+  nzShowSizeChanger
+  [nzData]="summaryList"
+  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+  [nzScroll]="scrollJson"
+>
+  <thead>
+  <tr>
+    <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)"></th>
+    <th>序号</th>
+    <th>类型</th>
+    <th>人员</th>
+    <th>组织</th>
+    <th>时间</th>
+    <th>内容</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data;let i = index">
+    <td
+      [nzChecked]="setOfCheckedId.has(data.id)"
+      (nzCheckedChange)="onItemChecked(data.id, $event)"
+    ></td>
+    <td>{{ i + 1 }}</td>
+    <td>{{ data.type }}</td>
+    <td>{{ data.personnel }}</td>
+    <td>{{ data.group }}</td>
+    <td>{{ data.summaryTime }}</td>
+    <td>{{ data.summary }}</td>
+
+  </tr>
+  </tbody>
+</nz-table>

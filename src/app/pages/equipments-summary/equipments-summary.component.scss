@@ -1,9 +1,17 @@
 
-      .send-request {
-        margin-bottom: 16px;
+      .edit-area {
+        text-align: right;
+        margin-right: 8px;
       }
 
-      .send-request span {
-        margin-left: 8px;
+      a {
+        margin-left: 4px;
       }
-    
+
+      button {
+        margin: 16px;
+      }
+
+      [nz-input] {
+        margin: 12px;
+      }

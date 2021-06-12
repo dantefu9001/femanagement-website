@@ -32,4 +32,19 @@
       .search-area {
         text-align: right;
       }
-    
+
+      [nz-input]{
+        width: 200px;
+      }
+
+      nz-form-item nz-select {
+        width: 125px;
+      }
+
+      nz-form-item nz-form-label{
+        margin-left: 64px;
+      }
+
+      textarea{
+        width: 900px;
+      }

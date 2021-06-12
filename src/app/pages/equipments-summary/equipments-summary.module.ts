@@ -11,6 +11,7 @@ import {EquipmentsSummaryAddComponent} from "./equipments-summary-add/equipments
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
+import {NzSpaceModule} from "ng-zorro-antd/space";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
     NzIconModule,
     FormsModule,
     NzSelectModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzSpaceModule,
   ]
 })
 export class EquipmentsSummaryModule {
