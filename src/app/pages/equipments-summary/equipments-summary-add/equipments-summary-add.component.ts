@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {Person} from "../../../model/model";
+import {EquipmentsSummary, Person} from "../../../model/model";
 import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentsSummaryComponent} from "../equipments-summary.component";
 
@@ -17,7 +17,6 @@ interface summaryType {
 @Component({
   selector: 'app-equipments-summary-add',
   templateUrl: './equipments-summary-add.component.html',
-
   styleUrls: ['./equipments-summary-add.component.scss']
 })
 export class EquipmentsSummaryAddComponent implements OnInit {

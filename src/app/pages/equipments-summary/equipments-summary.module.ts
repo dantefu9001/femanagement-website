@@ -12,12 +12,13 @@ import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzSpaceModule} from "ng-zorro-antd/space";
+import {NzModalModule} from "ng-zorro-antd/modal";
 
 
 @NgModule({
   declarations: [
     EquipmentsSummaryComponent,
-    EquipmentsSummaryAddComponent
+    EquipmentsSummaryAddComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +33,9 @@ import {NzSpaceModule} from "ng-zorro-antd/space";
     NzSelectModule,
     NzDatePickerModule,
     NzSpaceModule,
+    NzModalModule,
+  ],
+  providers:[
   ]
 })
 export class EquipmentsSummaryModule {

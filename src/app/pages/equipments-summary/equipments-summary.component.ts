@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {EquipmentsSummary} from "../../model/model";
 import {EquipmentService} from "../../service/equipment.service";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 export interface Data {
   id: number;
@@ -19,16 +20,21 @@ export class EquipmentsSummaryComponent implements OnInit {
   checked = false;
   loading = false;
   indeterminate = false;
-  listOfData: ReadonlyArray<Data> = [];
   listOfCurrentPageData: ReadonlyArray<Data> = [];
   setOfCheckedId = new Set<number>();
-
   summaryList!: Array<EquipmentsSummary>
+  selectedSummary!:EquipmentsSummary;
   summary!: string;
   summaryType = 'weekly';
   scrollJson = {
     y: "320px"
   };
+
+  //modal param
+  isVisible = false;
+  isOkLoading = false;
+  editForm!: FormGroup;
+  updatedSummaryString!: string;
 
 
   updateCheckedSet(id: number, checked: boolean): void {
@@ -46,7 +52,7 @@ export class EquipmentsSummaryComponent implements OnInit {
 
   refreshCheckedStatus(): void {
     const listOfEnabledData = this.listOfCurrentPageData.filter(({disabled}) => !disabled);
-    this.checked = listOfEnabledData.every(({id}) => this.setOfCheckedId.has(id));
+    this.checked =listOfEnabledData.length>0 && listOfEnabledData.every(({id}) => this.setOfCheckedId.has(id));
     this.indeterminate = listOfEnabledData.some(({id}) => this.setOfCheckedId.has(id)) && !this.checked;
   }
 
@@ -60,16 +66,29 @@ export class EquipmentsSummaryComponent implements OnInit {
     this.refreshCheckedStatus();
   }
 
-  constructor(public equipmentService: EquipmentService) {
+  constructor(private fb:FormBuilder,public equipmentService: EquipmentService){
   }
 
   ngOnInit(): void {
     this.getEquipmentSummary();
+    this.editForm = this.fb.group({
+      summary: new FormControl()
+    })
   }
 
   search(type: string): void {
     this.summaryType = type;
+    this.setOfCheckedId.clear();
     this.getEquipmentSummary();
+  }
+
+  edit() {
+    if (this.setOfCheckedId.size > 1 || this.setOfCheckedId.size < 1) {
+      alert("请选择单个小结进行编辑");
+    } else {
+      this.selectedSummary = this.summaryList.filter(summary=>this.setOfCheckedId.has(summary.id)).pop()!;
+      this.showModal();
+    }
   }
 
   getEquipmentSummary(): void {
@@ -82,31 +101,46 @@ export class EquipmentsSummaryComponent implements OnInit {
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.summaryList = result.data;
       this.loading = false;
+      this.setOfCheckedId.clear();
     });
   }
 
-  updateEquipmentSummary():void{
+  updateEquipmentSummary(): void {
     const api = 'http://localhost:8080/equipments-summary/update';
-    this.loading = true;
+    this.isOkLoading = true;
     let param = {
+      id: this.selectedSummary?.id,
+      summary: this.editForm.get("summary")?.value
     }
-    this.equipmentService.postData(api, param).then(()=>{
-      this.loading = false;
+    this.equipmentService.postData(api, param).then(() => {
+      this.isOkLoading = false;
+      this.isVisible = false;
+      this.editForm.reset();
+      this.getEquipmentSummary();
     });
-  }
-
-  edit() {
-
   }
 
   delete(): void {
     const api = 'http://localhost:8080/equipments-summary/delete';
     let params = {
-      "ids":Array.from(this.setOfCheckedId),
+      "ids": Array.from(this.setOfCheckedId),
     }
     this.equipmentService.postData(api, params).then(() => {
       this.getEquipmentSummary();
-      this.checked = false;
     })
+  }
+
+  showModal(): void {
+    this.updatedSummaryString = this.selectedSummary?.summary;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    this.updateEquipmentSummary()
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 }

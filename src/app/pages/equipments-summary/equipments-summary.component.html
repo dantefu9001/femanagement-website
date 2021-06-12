@@ -4,7 +4,23 @@
   <a (click)="search('monthly')">月小结</a>
 </div>
 <app-equipments-summary-add></app-equipments-summary-add>
-
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="编辑"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+  nzWidth="800px"
+>
+  <form nz-form [formGroup]="editForm" class="ant-advanced-search-form">
+    <nz-form-item >
+      <nz-form-label>小结</nz-form-label>
+      <nz-form-control nzSpan="16">
+        <textarea rows="5" placeholder="请输入文本" formControlName="summary" [value]="updatedSummaryString" style="width: 700px"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
 <div class="edit-area">
   <input nz-input placeholder="请输入内容" [(ngModel)]="summary"/>
   <nz-space>
