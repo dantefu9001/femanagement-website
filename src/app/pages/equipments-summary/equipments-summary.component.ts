@@ -67,6 +67,11 @@ export class EquipmentsSummaryComponent implements OnInit {
     this.getEquipmentSummary();
   }
 
+  search(type: string): void {
+    this.summaryType = type;
+    this.getEquipmentSummary();
+  }
+
   getEquipmentSummary(): void {
     const api = 'http://localhost:8080/equipments-summary';
     this.loading = true;
@@ -80,16 +85,28 @@ export class EquipmentsSummaryComponent implements OnInit {
     });
   }
 
-  search(type: string): void {
-    this.summaryType = type;
-    this.getEquipmentSummary();
+  updateEquipmentSummary():void{
+    const api = 'http://localhost:8080/equipments-summary/update';
+    this.loading = true;
+    let param = {
+    }
+    this.equipmentService.postData(api, param).then(()=>{
+      this.loading = false;
+    });
   }
 
   edit() {
 
   }
 
-  delete() {
-
+  delete(): void {
+    const api = 'http://localhost:8080/equipments-summary/delete';
+    let params = {
+      "ids":Array.from(this.setOfCheckedId),
+    }
+    this.equipmentService.postData(api, params).then(() => {
+      this.getEquipmentSummary();
+      this.checked = false;
+    })
   }
 }
