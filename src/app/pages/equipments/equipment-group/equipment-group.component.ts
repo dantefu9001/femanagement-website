@@ -22,7 +22,7 @@ export class EquipmentGroupComponent implements OnInit {
   }
 
   fetchEquipmentGroups(): void {
-    const api = 'http://localhost:8080/equipment-groups';
+    const api = this.equipmentService.api+'/equipment-groups';
     this.equipmentService.getData(api).then((result: any) => {
       this.equipmentGroups = result.data;
     });

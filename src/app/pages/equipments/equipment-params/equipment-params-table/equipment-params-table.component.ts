@@ -61,7 +61,7 @@ export class EquipmentParamsTableComponent implements OnInit {
   }
 
   deleteRows(): void {
-    const api = 'http://localhost:8080/equipment-params/delete';
+    const api = this.equipmentService.api+'/equipment-params/delete';
     let params = {
       "ids":Array.from(this.setOfCheckedId),
       "equipmentId": this.equipmentId
@@ -82,7 +82,7 @@ export class EquipmentParamsTableComponent implements OnInit {
     let param = {
       "equipmentId":equipmentId
     }
-    const api = 'http://localhost:8080/equipment-params/list';
+    const api = this.equipmentService.api+'/equipment-params/list';
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data;
       this.checked=false;

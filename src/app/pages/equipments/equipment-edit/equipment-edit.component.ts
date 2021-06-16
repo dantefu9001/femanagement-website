@@ -91,7 +91,7 @@ export class EquipmentEditComponent implements OnInit {
 
   saveEquipments(equipment: Equipment) {
     if (this.isEdit) {
-      const api = 'http://localhost:8080/equipments/update';
+      const api = this.equipmentService.api+'/equipments/update';
       this.equipmentService.postData(api, equipment).then((result: any) => {
         console.log(result);
         this.isVisible = false;
@@ -99,7 +99,7 @@ export class EquipmentEditComponent implements OnInit {
         this.equipmentsComponent.search('', '', '', this.equipmentsComponent.selectedGroup?.id);
       })
     } else {
-      const api = 'http://localhost:8080/equipments';
+      const api = this.equipmentService.api+'/equipments';
       this.equipmentService.postData(api, equipment).then((result: any) => {
         console.log(result);
         this.isVisible = false;
@@ -160,35 +160,35 @@ export class EquipmentEditComponent implements OnInit {
   }
 
   fetchEquipmentGroups(): void {
-    const api = 'http://localhost:8080/equipment-groups';
+    const api = this.equipmentService.api+'/equipment-groups';
     this.equipmentService.getData(api).then((result: any) => {
       this.equipmentGroups = result.data;
     });
   }
 
   fetchPersonnel(): void {
-    const api = 'http://localhost:8080/personnel/list';
+    const api = this.equipmentService.api+'/personnel/list';
     this.equipmentService.getData(api).then((result: any) => {
       this.responsibilities = result.data;
     })
   }
 
   fetchWorkshop(): void {
-    const api = 'http://localhost:8080/production-line/list';
+    const api = this.equipmentService.api+'/production-line/list';
     this.equipmentService.getData(api).then((result: any) => {
       this.productionLine = result.data;
     })
   }
 
   fetchProcess(): void {
-    const api = 'http://localhost:8080/process/list';
+    const api = this.equipmentService.api+'/process/list';
     this.equipmentService.getData(api).then((result: any) => {
       this.process = result.data;
     })
   }
 
   fetchAsset(): void {
-    const api = 'http://localhost:8080/asset/list';
+    const api = this.equipmentService.api+'/asset/list';
     this.equipmentService.getData(api).then((result: any) => {
       this.asset = result.data;
     })

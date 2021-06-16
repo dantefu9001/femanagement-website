@@ -73,7 +73,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
 
 
   getGroups(): void {
-    const api = 'http://localhost:8080/equipment-groups';
+    const api =this.equipmentService.api+'/equipment-groups';
     this.equipmentService.getData(api).then((result: any) => {
       this.equipmentGroups = result.data;
       this.selectedGroup = this.equipmentGroups[0]
@@ -84,7 +84,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
   }
 
   private saveNewGroup(): void {
-    const api = 'http://localhost:8080/equipment-groups';
+    const api = this.equipmentService.api+'/equipment-groups';
     let param = {
       name: this.groupEditForm.get('name')?.value
     }
@@ -96,7 +96,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
   }
 
   private updateGroup(): void {
-    const api = 'http://localhost:8080/equipment-groups/update';
+    const api = this.equipmentService.api+'/equipment-groups/update';
     let param = {
       id: this.selectedGroup?.id,
       name: this.groupEditForm.get('name')?.value
@@ -109,7 +109,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
   }
 
   private deleteGroup(): void {
-    const api = 'http://localhost:8080/equipment-groups/delete';
+    const api = this.equipmentService.api+'/equipment-groups/delete';
     let param = {
       id: this.selectedGroup?.id
     }

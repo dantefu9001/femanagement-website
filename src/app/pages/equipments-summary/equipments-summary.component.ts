@@ -92,7 +92,7 @@ export class EquipmentsSummaryComponent implements OnInit {
   }
 
   getEquipmentSummary(): void {
-    const api = 'http://localhost:8080/equipments-summary';
+    const api = this.equipmentService.api+'/equipments-summary';
     this.loading = true;
     let param = {
       type: this.summaryType,
@@ -106,7 +106,7 @@ export class EquipmentsSummaryComponent implements OnInit {
   }
 
   updateEquipmentSummary(): void {
-    const api = 'http://localhost:8080/equipments-summary/update';
+    const api =this.equipmentService.api+'/equipments-summary/update';
     this.isOkLoading = true;
     let param = {
       id: this.selectedSummary?.id,
@@ -121,7 +121,7 @@ export class EquipmentsSummaryComponent implements OnInit {
   }
 
   delete(): void {
-    const api = 'http://localhost:8080/equipments-summary/delete';
+    const api = this.equipmentService.api+'/equipments-summary/delete';
     let params = {
       "ids": Array.from(this.setOfCheckedId),
     }

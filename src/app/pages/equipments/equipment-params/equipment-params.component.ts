@@ -78,7 +78,7 @@ export class EquipmentParamsComponent implements OnInit {
   }
 
   private saveParams(param: Param) {
-    const api = 'http://localhost:8080/equipment-params';
+    const api = this.equipmentService.api+'/equipment-params';
     this.equipmentService.postData(api, param).then(() => {
       this.equipmentParamsTableComponent.search(this.equipmentId);
     });

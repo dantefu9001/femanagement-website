@@ -29,7 +29,7 @@ export class EquipmentsComponent implements OnInit {
   }
 
   search(name: string, responsible: string, workshop: string, group: number): void {
-    const api = 'http://localhost:8080/equipments';
+    const api = this.equipmentService.api+'/equipments';
     const params = {
       name: name,
       responsible: responsible,
@@ -42,7 +42,7 @@ export class EquipmentsComponent implements OnInit {
   }
 
   deleteEquipmentById(): void {
-    let api = 'http://localhost:8080/equipments/';
+    let api = this.equipmentService.api+"/equipments/";
     if (this.idOfSelectedRow === -1) {
       console.log('no data');
     } else {

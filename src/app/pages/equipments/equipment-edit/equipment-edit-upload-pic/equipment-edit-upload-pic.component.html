@@ -1,6 +1,6 @@
 <div class="clearfix">
   <nz-upload
-    nzAction="http://localhost:8080/equipments/upload-pic"
+    [nzAction]='equipmentService.api+"/equipments/upload-pic"'
     nzListType="picture-card"
     [nzShowUploadList]="false"
     (nzChange)="handleChange($event)"

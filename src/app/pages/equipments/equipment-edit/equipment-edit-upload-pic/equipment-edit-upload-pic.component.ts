@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
 import {getBase64} from "../../../../common/utils";
+import {EquipmentService} from "../../../../service/equipment.service";
 
 @Component({
   selector: 'app-equipment-edit-upload-pic',
@@ -11,6 +12,11 @@ export class EquipmentEditUploadPicComponent {
 
   url!: string;
   loading = false;
+  equipmentService:EquipmentService;
+
+  constructor(equipmentService:EquipmentService) {
+    this.equipmentService = equipmentService;
+  }
 
   handleChange(info: { file: NzUploadFile }) {
     switch (info.file.status) {
@@ -19,7 +25,7 @@ export class EquipmentEditUploadPicComponent {
         break;
       case 'done':
         this.loading = false;
-        this.url = "http://localhost:8080/equipments/pic/" + info.file.response.data;
+        this.url = this.equipmentService.api+"/equipments/pic/" + info.file.response.data;
         break;
       case 'error':
         this.loading = false;

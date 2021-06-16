@@ -7,6 +7,12 @@ import {EquipmentGroup, Person} from '../model/model';
 })
 export class EquipmentService {
 
+  get api(): string {
+    return this._api;
+  }
+
+  private _api = "http://localhost:8091";
+
   constructor() {
   }
 

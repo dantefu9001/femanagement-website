@@ -62,7 +62,7 @@ export class EquipmentsSummaryAddComponent implements OnInit {
       summaryTime: this.summaryForm.get('dateOfSummary')?.value,
       summary: this.summaryForm.get('summary')?.value
     }
-    const api = 'http://localhost:8080/equipments-summary';
+    const api = this.equipmentService.api+'/equipments-summary';
     this.equipmentService.postData(api, equipmentsSummary).then((result: any) => {
       console.log(result);
       this.equipmentsSummaryComponent.getEquipmentSummary();
