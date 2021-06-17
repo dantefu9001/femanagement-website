@@ -12,12 +12,12 @@ import {EquipmentService} from "../../../service/equipment.service";
 export class BasicDataPlantLayoutComponent implements OnInit {
   productionLines: Array<ProductionLine> = [
     {
-      isSelected:true,
+      isSelected: true,
       id: "0",
       name: "test"
     },
     {
-      isSelected:false,
+      isSelected: false,
       id: "1",
       name: "test2"
     }
@@ -70,7 +70,7 @@ export class BasicDataPlantLayoutComponent implements OnInit {
 
   handleOk(): void {
     this.isOkLoading = true;
-    this.dealWithItems();
+    // this.dealWithItems();
   }
 
   private dealWithItems() {
@@ -79,7 +79,11 @@ export class BasicDataPlantLayoutComponent implements OnInit {
       parentId: this.parentItem!.id!,
       id: this.selectedItem!.id!
     }
-    this.equipmentService.postData(api, param);
+    this.equipmentService.postData(api, param).then(() => {
+      this.isOkLoading = false;
+      this.isVisible = false;
+      this.initialData();
+    });
   }
 
   handleCancel(): void {
@@ -134,6 +138,33 @@ export class BasicDataPlantLayoutComponent implements OnInit {
           }
         })
       }
+    })
+  }
+
+  private getProductionLine() {
+    let api = this.equipmentService.api + '/plant/production-line/list'
+    this.equipmentService.getData(api).then((result: any) => {
+      this.productionLines = result.data;
+    })
+  }
+
+  private getProcess() {
+    let api = this.equipmentService.api + '/plant/process/list'
+    let param = {
+      id: this.selectedProductionLine.id
+    }
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+      this.productionLines = result.data;
+    })
+  }
+
+  private getAsset() {
+    let api = this.equipmentService.api + '/plant/asset/list'
+    let param = {
+      id: this.selectedProcess.id
+    }
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+      this.productionLines = result.data;
     })
   }
 
