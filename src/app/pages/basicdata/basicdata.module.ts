@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {BasicdataConfigsComponent} from './basicdata-configs/basicdata-configs.component';
+import {BasicDataConfigsComponent} from './basic-data-configs/basic-data-configs.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
@@ -18,11 +18,14 @@ import {BasicdataRoutingModule} from "./basicdata-routing.module";
 import {NzSwitchModule} from "ng-zorro-antd/switch";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {NzIconModule} from "ng-zorro-antd/icon";
+import { BasicDataPlantLayoutComponent } from './basic-data-plant-layout/basic-data-plant-layout.component';
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 
 
 @NgModule({
   declarations: [
-    BasicdataConfigsComponent,
+    BasicDataConfigsComponent,
+    BasicDataPlantLayoutComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +46,8 @@ import {NzIconModule} from "ng-zorro-antd/icon";
     NzCheckboxModule,
     NzSwitchModule,
     NzCardModule,
-    NzIconModule
+    NzIconModule,
+    NzDropDownModule
   ]
 })
 export class BasicdataModule { }

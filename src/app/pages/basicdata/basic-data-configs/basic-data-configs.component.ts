@@ -20,12 +20,12 @@ class MalfunctionLevel extends MalfunctionType {
 }
 
 @Component({
-  selector: 'app-basicdata-configs',
-  templateUrl: './basicdata-configs.component.html',
+  selector: 'app-basic-data-configs',
+  templateUrl: './basic-data-configs.component.html',
 
-  styleUrls: ['./basicdata-configs.component.scss']
+  styleUrls: ['./basic-data-configs.component.scss']
 })
-export class BasicdataConfigsComponent {
+export class BasicDataConfigsComponent {
 
   isEasyMode: boolean = false;
   isDisabled: boolean = false;

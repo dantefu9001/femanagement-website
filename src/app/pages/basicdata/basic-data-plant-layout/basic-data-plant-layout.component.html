@@ -1,0 +1,97 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="title"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <form nz-form [formGroup]="plantForm">
+    <nz-form-item>
+      <nz-form-label [hidden]="editType=='delete'">名称</nz-form-label>
+      <nz-form-control>
+        <h3 [hidden]="editType!='delete'">是否删除{{selectedItem?.name}}？确认删除将会删除该对象的所有级联子对象</h3>
+        <input
+          [hidden]="editType=='delete'"
+          [value]="editType=='edit'&&selectedItem?selectedItem.name:''"
+          nz-input
+          formControlName="name"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-row>
+      <nz-form-label [hidden]="editType=='delete'">负责人</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="responsibilities"
+          [hidden]="editType=='delete'"
+          [(ngModel)]="selectedPerson"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option
+            *ngFor="let item of responsibilities"
+            [nzLabel]="item.name"
+            [nzValue]="item"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-row>
+  </form>
+</nz-modal>
+<nz-row>
+  <nz-list [nzDataSource]="productionLines" nzBordered nzHeader="车间" nzSize="large"
+           (contextmenu)="contextMenu($event, menu1)">
+    <nz-list-item *ngFor="let item of productionLines" nzNoFlex>
+      <ul nz-list-item-actions>
+        <nz-list-item-action>
+          <a (click)="showModal(item,0,'edit')">编辑 </a>
+          <a (click)="showModal(item,0,'delete')">删除 </a>
+        </nz-list-item-action>
+      </ul>
+      {{ item.name }}
+    </nz-list-item>
+  </nz-list>
+  <nz-list [nzDataSource]="processes" nzBordered nzHeader="工序" nzSize="large"
+           (contextmenu)="contextMenu($event, menu2)">
+    <nz-list-item *ngFor="let item of processes" nzNoFlex>
+      <ul nz-list-item-actions>
+        <nz-list-item-action>
+          <a (click)="showModal(item,1,'edit')">编辑 </a>
+          <a (click)="showModal(item,1,'delete')">删除 </a>
+        </nz-list-item-action>
+      </ul>
+      {{ item }}
+    </nz-list-item>
+  </nz-list>
+  <nz-list [nzDataSource]="assets" nzBordered nzHeader="工位" nzSize="large"
+           (contextmenu)="contextMenu($event, menu3)">
+    <nz-list-item *ngFor="let item of assets" nzNoFlex>
+      <ul nz-list-item-actions>
+        <nz-list-item-action>
+          <a (click)="showModal(item,2,'edit')">编辑 </a>
+          <a (click)="showModal(item,2,'delete')">删除 </a>
+        </nz-list-item-action>
+      </ul>
+      {{ item }}
+    </nz-list-item>
+  </nz-list>
+</nz-row>
+
+<nz-dropdown-menu #menu1="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="showModal(null,0,'add')">新增</li>
+  </ul>
+</nz-dropdown-menu>
+<nz-dropdown-menu #menu2="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="showModal(null, 1,'add')">新增</li>
+  </ul>
+</nz-dropdown-menu>
+<nz-dropdown-menu #menu3="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="showModal(null, 2,'add')">新增</li>
+  </ul>
+</nz-dropdown-menu>

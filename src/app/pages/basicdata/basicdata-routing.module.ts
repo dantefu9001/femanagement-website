@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
-import {BasicdataConfigsComponent} from './basicdata-configs/basicdata-configs.component';
+import {BasicDataConfigsComponent} from './basic-data-configs/basic-data-configs.component';
 import {RouterModule, Routes} from "@angular/router";
+import {BasicDataPlantLayoutComponent} from "./basic-data-plant-layout/basic-data-plant-layout.component";
 
 
 const routes: Routes = [
-  {path: '', component: BasicdataConfigsComponent},
-
+  {path: 'basic', component: BasicDataConfigsComponent},
+  {path: 'plant', component: BasicDataPlantLayoutComponent}
 ];
 
 @NgModule({

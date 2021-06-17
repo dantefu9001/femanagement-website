@@ -1,17 +1,17 @@
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BasicdataConfigsComponent } from './basicdata-configs.component';
+import { BasicDataConfigsComponent } from './basic-data-configs.component';
 
 describe('BasicdataConfigsComponent', () => {
-  let component: BasicdataConfigsComponent;
-  let fixture: ComponentFixture<BasicdataConfigsComponent>;
+  let component: BasicDataConfigsComponent;
+  let fixture: ComponentFixture<BasicDataConfigsComponent>;
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ BasicdataConfigsComponent ]
+      declarations: [ BasicDataConfigsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BasicdataConfigsComponent);
+    fixture = TestBed.createComponent(BasicDataConfigsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
