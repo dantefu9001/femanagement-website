@@ -44,7 +44,8 @@
 <nz-row>
   <nz-list [nzDataSource]="productionLines" nzBordered nzHeader="车间" nzSize="large"
            (contextmenu)="contextMenu($event, menu1)">
-    <nz-list-item *ngFor="let item of productionLines" nzNoFlex>
+    <nz-list-item *ngFor="let item of productionLines"
+                  (click)="selectProductionLine(item)" nzNoFlex class="{{item.isSelected?'selected':''}}">
       <ul nz-list-item-actions>
         <nz-list-item-action>
           <a (click)="showModal(item,0,'edit')">编辑 </a>
@@ -56,7 +57,7 @@
   </nz-list>
   <nz-list [nzDataSource]="processes" nzBordered nzHeader="工序" nzSize="large"
            (contextmenu)="contextMenu($event, menu2)">
-    <nz-list-item *ngFor="let item of processes" nzNoFlex>
+    <nz-list-item *ngFor="let item of processes" nzNoFlex class="{{item.isSelected?'selected':''}}">
       <ul nz-list-item-actions>
         <nz-list-item-action>
           <a (click)="showModal(item,1,'edit')">编辑 </a>
@@ -68,7 +69,7 @@
   </nz-list>
   <nz-list [nzDataSource]="assets" nzBordered nzHeader="工位" nzSize="large"
            (contextmenu)="contextMenu($event, menu3)">
-    <nz-list-item *ngFor="let item of assets" nzNoFlex>
+    <nz-list-item *ngFor="let item of assets" nzNoFlex class="{{item.isSelected?'selected':''}}">
       <ul nz-list-item-actions>
         <nz-list-item-action>
           <a (click)="showModal(item,2,'edit')">编辑 </a>

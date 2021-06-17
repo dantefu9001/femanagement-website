@@ -12,11 +12,17 @@ import {EquipmentService} from "../../../service/equipment.service";
 export class BasicDataPlantLayoutComponent implements OnInit {
   productionLines: Array<ProductionLine> = [
     {
+      isSelected:true,
       id: "0",
       name: "test"
+    },
+    {
+      isSelected:false,
+      id: "1",
+      name: "test2"
     }
   ];
-  selectedProductionLine!: ProductionLine;
+  selectedProductionLine = this.productionLines[0];
   processes!: Array<Process>;
   selectedProcess!: Process;
   assets!: Array<Asset>;
@@ -95,7 +101,7 @@ export class BasicDataPlantLayoutComponent implements OnInit {
     this.levelMap.set(0, "productionLine");
     this.levelMap.set(1, "process");
     this.levelMap.set(2, "asset");
-    this.initialData();
+    // this.initialData();
   }
 
   private initialData() {
@@ -131,4 +137,9 @@ export class BasicDataPlantLayoutComponent implements OnInit {
     })
   }
 
+  selectProductionLine(item: ProductionLine) {
+    this.selectedProductionLine.isSelected = false;
+    this.selectedProductionLine = item;
+    this.selectedProductionLine.isSelected = true;
+  }
 }

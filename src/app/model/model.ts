@@ -46,6 +46,7 @@ export interface Person {
 }
 
 export interface ProductionLine {
+  isSelected: boolean;
   id: string,
   name: string;
 }
@@ -56,11 +57,13 @@ export interface Area {
 }
 
 export interface Process {
+  isSelected: boolean;
   id: string;
   name: string;
 }
 
 export interface Asset {
+  isSelected: boolean;
   id: string;
   name: string;
 }
