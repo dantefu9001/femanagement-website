@@ -105,7 +105,7 @@ export class BasicDataPlantLayoutComponent implements OnInit {
     this.levelMap.set(0, "productionLine");
     this.levelMap.set(1, "process");
     this.levelMap.set(2, "asset");
-    // this.initialData();
+    this.initialData();
   }
 
   private initialData() {
@@ -154,7 +154,11 @@ export class BasicDataPlantLayoutComponent implements OnInit {
       id: this.selectedProductionLine.id
     }
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
-      this.productionLines = result.data;
+      this.processes = result.data;
+      if(this.processes.length>0){
+        this.selectedProcess = this.processes[0];
+        this.selectedProcess.isSelected = true;
+      }
     })
   }
 
@@ -164,7 +168,11 @@ export class BasicDataPlantLayoutComponent implements OnInit {
       id: this.selectedProcess.id
     }
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
-      this.productionLines = result.data;
+      this.assets = result.data;
+      if(this.assets.length>0){
+        this.selectedAsset = this.assets[0];
+        this.selectedAsset.isSelected = true;
+      }
     })
   }
 
@@ -172,5 +180,18 @@ export class BasicDataPlantLayoutComponent implements OnInit {
     this.selectedProductionLine.isSelected = false;
     this.selectedProductionLine = item;
     this.selectedProductionLine.isSelected = true;
+    this.getProcess()
+  }
+
+  selectProcess(item: Process) {
+    this.selectedProcess.isSelected = false;
+    this.selectedProcess = item;
+    this.selectedProcess.isSelected = true;
+  }
+
+  selectAsset(item: Asset) {
+    this.selectedAsset.isSelected = false;
+    this.selectedAsset = item;
+    this.selectedAsset.isSelected = true;
   }
 }
