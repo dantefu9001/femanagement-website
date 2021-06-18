@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {EquipmentService} from "../../../service/equipment.service";
 
 class MalfunctionType {
   name: string;
@@ -22,32 +23,24 @@ class MalfunctionLevel extends MalfunctionType {
 @Component({
   selector: 'app-basic-data-configs',
   templateUrl: './basic-data-configs.component.html',
-
   styleUrls: ['./basic-data-configs.component.scss']
 })
-export class BasicDataConfigsComponent {
+export class BasicDataConfigsComponent implements OnInit {
 
   isEasyMode: boolean = false;
   isDisabled: boolean = false;
   isAutoDispatch: boolean = false;
   enableValidate: boolean = false;
   enableAlarm: boolean = false;
-  malfunctionTypes: Array<MalfunctionType> = [{
-    name: '操作不当',
-    hideButton: true
-  }];
-
-  malfunctionLevels: Array<MalfunctionLevel> = [{
-    name: '一级故障',
-    hideButton: true,
-    desc: '很严重的故障'
-  }]
+  malfunctionTypes: Array<MalfunctionType> = [];
+  malfunctionLevels: Array<MalfunctionLevel> = []
   newMalfunctionType!: string;
   waitTime!: string;
   pauseTime!: string;
   dispatchTime!: string;
   newMalfunctionLevel!: string;
   enableEquipmentManagement: boolean = false;
+  enableSparePartsManagement!: boolean;
 
 
   unableAutoDispatchAndValidate() {
@@ -86,5 +79,57 @@ export class BasicDataConfigsComponent {
 
   deleteLevel(item: MalfunctionLevel) {
     this.malfunctionLevels = this.malfunctionLevels.filter(p => p.name != item.name);
+  }
+
+
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  constructor(private equipmentService: EquipmentService) {
+  }
+
+  saveConfigs() {
+    let api = this.equipmentService.api + "/config";
+    let param = {
+      easyMode: this.isEasyMode,
+      autoDispatch: this.isAutoDispatch,
+      enableValidation: this.enableValidate,
+      maintenanceAlarm: this.enableAlarm,
+      waitTime: this.waitTime,
+      downTime: this.pauseTime,
+      dispatchTime: this.dispatchTime,
+      malfunctionType: JSON.stringify(this.malfunctionTypes),
+      malfunctionLevel: JSON.stringify(this.malfunctionLevels),
+      equipmentSummary: this.enableEquipmentManagement,
+      sparePartManagement: this.enableSparePartsManagement
+    }
+    this.equipmentService.postData(api, param).then(()=>{
+      this.fetchData();
+    })
+  }
+
+
+
+  private fetchData() {
+    let api = this.equipmentService.api + '/config';
+    this.equipmentService.getData(api).then((result:any)=>{
+      let resultData = result.data;
+      if (result.data !== undefined) {
+        this.isEasyMode = resultData.easyMode;
+        this.isAutoDispatch = resultData.autoDispatch;
+        this.enableValidate = resultData.enableValidation;
+        this.enableAlarm = resultData.maintenanceAlarm;
+        this.waitTime = resultData.waitTime;
+        this.pauseTime = resultData.downTime;
+        this.dispatchTime = resultData.dispatchTime;
+        this.malfunctionTypes = JSON.parse(resultData.malfunctionType);
+        this.malfunctionLevels = JSON.parse(resultData.malfunctionLevel);
+        this.enableEquipmentManagement = resultData.equipmentSummary;
+        this.enableSparePartsManagement = resultData.sparePartManagement;
+      }
+    }).catch((e:Error)=>{
+      console.error(e.message);
+    })
   }
 }

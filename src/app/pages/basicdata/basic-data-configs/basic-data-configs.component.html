@@ -21,10 +21,11 @@
 </div>
 <div class="malfunctionType">
   <h4>故障类型</h4>
+  <div nz-row [nzGutter]="16">
+    <input nz-input [(ngModel)]="newMalfunctionType" (keydown)="addNewMalfunctionType($event)"
+           placeholder="输入新分类并回车" style="margin: 8px">
+  </div>
   <nz-list [nzBordered]="true" nzGrid>
-    <div nz-row [nzGutter]="16">
-      <input nz-input [(ngModel)]="newMalfunctionType" (keydown)="addNewMalfunctionType($event)" placeholder="输入新分类并回车">
-    </div>
     <div nz-row [nzGutter]="16">
       <div nz-col [nzSpan]="6" *ngFor="let item of malfunctionTypes">
         <div nz-row>
@@ -43,11 +44,11 @@
 
 <div class="malfunctionLevel">
   <h4>故障等级</h4>
+  <div nz-row [nzGutter]="16">
+    <input nz-input [(ngModel)]="newMalfunctionLevel" (keydown)="addNewMalfunctionLevel($event)"
+           placeholder="输入新分类并回车" style="margin: 8px">
+  </div>
   <nz-list [nzBordered]="true" nzGrid>
-    <div nz-row [nzGutter]="16">
-      <input nz-input [(ngModel)]="newMalfunctionLevel" (keydown)="addNewMalfunctionLevel($event)"
-             placeholder="输入新分类并回车">
-    </div>
     <div nz-row [nzGutter]="8">
       <div nz-row *ngFor="let item of malfunctionLevels">
         <nz-list-item (mouseover)="showIcon(item)" (mouseleave)="hideIcon(item)">
@@ -67,4 +68,13 @@
 <div class="equipment-management">
   <h4>设备台账</h4>
   <nz-switch [(ngModel)]="enableEquipmentManagement"></nz-switch>
-  <span>设备管理小结</span></div>
+  <span>设备管理小结</span>
+</div>
+
+<div class="spare-parts-management">
+  <h4>备件管理</h4>
+  <nz-switch [(ngModel)]="enableSparePartsManagement"></nz-switch>
+  <span>启用备件管理</span>
+</div>
+
+<button nz-button (click)="saveConfigs()" style="margin-top: 16px">保存所有数据</button>

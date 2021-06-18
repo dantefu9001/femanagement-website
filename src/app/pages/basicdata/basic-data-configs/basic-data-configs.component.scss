@@ -8,15 +8,29 @@
       }
 
       .malfunctionType{
-        padding-top: 50px;
+        margin-top: 50px;
+      }
+
+      .malfunctionLevel{
+        margin-top: 50px;
+      }
+
+      .equipment-management{
+        margin-top: 50px;
+      }
+
+      .spare-parts-management{
+        margin-top: 50px;
       }
 
       i{
       }
 
       nz-switch {
+        margin-bottom: 16px;
         padding-left: 8px;
         padding-right: 8px;
+        color: cadetblue;
       }
 
       .strategy-config span {
