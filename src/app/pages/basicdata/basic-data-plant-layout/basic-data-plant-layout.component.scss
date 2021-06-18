@@ -8,8 +8,12 @@ input {
   width: 200px;
 }
 
-nz-select {
+nz-form-item nz-select {
   width: 200px;
+}
+
+nz-form-item {
+  margin: 16px;
 }
 
 .selected {

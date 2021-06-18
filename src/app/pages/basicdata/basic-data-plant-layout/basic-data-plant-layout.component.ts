@@ -11,22 +11,14 @@ import {EquipmentService} from "../../../service/equipment.service";
 })
 export class BasicDataPlantLayoutComponent implements OnInit {
   productionLines: Array<ProductionLine> = [
-    {
-      isSelected: true,
-      id: "0",
-      name: "test"
-    },
-    {
-      isSelected: false,
-      id: "1",
-      name: "test2"
-    }
+
   ];
-  selectedProductionLine = this.productionLines[0];
+  selectedProductionLine!:ProductionLine;
   processes!: Array<Process>;
   selectedProcess!: Process;
   assets!: Array<Asset>;
   selectedAsset!: Asset;
+
 
 
   isVisible = false;
@@ -35,17 +27,18 @@ export class BasicDataPlantLayoutComponent implements OnInit {
   plantForm!: FormGroup;
   editType!: string;
 
-  selectedPerson!: Person;
-  responsibilities: Array<Person> = [{
-    name: 'zenan',
-    id: "1"
-  }];
   map: Map<string, string> = new Map()
   levelMap: Map<number, string> = new Map()
   parentItem!: any;
   selectedItem!: any;
   level = 'productionLine';
 
+  processOptions: Array<Process> = [];
+  assetsOptions : Array<Asset> = []
+  options:Array<any> = []
+  selectedPerson!: Person;
+  responsibilities: Array<Person> = [];
+  selectedOption!: any;
 
   constructor(public fb: FormBuilder, public nzContextMenuService: NzContextMenuService, public equipmentService: EquipmentService) {
   }
@@ -59,9 +52,12 @@ export class BasicDataPlantLayoutComponent implements OnInit {
         break;
       case 1:
         this.parentItem = this.selectedProductionLine;
+        this.options = this.processOptions;
         break;
       case 2:
         this.parentItem = this.selectedProcess;
+        this.options = this.assetsOptions;
+        break;
     }
     this.level = this.levelMap.get(level)!;
     this.editType = type;
@@ -70,24 +66,28 @@ export class BasicDataPlantLayoutComponent implements OnInit {
 
   handleOk(): void {
     this.isOkLoading = true;
-    // this.dealWithItems();
+    this.dealWithItems();
   }
 
   private dealWithItems() {
     let api = this.equipmentService.api + '/plant/' + this.level + '/' + this.editType;
     let param = {
-      parentId: this.parentItem!.id!,
-      id: this.selectedItem!.id!
+      parentId: this.parentItem?.id!,
+      id: this.selectedOption?.id!,
+      name:this.plantForm.get("name")?.value!,
+      groupLeader: this.selectedPerson?.id
     }
     this.equipmentService.postData(api, param).then(() => {
       this.isOkLoading = false;
       this.isVisible = false;
       this.initialData();
     });
+    this.resetForm();
   }
 
   handleCancel(): void {
     this.isVisible = false;
+    this.resetForm();
   }
 
   contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent) {
@@ -102,42 +102,66 @@ export class BasicDataPlantLayoutComponent implements OnInit {
     this.map.set("add", "新增");
     this.map.set("edit", "编辑");
     this.map.set("delete", "删除");
-    this.levelMap.set(0, "productionLine");
+    this.levelMap.set(0, "production-line");
     this.levelMap.set(1, "process");
     this.levelMap.set(2, "asset");
     this.initialData();
+    this.fetchPersonnelAsOptions();
+    this.fetchProcessAsOptions();
+    this.fetchAssetAsOptions();
   }
 
   private initialData() {
     let api = this.equipmentService.api + '/plant/production-line/list'
-    let param = {
-      id: '-1'
-    }
-    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+    this.equipmentService.getData(api).then((result: any) => {
       this.productionLines = result.data;
       if (this.productionLines.length > 0) {
         this.selectedProductionLine = this.productionLines[0]
+        this.selectedProductionLine.isSelected = true;
         api = this.equipmentService.api + '/plant/process/list'
-        param = {
-          id: this.selectedProductionLine.id
+        let param = {
+          parentId: this.selectedProductionLine.id
         }
         this.equipmentService.getDataWithParams(api, param).then((result: any) => {
           this.processes = result.data;
           if (this.processes.length > 0) {
             this.selectedProcess = this.processes[0]
+            this.selectedProcess.isSelected = true;
             api = this.equipmentService.api + '/plant/asset/list'
-            param = {
-              id: this.selectedProcess.id
+            let param = {
+              parentId: this.selectedProcess.id
             }
             this.equipmentService.getDataWithParams(api, param).then((result: any) => {
               this.assets = result.data;
               if (this.assets.length > 0) {
-                this.selectedAsset = this.assets[0]
+                this.selectedAsset = this.assets[0];
+                this.selectedAsset.isSelected = true;
               }
             })
           }
         })
       }
+    })
+  }
+
+  fetchPersonnelAsOptions(): void {
+    const api = this.equipmentService.api+'/personnel/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.responsibilities = result.data;
+    })
+  }
+
+  fetchProcessAsOptions(): void {
+    const api = this.equipmentService.api+'/process/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.processOptions = result.data;
+    })
+  }
+
+  fetchAssetAsOptions(): void {
+    const api = this.equipmentService.api+'/asset/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.assetsOptions = result.data;
     })
   }
 
@@ -148,30 +172,32 @@ export class BasicDataPlantLayoutComponent implements OnInit {
     })
   }
 
-  private getProcess() {
+  private getProcessByProductionId() {
     let api = this.equipmentService.api + '/plant/process/list'
     let param = {
-      id: this.selectedProductionLine.id
+      parentId: this.selectedProductionLine.id
     }
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.processes = result.data;
-      if(this.processes.length>0){
+      if (this.processes.length > 0) {
         this.selectedProcess = this.processes[0];
-        this.selectedProcess.isSelected = true;
+        this.selectProcess(this.selectedProcess);
+      }else{
+        this.assets = []
       }
     })
   }
 
-  private getAsset() {
+  private getAssetByProcessId() {
     let api = this.equipmentService.api + '/plant/asset/list'
     let param = {
-      id: this.selectedProcess.id
+      parentId: this.selectedProcess.id
     }
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.assets = result.data;
-      if(this.assets.length>0){
+      if (this.assets.length > 0) {
         this.selectedAsset = this.assets[0];
-        this.selectedAsset.isSelected = true;
+        this.selectAsset(this.selectedAsset);
       }
     })
   }
@@ -180,18 +206,24 @@ export class BasicDataPlantLayoutComponent implements OnInit {
     this.selectedProductionLine.isSelected = false;
     this.selectedProductionLine = item;
     this.selectedProductionLine.isSelected = true;
-    this.getProcess()
+    this.getProcessByProductionId()
   }
 
   selectProcess(item: Process) {
     this.selectedProcess.isSelected = false;
     this.selectedProcess = item;
     this.selectedProcess.isSelected = true;
+    this.getAssetByProcessId();
   }
 
   selectAsset(item: Asset) {
     this.selectedAsset.isSelected = false;
     this.selectedAsset = item;
     this.selectedAsset.isSelected = true;
+  }
+
+  resetForm(){
+    this.selectedOption = null;
+    this.plantForm.reset();
   }
 }
