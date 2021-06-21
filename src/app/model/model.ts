@@ -81,3 +81,17 @@ export interface EquipmentsSummary {
   personnel: number;
   summary: string;
 }
+
+export interface EquipmentsMaintenanceSheet {
+  id: number;
+  code: string,
+  productionLine: string,
+  equipment: string,
+  nonEquipment:boolean,
+  malfunctionTime: string,
+  description: string,
+  maintenancePerson: string,
+  malfunctionType: string,
+  ratingOfMaintenance: string,
+  status: string
+}

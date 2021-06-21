@@ -1,22 +1,23 @@
 <button nz-button nzType="primary" (click)="showModal()">
-  <span>新增</span>
+  <span>{{editable?'新增':'查看'}}</span>
 </button>
 <nz-modal
   [(nzVisible)]="isVisible"
-  nzTitle="新增维修单"
+  nzTitle='{{editable?"新增维修单":"查看维修单"}}'
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzOkLoading]="isOkLoading"
+  nzWidth="400px"
 >
   <form nz-form [formGroup]="equipmentMaintenanceEditForm">
 
-    <nz-form-item>
+    <nz-form-item style="margin-left: 26px">
       <nz-form-label>编号</nz-form-label>
       <nz-form-control>
         <input nz-input placeholder="请输入" formControlName="code"/>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item style="margin-left: 26px">
       <nz-form-label>人员</nz-form-label>
       <nz-form-control>
         <nz-select
@@ -37,7 +38,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label>车间</nz-form-label>
+      <nz-form-label style="margin-left: 26px">车间</nz-form-label>
       <nz-form-control>
         <nz-select
           name="workshops"
@@ -57,27 +58,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label>区域</nz-form-label>
-      <nz-form-control>
-        <nz-select
-          name="areas"
-          [(ngModel)]="selectedArea"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <nz-option
-            *ngFor="let item of areas"
-            [nzLabel]="item.name"
-            [nzValue]="item.name"
-          >
-            <ng-template #tpl>
-              {{ item }}
-            </ng-template>
-          </nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label>工序</nz-form-label>
+      <nz-form-label style="margin-left: 26px">工序</nz-form-label>
       <nz-form-control>
         <nz-select
           name="process"

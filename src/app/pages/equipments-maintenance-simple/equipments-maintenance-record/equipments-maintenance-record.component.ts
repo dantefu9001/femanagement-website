@@ -1,44 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-
-interface ItemData {
-  id: number;
-  name: string;
-  age: number;
-  address: string;
-}
+import {EquipmentsMaintenanceSheet} from "../../../model/model";
 
 @Component({
   selector: 'app-equipments-maintenance-record',
-  templateUrl: './equipments-maintenance-record.component.html'
+  templateUrl: './equipments-maintenance-record.component.html',
+  styleUrls: ['./equipments-maintenance-record.component.scss']
 })
 export class EquipmentsMaintenanceRecordComponent implements OnInit {
-  listOfSelection = [
-    {
-      text: 'Select All Row',
-      onSelect: () => {
-        this.onAllChecked(true);
-      }
-    },
-    {
-      text: 'Select Odd Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 !== 0));
-        this.refreshCheckedStatus();
-      }
-    },
-    {
-      text: 'Select Even Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 === 0));
-        this.refreshCheckedStatus();
-      }
-    }
-  ];
+  listOfSelection = [];
   checked = false;
   indeterminate = false;
-  listOfCurrentPageData: ReadonlyArray<ItemData> = [];
-  listOfData: ReadonlyArray<ItemData> = [];
+  listOfCurrentPageData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
+  listOfData: Array<EquipmentsMaintenanceSheet> = [];
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
 
@@ -60,7 +34,7 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
     this.refreshCheckedStatus();
   }
 
-  onCurrentPageDataChange($event: ReadonlyArray<ItemData>): void {
+  onCurrentPageDataChange($event: ReadonlyArray<EquipmentsMaintenanceSheet>): void {
     this.listOfCurrentPageData = $event;
     this.refreshCheckedStatus();
   }
@@ -81,12 +55,19 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
       "endDate": [null]
     })
 
-    this.listOfData = new Array(200).fill(0).map((_, index) => {
+    this.listOfData = new Array(20).fill(0).map((_, index) => {
       return {
         id: index,
-        name: `Edward King ${index}`,
-        age: 32,
-        address: `London, Park Lane no. ${index}`
+        code: `Edward King ${index}`,
+        productionLine: 'test',
+        equipment: 'test',
+        nonEquipment: true,
+        malfunctionTime: '2021-04-01',
+        description: 'test',
+        maintenancePerson: 'me',
+        malfunctionType: 'broken',
+        ratingOfMaintenance: 'good',
+        status: 'finished'
       };
     });
   }
@@ -100,10 +81,8 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
   }
 
   deleteRow() {
-
+    this.listOfData = this.listOfData.filter(sheet => !this.setOfCheckedId.has(sheet.id))
   }
 
-  add() {
 
-  }
 }
