@@ -14,7 +14,7 @@
     <nz-form-item style="margin-left: 26px">
       <nz-form-label>编号</nz-form-label>
       <nz-form-control>
-        <input [disabled]="!editable" nz-input placeholder="请输入" formControlName="code"/>
+        <input nz-input placeholder="请输入" formControlName="code"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item style="margin-left: 26px">
@@ -28,7 +28,7 @@
           <nz-option
             *ngFor="let item of personnel"
             [nzLabel]="item.name"
-            [nzValue]="item.name"
+            [nzValue]="item"
           >
             <ng-template #tpl>
               {{ item }}
@@ -103,13 +103,13 @@
     <nz-form-item>
       <nz-form-label>故障时间</nz-form-label>
       <nz-form-control>
-        <nz-date-picker formControlName="malfunctionTime"></nz-date-picker>
+        <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="malfunctionDate"  formControlName="dateOfMalfunction"></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label>描述</nz-form-label>
       <nz-form-control>
-        <textarea [disabled]="!editable" rows="5" placeholder="请输入文本" formControlName="description" ></textarea>
+        <textarea rows="5" placeholder="请输入文本" formControlName="description" ></textarea>
       </nz-form-control>
     </nz-form-item>
     <nz-row style="margin-left: 26px">

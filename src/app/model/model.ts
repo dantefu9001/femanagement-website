@@ -90,7 +90,7 @@ export interface EquipmentsMaintenanceSheet {
   process: Process,
   equipment: Equipment,
   nonEquipment: boolean,
-  malfunctionTime: string,
+  malfunctionTime: Date,
   description: string,
   maintenancePerson: string,
   malfunctionType: string,

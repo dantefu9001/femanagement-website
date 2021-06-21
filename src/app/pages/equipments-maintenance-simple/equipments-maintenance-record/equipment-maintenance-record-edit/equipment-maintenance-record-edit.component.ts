@@ -19,7 +19,7 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
   isVisible = false;
   isOkLoading = false;
 
-  code!: string;
+  randomCode!: string;
   selectedPerson!: Person;
   personnel!: Array<Person>;
   selectedProductionLine!: ProductionLine;
@@ -30,14 +30,21 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
   selectedEquipmentMaintenanceSheet!: EquipmentsMaintenanceSheet;
   selectedEquipment!: Equipment;
   equipments!: Array<Equipment>;
+  malfunctionDate!: Date;
 
   showModal(): void {
+    this.initData();
     if (!this.editable) {
       this.view();
     } else {
       this.equipmentMaintenanceEditForm.setControl('code', new FormControl(Date.now().toString()));
     }
     this.isVisible = true;
+  }
+
+  private initData() {
+    this.fetchPersonnel();
+    this.fetchProductionLine();
   }
 
   handleOk(): void {
@@ -47,10 +54,26 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
     }
     this.isVisible = false;
     this.isOkLoading = false;
+    this.clearForm();
   }
+
 
   handleCancel(): void {
     this.isVisible = false;
+    this.clearForm();
+  }
+
+  private clearForm() {
+    this.equipmentMaintenanceEditForm.reset();
+    this.selectedPerson = null!;
+    this.selectedProductionLine = null!;
+    this.selectedProcess = null!;
+    this.selectedEquipment = null!;
+    this.productionLines = [];
+    this.personnel = [];
+    this.process = [];
+    this.equipments = [];
+    this.randomCode = '';
   }
 
   constructor(public fb: FormBuilder,
@@ -71,22 +94,22 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
       area: new FormControl(''),
       process: new FormControl(''),
       equipment: new FormControl(''),
-      malfunctionTime: [null],
+      dateOfMalfunction: new FormControl(''),
       description: new FormControl('')
     });
-    this.fetchPersonnel();
-    this.fetchProductionLine();
   }
 
 
   add() {
     let param =
       {
-        code: this.code,
+        code: this.randomCode,
         productionLine: this.selectedProductionLine,
+        process: this.selectedProcess,
         equipment: this.selectedEquipment,
+        submitter: this.selectedPerson,
         nonEquipment: true,
-        malfunctionTime: '2021-04-01',
+        malfunctionTime: this.malfunctionDate,
         description: this.equipmentMaintenanceEditForm.get('description')?.value,
         picUrls: [this.uploadPicComponent.url, this.uploadPicComponent2.url]
       } as EquipmentsMaintenanceSheet;
@@ -105,9 +128,19 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
       this.selectedEquipmentMaintenanceSheet = this.equipmentMaintenanceComponent.listOfData.filter(d => d.id === selectedId)[0]
       this.equipmentMaintenanceEditForm.setControl('code', new FormControl(this.selectedEquipmentMaintenanceSheet.code));
       this.equipmentMaintenanceEditForm.setControl('description', new FormControl(this.selectedEquipmentMaintenanceSheet.description));
-      this.selectedPerson = this.selectedEquipmentMaintenanceSheet.submitter
+
+      this.selectedPerson = this.selectedEquipmentMaintenanceSheet.submitter!;
+      this.personnel = [...[this.selectedPerson]];
+
+      this.selectedProcess = this.selectedEquipmentMaintenanceSheet.process!;
+      this.process = [...[this.selectedProcess]]
+
       this.selectedProductionLine = this.selectedEquipmentMaintenanceSheet.productionLine;
+      this.productionLines = [...[this.selectedProductionLine]];
+
       this.selectedEquipment = this.selectedEquipmentMaintenanceSheet.equipment;
+      this.equipments = [...[this.selectedEquipment]]
+
       this.uploadPicComponent.url = this.selectedEquipmentMaintenanceSheet.picUrls?.pop()!
       this.uploadPicComponent2.url = this.selectedEquipmentMaintenanceSheet.picUrls?.pop()!
       this.equipmentMaintenanceEditForm.setControl('malfunctionTime', new FormControl(this.selectedEquipmentMaintenanceSheet.malfunctionTime))

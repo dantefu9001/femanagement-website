@@ -62,8 +62,8 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
   search() {
     const api = this.equipmentService.api + '/maintenance/submitter';
     let param = {
-      start: this.searchForm.get('startDate')!.value,
-      end: this.searchForm.get('endDate')!.value,
+      startDate: this.searchForm.get('startDate')!.value,
+      endDate: this.searchForm.get('endDate')!.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value
     };
@@ -74,6 +74,12 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
 
 
   deleteRow() {
-    this.listOfData = this.listOfData.filter(sheet => !this.setOfCheckedId.has(sheet.id))
+    const api = this.equipmentService.api + '/maintenance/submitter/delete';
+    let param = {
+      "ids": Array.from(this.setOfCheckedId),
+    }
+    this.equipmentService.postData(api, param).then(()=>{
+      this.search();
+    })
   }
 }
