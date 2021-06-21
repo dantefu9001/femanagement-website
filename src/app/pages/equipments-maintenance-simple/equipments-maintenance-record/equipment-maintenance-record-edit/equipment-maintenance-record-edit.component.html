@@ -1,5 +1,5 @@
 <button nz-button nzType="primary" (click)="showModal()">
-  <span>{{editable?'新增':'查看'}}</span>
+  <span>{{editable ? '新增' : '查看'}}</span>
 </button>
 <nz-modal
   [(nzVisible)]="isVisible"
@@ -7,7 +7,7 @@
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
   [nzOkLoading]="isOkLoading"
-  nzWidth="400px"
+  nzWidth="480px"
 >
   <form nz-form [formGroup]="equipmentMaintenanceEditForm">
 
@@ -42,13 +42,14 @@
       <nz-form-control>
         <nz-select
           name="workshops"
-          [(ngModel)]="selectedWorkshops"
+          [(ngModel)]="selectedProductionLine"
+          (ngModelChange)="fetchProcess()"
           [ngModelOptions]="{ standalone: true }"
         >
           <nz-option
-            *ngFor="let item of workshops"
+            *ngFor="let item of productionLines"
             [nzLabel]="item.name"
-            [nzValue]="item.name"
+            [nzValue]="item"
           >
             <ng-template #tpl>
               {{ item }}
@@ -63,12 +64,34 @@
         <nz-select
           name="process"
           [(ngModel)]="selectedProcess"
+          (ngModelChange)="fetchEquipments()"
           [ngModelOptions]="{ standalone: true }"
         >
           <nz-option
             *ngFor="let item of process"
             [nzLabel]="item.name"
-            [nzValue]="item.name"
+            [nzValue]="item"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label style="margin-left: 26px">设备</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="equipment"
+          [(ngModel)]="selectedEquipment"
+          (ngModelChange)="fetchEquipments()"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option
+            *ngFor="let item of equipments"
+            [nzLabel]="item.name"
+            [nzValue]="item"
           >
             <ng-template #tpl>
               {{ item }}
@@ -89,5 +112,9 @@
         <textarea rows="5" placeholder="请输入文本" formControlName="description" [(ngModel)]="description"></textarea>
       </nz-form-control>
     </nz-form-item>
+    <nz-row style="margin-left: 26px">
+      <app-equipment-edit-upload-pic #uploadPicComponent1></app-equipment-edit-upload-pic>
+      <app-equipment-edit-upload-pic #uploadPicComponent2></app-equipment-edit-upload-pic>
+    </nz-row>
   </form>
 </nz-modal>

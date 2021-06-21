@@ -18,9 +18,14 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import { EquipmentsMaintenanceJobBookingModalComponent } from './equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-modal.component';
 import { EquipmentsMaintenanceJobBookingFormComponent } from './equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-form/equipments-maintenance-job-booking-form.component';
 import { EquipmentsMaintenanceJobBookingTableComponent } from './equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-table/equipments-maintenance-job-booking-table.component';
+import {EquipmentsModule} from "../equipments/equipments.module";
+import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 
 
 @NgModule({
+  providers:[
+    EquipmentEditUploadPicComponent
+  ],
   declarations: [
     EquipmentsMaintenanceRecordComponent,
     EquipmentMaintenanceRecordEditComponent,
@@ -34,19 +39,20 @@ import { EquipmentsMaintenanceJobBookingTableComponent } from './equipments-main
   exports: [
     EquipmentsMaintenanceRecordComponent
   ],
-  imports: [
-    CommonModule,
-    EquipmentsMaintenanceSimpleRoutingModule,
-    NzTableModule,
-    NzGridModule,
-    ReactiveFormsModule,
-    NzDatePickerModule,
-    NzModalModule,
-    NzTabsModule,
-    NzFormModule,
-    NzSelectModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        EquipmentsMaintenanceSimpleRoutingModule,
+        NzTableModule,
+        NzGridModule,
+        ReactiveFormsModule,
+        NzDatePickerModule,
+        NzModalModule,
+        NzTabsModule,
+        NzFormModule,
+        NzSelectModule,
+        FormsModule,
+        EquipmentsModule
+    ]
 })
 export class EquipmentsMaintenanceSimpleModule {
 }

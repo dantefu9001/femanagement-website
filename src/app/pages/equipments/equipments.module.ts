@@ -30,44 +30,47 @@ import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import { EquipmentGroupEditModalComponent } from './equipment-group/equipment-group-edit-modal/equipment-group-edit-modal.component';
 
 @NgModule({
-  declarations: [
-    EquipmentsComponent,
-    EquipmentSearchComponent,
-    EquipmentGroupComponent,
-    EquipmentEditComponent,
-    EquipmentAttributesTableComponent,
-    EquipmentParamsComponent,
-    EquipmentParamsTableComponent,
-    EquipmentEditUploadPicComponent,
-    EquipmentTagComponent,
-    EquipmentGroupEditModalComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NzTableModule,
-    NzPopconfirmModule,
-    NzPopoverModule,
-    NzFormModule,
-    NzListModule,
-    NzLayoutModule,
-    NzModalModule,
-    EquipmentsRoutingModule,
-    NzMessageModule,
-    NzSelectModule,
-    NzDatePickerModule,
-    NzUploadModule,
-    NzCheckboxModule,
-    QRCodeModule,
-    NzIconModule,
-    NzDropDownModule,
-  ],
-  providers: [
-    EquipmentGroupComponent,
-    EquipmentParamsTableComponent,
-    EquipmentGroupEditModalComponent,
-  ]
+    declarations: [
+        EquipmentsComponent,
+        EquipmentSearchComponent,
+        EquipmentGroupComponent,
+        EquipmentEditComponent,
+        EquipmentAttributesTableComponent,
+        EquipmentParamsComponent,
+        EquipmentParamsTableComponent,
+        EquipmentEditUploadPicComponent,
+        EquipmentTagComponent,
+        EquipmentGroupEditModalComponent,
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NzTableModule,
+        NzPopconfirmModule,
+        NzPopoverModule,
+        NzFormModule,
+        NzListModule,
+        NzLayoutModule,
+        NzModalModule,
+        EquipmentsRoutingModule,
+        NzMessageModule,
+        NzSelectModule,
+        NzDatePickerModule,
+        NzUploadModule,
+        NzCheckboxModule,
+        QRCodeModule,
+        NzIconModule,
+        NzDropDownModule,
+    ],
+    exports: [
+        EquipmentEditUploadPicComponent
+    ],
+    providers: [
+        EquipmentGroupComponent,
+        EquipmentParamsTableComponent,
+        EquipmentGroupEditModalComponent,
+    ]
 })
 export class EquipmentsModule {
 }

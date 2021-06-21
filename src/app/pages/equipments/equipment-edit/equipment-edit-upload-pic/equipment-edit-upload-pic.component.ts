@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
-import {getBase64} from "../../../../common/utils";
+import {NzUploadFile} from 'ng-zorro-antd/upload';
 import {EquipmentService} from "../../../../service/equipment.service";
 
 @Component({
@@ -12,9 +11,9 @@ export class EquipmentEditUploadPicComponent {
 
   url!: string;
   loading = false;
-  equipmentService:EquipmentService;
+  equipmentService: EquipmentService;
 
-  constructor(equipmentService:EquipmentService) {
+  constructor(equipmentService: EquipmentService) {
     this.equipmentService = equipmentService;
   }
 
@@ -25,7 +24,7 @@ export class EquipmentEditUploadPicComponent {
         break;
       case 'done':
         this.loading = false;
-        this.url = this.equipmentService.api+"/equipments/pic/" + info.file.response.data;
+        this.url = this.equipmentService.api + "/equipments/pic/" + info.file.response.data;
         break;
       case 'error':
         this.loading = false;

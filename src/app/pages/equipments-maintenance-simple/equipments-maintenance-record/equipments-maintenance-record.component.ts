@@ -67,8 +67,8 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
         maintenancePerson: 'me',
         malfunctionType: 'broken',
         ratingOfMaintenance: 'good',
-        status: 'finished'
-      };
+        status: 'finished',
+      } as EquipmentsMaintenanceSheet;
     });
   }
 
@@ -76,13 +76,7 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
 
   }
 
-  view() {
-
-  }
-
   deleteRow() {
     this.listOfData = this.listOfData.filter(sheet => !this.setOfCheckedId.has(sheet.id))
   }
-
-
 }
