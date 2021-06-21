@@ -85,8 +85,10 @@ export interface EquipmentsSummary {
 export interface EquipmentsMaintenanceSheet {
   id: number;
   code: string,
-  productionLine: string,
-  equipment: string,
+  submitter: Person;
+  productionLine: ProductionLine,
+  process: Process,
+  equipment: Equipment,
   nonEquipment: boolean,
   malfunctionTime: string,
   description: string,

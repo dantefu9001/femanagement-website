@@ -26,7 +26,6 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
   productionLines!: Array<ProductionLine>;
   selectedProcess!: Process;
   process!: Array<Process>;
-  description!: string;
   equipmentMaintenanceEditForm!: FormGroup;
   selectedEquipmentMaintenanceSheet!: EquipmentsMaintenanceSheet;
   selectedEquipment!: Equipment;
@@ -35,6 +34,8 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
   showModal(): void {
     if (!this.editable) {
       this.view();
+    } else {
+      this.equipmentMaintenanceEditForm.setControl('code', new FormControl(Date.now().toString()));
     }
     this.isVisible = true;
   }
@@ -53,7 +54,7 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
   }
 
   constructor(public fb: FormBuilder,
-              public equipmentService:EquipmentService,
+              public equipmentService: EquipmentService,
               equipmentEditUploadPicComponent1: EquipmentEditUploadPicComponent,
               equipmentEditUploadPicComponent2: EquipmentEditUploadPicComponent,
               public equipmentsMaintenanceRecordComponent: EquipmentsMaintenanceRecordComponent) {
@@ -79,23 +80,21 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
 
 
   add() {
-    this.equipmentMaintenanceComponent.listOfData = [
-      ...this.equipmentMaintenanceComponent.listOfData,
+    let param =
       {
-        id: this.equipmentMaintenanceComponent.listOfData.length + 1,
-        code: `Edward King ${this.equipmentMaintenanceComponent.listOfData.length + 1}`,
-        productionLine: 'test',
-        equipment: 'test',
+        code: this.code,
+        productionLine: this.selectedProductionLine,
+        equipment: this.selectedEquipment,
         nonEquipment: true,
         malfunctionTime: '2021-04-01',
-        description: 'test',
-        maintenancePerson: 'me',
-        malfunctionType: 'broken',
-        ratingOfMaintenance: 'good',
-        status: 'finished',
+        description: this.equipmentMaintenanceEditForm.get('description')?.value,
         picUrls: [this.uploadPicComponent.url, this.uploadPicComponent2.url]
-      }
-    ];
+      } as EquipmentsMaintenanceSheet;
+    const api = this.equipmentService.api + '/maintenance/submitter';
+    this.equipmentService.postData(api, param).then((result: any) => {
+      console.log(result.code);
+    })
+
   }
 
   view() {
@@ -106,7 +105,12 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
       this.selectedEquipmentMaintenanceSheet = this.equipmentMaintenanceComponent.listOfData.filter(d => d.id === selectedId)[0]
       this.equipmentMaintenanceEditForm.setControl('code', new FormControl(this.selectedEquipmentMaintenanceSheet.code));
       this.equipmentMaintenanceEditForm.setControl('description', new FormControl(this.selectedEquipmentMaintenanceSheet.description));
-
+      this.selectedPerson = this.selectedEquipmentMaintenanceSheet.submitter
+      this.selectedProductionLine = this.selectedEquipmentMaintenanceSheet.productionLine;
+      this.selectedEquipment = this.selectedEquipmentMaintenanceSheet.equipment;
+      this.uploadPicComponent.url = this.selectedEquipmentMaintenanceSheet.picUrls?.pop()!
+      this.uploadPicComponent2.url = this.selectedEquipmentMaintenanceSheet.picUrls?.pop()!
+      this.equipmentMaintenanceEditForm.setControl('malfunctionTime', new FormControl(this.selectedEquipmentMaintenanceSheet.malfunctionTime))
     }
   }
 
@@ -127,15 +131,15 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
   fetchProcess(): void {
     const api = this.equipmentService.api + '/plant/process/list';
     let param = {
-      parentId:this.selectedProductionLine?.id,
+      parentId: this.selectedProductionLine?.id,
     }
-    this.equipmentService.getDataWithParams(api,param).then((result: any) => {
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.process = result.data;
     })
   }
 
   fetchEquipments() {
-    const api = this.equipmentService.api+'/equipments/process='+this.selectedProcess!.id;
+    const api = this.equipmentService.api + '/equipments/process=' + this.selectedProcess!.id;
 
     this.equipmentService.getData(api).then((result: any) => {
       this.equipments = result.data;

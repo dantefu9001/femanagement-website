@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentsMaintenanceSheet} from "../../../model/model";
+import {EquipmentService} from "../../../service/equipment.service";
 
 @Component({
   selector: 'app-equipments-maintenance-record',
@@ -44,7 +45,7 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
-  constructor(public fb: FormBuilder) {
+  constructor(public fb: FormBuilder, public equipmentService: EquipmentService) {
   }
 
   ngOnInit(): void {
@@ -54,27 +55,23 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
       "startDate": [null],
       "endDate": [null]
     })
+    this.search();
+  }
 
-    this.listOfData = new Array(20).fill(0).map((_, index) => {
-      return {
-        id: index,
-        code: `Edward King ${index}`,
-        productionLine: 'test',
-        equipment: 'test',
-        nonEquipment: true,
-        malfunctionTime: '2021-04-01',
-        description: 'test',
-        maintenancePerson: 'me',
-        malfunctionType: 'broken',
-        ratingOfMaintenance: 'good',
-        status: 'finished',
-      } as EquipmentsMaintenanceSheet;
+
+  search() {
+    const api = this.equipmentService.api + '/maintenance/submitter';
+    let param = {
+      start: this.searchForm.get('startDate')!.value,
+      end: this.searchForm.get('endDate')!.value,
+      equipment: this.searchForm.get('equipment')?.value,
+      equipmentGroup: this.searchForm.get('equipmentGroup')?.value
+    };
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+      this.listOfData = result.data
     });
   }
 
-  search() {
-
-  }
 
   deleteRow() {
     this.listOfData = this.listOfData.filter(sheet => !this.setOfCheckedId.has(sheet.id))

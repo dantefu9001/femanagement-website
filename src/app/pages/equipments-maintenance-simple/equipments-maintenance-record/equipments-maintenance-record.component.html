@@ -67,8 +67,8 @@
   <tr *ngFor="let data of rowSelectionTable.data">
     <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
     <td>{{ data.code }}</td>
-    <td>{{ data.productionLine }}</td>
-    <td>{{ data.equipment }}</td>
+    <td>{{ data.productionLine?.name }}</td>
+    <td>{{ data.equipment?.name }}</td>
     <td>{{ data.nonEquipment }}</td>
     <td>{{ data.malfunctionTime }}</td>
     <td>{{ data.description }}</td>
