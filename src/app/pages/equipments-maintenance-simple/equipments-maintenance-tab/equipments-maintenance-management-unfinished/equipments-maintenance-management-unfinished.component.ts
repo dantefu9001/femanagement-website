@@ -1,54 +1,31 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-
-interface ItemData {
-  id: number;
-  name: string;
-  age: number;
-  address: string;
-}
+import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {EquipmentService} from "../../../../service/equipment.service";
 
 @Component({
   selector: 'app-equipments-maintenance-management-unfinished',
-  templateUrl: './equipments-maintenance-management-unfinished.component.html'
+  templateUrl: './equipments-maintenance-management-unfinished.component.html',
+  styleUrls: ['./equipments-maintenance-management-unfinished.component.scss']
 })
 export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnInit {
   listOfSelection = [
-    {
-      text: 'Select All Row',
-      onSelect: () => {
-        this.onAllChecked(true);
-      }
-    },
-    {
-      text: 'Select Odd Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 !== 0));
-        this.refreshCheckedStatus();
-      }
-    },
-    {
-      text: 'Select Even Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 === 0));
-        this.refreshCheckedStatus();
-      }
-    }
+
   ];
   checked = false;
   indeterminate = false;
-  listOfCurrentPageData: ReadonlyArray<ItemData> = [];
-  listOfData: ReadonlyArray<ItemData> = [];
+  listOfCurrentPageData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
+  listOfData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
-  types = [{
+  status = [{
     name: '新增',
     value: 'new'
   }, {
     name: '待审核',
     value: 'toBeChecked'
   }];
-  selectedType = this.types[0].name;
+  selectedStatus = this.status[0].name;
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -68,17 +45,17 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
     this.refreshCheckedStatus();
   }
 
-  onCurrentPageDataChange($event: ReadonlyArray<ItemData>): void {
+  onCurrentPageDataChange($event: ReadonlyArray<EquipmentsMaintenanceSheet>): void {
     this.listOfCurrentPageData = $event;
     this.refreshCheckedStatus();
   }
 
   refreshCheckedStatus(): void {
-    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
+    this.checked =this.listOfCurrentPageData.length>0 && this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
-  constructor(public fb: FormBuilder) {
+  constructor(public fb: FormBuilder, public equipmentService: EquipmentService) {
   }
 
   ngOnInit(): void {
@@ -87,20 +64,23 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
       "equipment": new FormControl(''),
       "startDate": [null],
       "endDate": [null],
-      "type": new FormControl('')
+      "status": new FormControl('')
     });
-    this.listOfData = new Array(9).fill(0).map((_, index) => {
-      return {
-        id: index,
-        name: `Edward King ${index}`,
-        age: 32,
-        address: `London, Park Lane no. ${index}`
-      };
-    });
+    this.search();
   }
 
   search() {
-
+    const api = this.equipmentService.api + '/maintenance/submitter';
+    let param = {
+      startDate: this.searchForm.get('startDate')!.value,
+      endDate: this.searchForm.get('endDate')!.value,
+      equipment: this.searchForm.get('equipment')?.value,
+      equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
+      status:this.selectedStatus
+    };
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+      this.listOfData = result.data
+    });
   }
 
   report() {

@@ -1,15 +1,15 @@
 <form nz-form [formGroup]="searchForm" class="ant-advanced-search-form">
-  <nz-row nz-row [nzGutter]="56">
+  <nz-row nz-row>
     <nz-form-item>
       <nz-form-label>设备组</nz-form-label>
       <nz-form-control>
-        <input nz-input value="" placeholder="请输入" formControlName="equipmentGroup"/>
+        <input nz-input placeholder="请输入" formControlName="equipmentGroup"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label>设备</nz-form-label>
       <nz-form-control>
-        <input nz-input value="" placeholder="请输入" formControlName="equipment"/>
+        <input nz-input placeholder="请输入" formControlName="equipment"/>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -23,31 +23,33 @@
       <nz-form-control>
         <nz-date-picker formControlName="endDate"></nz-date-picker>
       </nz-form-control>
-    </nz-form-item><nz-form-item>
-    <nz-form-label>状态</nz-form-label>
-    <nz-form-control>
-      <nz-select
-        name="type"
-        [(ngModel)]="selectedType"
-        [ngModelOptions]="{ standalone: true }"
-      >
-        <nz-option
-          *ngFor="let item of types"
-          [nzLabel]="item.name"
-          [nzValue]="item.name"
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>状态</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="status"
+          [(ngModel)]="selectedStatus"
+          [ngModelOptions]="{ standalone: true }"
         >
-          <ng-template #tpl>
-            {{ item }}
-          </ng-template>
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+          <nz-option
+            *ngFor="let item of status"
+            [nzLabel]="item.name"
+            [nzValue]="item.name"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
     <div class="search-area">
       <button nz-button nzType="'primary'" (click)="search()">查询</button>
     </div>
     <div class="edit-area">
-      <app-equipments-maintenance-job-booking-modal></app-equipments-maintenance-job-booking-modal>
+      <app-equipments-maintenance-job-booking-modal
+        style="margin-left: 8px;margin-top: 8px"></app-equipments-maintenance-job-booking-modal>
       <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
       <button nz-button nzType="'primary'" (click)="deprecate()">删除</button>
       <button nz-button nzType="'primary'" (click)="check()">审核</button>
@@ -81,9 +83,17 @@
   <tbody>
   <tr *ngFor="let data of rowSelectionTable.data">
     <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-    <td>{{ data.name }}</td>
-    <td>{{ data.age }}</td>
-    <td>{{ data.address }}</td>
+    <td>{{ data.code }}</td>
+    <td>{{ data.productionLine?.name }}</td>
+    <td>{{ data.equipment?.name }}</td>
+    <td>{{ data.status }}</td>
+    <td>{{ data.malfunctionTime.toLocaleString() }}</td>
+    <td>{{ data.description }}</td>
+    <td>{{ data.submitter?.name }}</td>
+    <td>图片</td>
+    <td>{{ data.maintenancePerson?.name }}</td>
+    <td>{{data.pauseTime}}</td>
+    <td>{{data.maintenanceDesc}}</td>
   </tr>
   </tbody>
 </nz-table>

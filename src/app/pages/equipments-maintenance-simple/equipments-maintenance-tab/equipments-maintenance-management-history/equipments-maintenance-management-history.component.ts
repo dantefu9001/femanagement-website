@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 
 interface ItemData {
@@ -10,7 +10,8 @@ interface ItemData {
 
 @Component({
   selector: 'app-equipments-maintenance-management-history',
-  templateUrl: './equipments-maintenance-management-history.component.html'
+  templateUrl: './equipments-maintenance-management-history.component.html',
+  styleUrls: ['./equipments-maintenance-management-history.component.scss']
 })
 export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
   listOfSelection = [

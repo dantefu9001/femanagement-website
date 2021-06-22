@@ -92,9 +92,11 @@ export interface EquipmentsMaintenanceSheet {
   nonEquipment: boolean,
   malfunctionTime: Date,
   description: string,
-  maintenancePerson: string,
+  maintenancePerson: Person,
   malfunctionType: string,
   ratingOfMaintenance: string,
   status: string,
-  picUrls: string[]
+  picUrls: string[],
+  pauseTime:string,
+  maintenanceDesc:string
 }
