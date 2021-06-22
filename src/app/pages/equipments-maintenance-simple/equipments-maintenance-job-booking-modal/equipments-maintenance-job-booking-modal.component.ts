@@ -56,12 +56,14 @@ export class EquipmentsMaintenanceJobBookingModalComponent {
       malfunctionType: this.equipmentBookingForm.malfunctionType,
       pauseTime: this.equipmentBookingForm.maintenanceForm.get('time')?.value,
       maintenanceDesc: this.equipmentBookingForm.maintenanceForm.get('comment')?.value,
-      maintainPicUrls: [this.equipmentBookingForm.upload1.url, this.equipmentBookingForm.upload2.url]
+      maintainPicUrls: [this.equipmentBookingForm.upload1.url, this.equipmentBookingForm.upload2.url],
+      spareParts:this.equipmentBookingTable.listOfData
     }
     this.equipmentService.postData(api, param).then(() => {
       this.nzMsgService.success("报工成功")
       this.isOkLoading = false;
       this.isVisible = false;
+      this.equipmentManagementUnfinished.resetAndSearch();
     })
   }
 }
