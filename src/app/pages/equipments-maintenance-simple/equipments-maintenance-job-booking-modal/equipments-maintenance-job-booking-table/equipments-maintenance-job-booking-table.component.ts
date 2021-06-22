@@ -52,11 +52,11 @@ export class EquipmentsMaintenanceJobBookingTableComponent implements OnInit {
   }
 
   refreshCheckedStatus(): void {
-    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
+    this.checked = this.listOfSelection.length > 0 && this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
-  constructor(public fb: FormBuilder,public equipmentService:EquipmentService) {
+  constructor(public fb: FormBuilder, public equipmentService: EquipmentService) {
 
   }
 
@@ -71,9 +71,9 @@ export class EquipmentsMaintenanceJobBookingTableComponent implements OnInit {
     this.fetchSpareParts();
   }
 
-  fetchSpareParts(){
+  fetchSpareParts() {
     const api = this.equipmentService.api + '/spare-part'
-    this.equipmentService.getData(api).then((result:any)=>{
+    this.equipmentService.getData(api).then((result: any) => {
       this.spareParts = result.data
     })
   }
@@ -83,16 +83,24 @@ export class EquipmentsMaintenanceJobBookingTableComponent implements OnInit {
   }
 
   deleteSelectedSpareParts() {
-
+    this.listOfData = this.listOfData.filter(d => !this.setOfCheckedId.has(d.id))
   }
 
   handleCancel() {
-
     this.isVisible = false;
+    this.resetForm();
   }
 
   handleOk() {
-    this.listOfData = [...this.listOfData,this.selectedSparePart]
+    this.selectedSparePart.consumption = this.sparePartsForm.get('consumptionNumber')?.value!
+    this.selectedSparePart.remark = this.sparePartsForm.get('remark')?.value!
+    this.listOfData = [...this.listOfData, this.selectedSparePart]
     this.isVisible = false;
+    this.resetForm();
+  }
+
+  resetForm(){
+    this.selectedSparePart = null!;
+    this.sparePartsForm.reset();
   }
 }

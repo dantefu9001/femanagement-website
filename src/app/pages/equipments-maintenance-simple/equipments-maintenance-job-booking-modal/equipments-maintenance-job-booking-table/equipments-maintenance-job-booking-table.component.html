@@ -1,7 +1,7 @@
-<span>备件消耗</span>
 <div>
   <nz-row>
-    <button (click)="showSpareParts()">新增</button>
+    <span>备件消耗</span>
+    <button (click)="showSpareParts()" style="margin-left: 580px">新增</button>
     <button (click)="deleteSelectedSpareParts()">删除</button>
   </nz-row>
 </div>
@@ -48,7 +48,7 @@
   [nzWidth]="600"
 >
   <form nz-form [formGroup]="sparePartsForm" nzLayout="horizontal">
-    <nz-row >
+    <nz-row>
       <nz-form-item>
         <nz-form-label>备件选择</nz-form-label>
         <nz-form-control>
@@ -71,27 +71,27 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-label style="margin-right: 28px">编码</nz-form-label>
-        <nz-form-control >
-          <input [disabled]="true" nz-input formControlName="code" [value]="selectedSparePart?.code">
+        <nz-form-control>
+          <input nz-input formControlName="code" [value]="selectedSparePart?.code">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label >当前库存</nz-form-label>
-        <nz-form-control >
+        <nz-form-label>当前库存</nz-form-label>
+        <nz-form-control>
           <input nz-input formControlName="stock" [value]="selectedSparePart?.stock">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label>计量单位</nz-form-label>
-        <nz-form-control disabled="true" >
-          <input  nz-input formControlName="unit" [value]="selectedSparePart?.unit">
+        <nz-form-control>
+          <input nz-input formControlName="unit" [value]="selectedSparePart?.unit">
         </nz-form-control>
       </nz-form-item>
     </nz-row>
     <nz-row>
       <nz-form-item>
         <nz-form-label>消耗数量</nz-form-label>
-        <nz-form-control >
+        <nz-form-control>
           <input nz-input formControlName="consumptionNumber" placeholder="请输入"/>
         </nz-form-control>
       </nz-form-item>
