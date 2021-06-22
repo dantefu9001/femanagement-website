@@ -97,8 +97,19 @@ export interface EquipmentsMaintenanceSheet {
   ratingOfMaintenance: string,
   status: string,
   picUrls: string[],
-  pauseTime:string,
-  maintenanceDesc:string,
-  auditor:Person,
-  auditTime:Date
+  pauseTime: string,
+  maintenanceDesc: string,
+  auditor: Person,
+  auditTime: Date
+}
+
+export interface SparePart {
+  id: number,
+  code: string,
+  name: string,
+  stock: number,
+  unit: string,
+  consumption: number,
+  period: number,
+  remark: string,
 }

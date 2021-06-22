@@ -1,28 +1,106 @@
-    <span>备件消耗</span>
-    <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
-      <thead>
-        <tr>
-          <th
-            [nzSelections]="listOfSelection"
-            [(nzChecked)]="checked"
-            [nzIndeterminate]="indeterminate"
-            (nzCheckedChange)="onAllChecked($event)"
-          ></th>
-          <th>编号</th>
-          <th>名称</th>
-          <th>当前库存</th>
-          <th>计量单位</th>
-          <th>消耗数量</th>
-          <th>更换周期（天）</th>
-          <th>备注</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of rowSelectionTable.data">
-          <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-          <td>{{ data.name }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
-        </tr>
-      </tbody>
-    </nz-table>
+<span>备件消耗</span>
+<div>
+  <nz-row>
+    <button (click)="showSpareParts()">新增</button>
+    <button (click)="deleteSelectedSpareParts()">删除</button>
+  </nz-row>
+</div>
+
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+          [nzScroll]="scrollJson"
+          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+  <thead>
+  <tr>
+    <th
+      [(nzChecked)]="checked"
+      [nzIndeterminate]="indeterminate"
+      (nzCheckedChange)="onAllChecked($event)"
+    ></th>
+    <th>编号</th>
+    <th>名称</th>
+    <th>当前库存</th>
+    <th>计量单位</th>
+    <th>消耗数量</th>
+    <th>更换周期（天）</th>
+    <th>备注</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+    <td>{{ data.code }}</td>
+    <td>{{ data.name }}</td>
+    <td>{{ data.stock }}</td>
+    <td>{{ data.unit }}</td>
+    <td>{{ data.consumption }}</td>
+    <td>{{ data.period }}</td>
+    <td>{{ data.remark }}</td>
+
+  </tr>
+  </tbody>
+</nz-table>
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="维修报工"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+  [nzWidth]="600"
+>
+  <form nz-form [formGroup]="sparePartsForm" nzLayout="horizontal">
+    <nz-row >
+      <nz-form-item>
+        <nz-form-label>备件选择</nz-form-label>
+        <nz-form-control>
+          <nz-select
+            name="spareParts"
+            [(ngModel)]="selectedSparePart"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <nz-option
+              *ngFor="let item of spareParts"
+              [nzLabel]="item.name"
+              [nzValue]="item"
+            >
+              <ng-template #tpl>
+                {{ item }}
+              </ng-template>
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label style="margin-right: 28px">编码</nz-form-label>
+        <nz-form-control >
+          <input [disabled]="true" nz-input formControlName="code" [value]="selectedSparePart?.code">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >当前库存</nz-form-label>
+        <nz-form-control >
+          <input nz-input formControlName="stock" [value]="selectedSparePart?.stock">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>计量单位</nz-form-label>
+        <nz-form-control disabled="true" >
+          <input  nz-input formControlName="unit" [value]="selectedSparePart?.unit">
+        </nz-form-control>
+      </nz-form-item>
+    </nz-row>
+    <nz-row>
+      <nz-form-item>
+        <nz-form-label>消耗数量</nz-form-label>
+        <nz-form-control >
+          <input nz-input formControlName="consumptionNumber" placeholder="请输入"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label style="margin-right: 28px">备注</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="remark" placeholder="请输入"/>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-row>
+  </form>
+</nz-modal>
