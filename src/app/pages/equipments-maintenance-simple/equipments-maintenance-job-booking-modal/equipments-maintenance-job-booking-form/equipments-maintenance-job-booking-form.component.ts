@@ -1,72 +1,51 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable, Observer } from 'rxjs';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {EquipmentService} from "../../../../service/equipment.service";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {EquipmentEditUploadPicComponent} from "../../../equipments/equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component";
+import {EquipmentsMaintenanceSheet} from "../../../../model/model";
 
 @Component({
   selector: 'app-equipments-maintenance-job-booking-form',
   templateUrl: './equipments-maintenance-job-booking-form.component.html',
-
   styleUrls: ['./equipments-maintenance-job-booking-form.component.scss']
 })
-export class EquipmentsMaintenanceJobBookingFormComponent {
-  validateForm: FormGroup;
-
-  submitForm(value: { userName: string; email: string; password: string; confirm: string; comment: string }): void {
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsDirty();
-      this.validateForm.controls[key].updateValueAndValidity();
-    }
-    console.log(value);
-  }
-
-  resetForm(e: MouseEvent): void {
-    e.preventDefault();
-    this.validateForm.reset();
-    for (const key in this.validateForm.controls) {
-      this.validateForm.controls[key].markAsPristine();
-      this.validateForm.controls[key].updateValueAndValidity();
-    }
-  }
-
-  validateConfirmPassword(): void {
-    setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
-  }
-
-  userNameAsyncValidator = (control: FormControl) =>
-    new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
-    });
-
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { error: true, required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
-  repairNumber!: number;
-  repairNumbers!: Array<number>;
+export class EquipmentsMaintenanceJobBookingFormComponent implements OnInit {
+  @ViewChild('uploadPicComponent1') upload1: EquipmentEditUploadPicComponent;
+  @ViewChild('uploadPicComponent2') upload2: EquipmentEditUploadPicComponent;
+  @Input() maintenance!:EquipmentsMaintenanceSheet;
+  maintenanceForm: FormGroup;
+  selectedMaintenanceCode!: number;
+  maintenanceCodes!: Array<number>;
   malfunctionType!: string;
   malfunctionTypes!: Array<string>;
 
-  constructor(private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
-      userName: ['', [Validators.required], [this.userNameAsyncValidator]],
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required]],
-      confirm: ['', [this.confirmValidator]],
-      time:[''],
-      comment: ['', [Validators.required]]
+  constructor(private fb: FormBuilder,
+              upload1: EquipmentEditUploadPicComponent,
+              upload2: EquipmentEditUploadPicComponent,
+              public equipmentService: EquipmentService,
+              public nzMsgService: NzMessageService) {
+    this.upload1 = upload1;
+    this.upload2 = upload2;
+    this.maintenanceForm = this.fb.group({
+      repairNumber: [''],
+      malfunctionType: [''],
+      time: '',
+      comment: ''
+    });
+  }
+
+  ngOnInit(): void {
+    this.fetchMalfunctionType();
+  }
+
+  private fetchMalfunctionType() {
+    const api = this.equipmentService.api + '/config';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.malfunctionTypes = JSON.parse(result.data.malfunctionType).map((item: any) => {
+        return item.name
+      });
     });
   }
 }
