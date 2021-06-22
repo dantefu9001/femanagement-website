@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {EquipmentParamsTableComponent, Param} from "./equipment-params-table/equipment-params-table.component";
 import {EquipmentsComponent} from "../equipments.component";
 import {EquipmentService} from "../../../service/equipment.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-equipment-params',
@@ -36,8 +37,11 @@ export class EquipmentParamsComponent implements OnInit {
     });
   }
 
-  constructor(public fb: FormBuilder, equipmentsComponent: EquipmentsComponent,
-              public equipmentService: EquipmentService) {
+  constructor(
+    equipmentsComponent: EquipmentsComponent,
+    public fb: FormBuilder,
+    public nzMsgService: NzMessageService,
+    public equipmentService: EquipmentService) {
     this.equipmentsComponent = equipmentsComponent;
   }
 
@@ -57,13 +61,13 @@ export class EquipmentParamsComponent implements OnInit {
       this.equipmentParamsTableComponent.search(this.equipmentId);
       this.isVisible = true;
     } else {
-      alert("请选择设备")
+      this.nzMsgService.error("请选择设备")
     }
   }
 
   addParam() {
     let param = {
-      id:  this.equipmentParamsTableComponent.listOfData.length,
+      id: this.equipmentParamsTableComponent.listOfData.length,
       equipmentId: this.equipmentsComponent.selectedEquipment.id,
       code: this.paramsForm.get('code')?.value,
       param: this.paramsForm.get('param')?.value,
@@ -78,7 +82,7 @@ export class EquipmentParamsComponent implements OnInit {
   }
 
   private saveParams(param: Param) {
-    const api = this.equipmentService.api+'/equipment-params';
+    const api = this.equipmentService.api + '/equipment-params';
     this.equipmentService.postData(api, param).then(() => {
       this.equipmentParamsTableComponent.search(this.equipmentId);
     });

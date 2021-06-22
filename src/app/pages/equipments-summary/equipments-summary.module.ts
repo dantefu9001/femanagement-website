@@ -13,6 +13,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzSpaceModule} from "ng-zorro-antd/space";
 import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {NzModalModule} from "ng-zorro-antd/modal";
     NzModalModule,
   ],
   providers:[
+    NzMessageService
   ]
 })
 export class EquipmentsSummaryModule {

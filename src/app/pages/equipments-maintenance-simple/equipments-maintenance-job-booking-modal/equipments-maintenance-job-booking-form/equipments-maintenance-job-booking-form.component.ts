@@ -65,6 +65,7 @@ export class EquipmentsMaintenanceJobBookingFormComponent {
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required]],
       confirm: ['', [this.confirmValidator]],
+      time:[''],
       comment: ['', [Validators.required]]
     });
   }

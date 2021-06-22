@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {EquipmentService} from "../../../../service/equipment.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 interface ItemData {
   id: number;
@@ -14,34 +17,27 @@ interface ItemData {
   styleUrls: ['./equipments-maintenance-management-history.component.scss']
 })
 export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
-  listOfSelection = [
-    {
-      text: 'Select All Row',
-      onSelect: () => {
-        this.onAllChecked(true);
-      }
-    },
-    {
-      text: 'Select Odd Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 !== 0));
-        this.refreshCheckedStatus();
-      }
-    },
-    {
-      text: 'Select Even Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) => this.updateCheckedSet(data.id, index % 2 === 0));
-        this.refreshCheckedStatus();
-      }
-    }
-  ];
+  listOfSelection = [];
+
+
+  isVisible = false;
+  isOkLoading = false;
+
   checked = false;
   indeterminate = false;
-  listOfCurrentPageData: ReadonlyArray<ItemData> = [];
-  listOfData: ReadonlyArray<ItemData> = [];
+  listOfCurrentPageData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
+  listOfData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
+  status = [{
+    name: '新增',
+    value: 'new'
+  }, {
+    name: '待审核',
+    value: 'toBeChecked'
+  }];
+  selectedStatus = this.status[0].name;
+  isAudit!: boolean;
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -61,36 +57,112 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
     this.refreshCheckedStatus();
   }
 
-  onCurrentPageDataChange($event: ReadonlyArray<ItemData>): void {
+  onCurrentPageDataChange($event: ReadonlyArray<EquipmentsMaintenanceSheet>): void {
     this.listOfCurrentPageData = $event;
     this.refreshCheckedStatus();
   }
 
   refreshCheckedStatus(): void {
-    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
+    this.checked = this.listOfCurrentPageData.length > 0 && this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
+  constructor(public fb: FormBuilder, public equipmentService: EquipmentService, public nzMsgService: NzMessageService) {
+  }
+
   ngOnInit(): void {
-    this.listOfData = new Array(7).fill(0).map((_, index) => {
-      return {
-        id: index,
-        name: `Edward King ${index}`,
-        age: 32,
-        address: `London, Park Lane no. ${index}`
-      };
+    this.searchForm = this.fb.group({
+      "equipmentGroup": new FormControl(''),
+      "equipment": new FormControl(''),
+      "startDate": [null],
+      "endDate": [null],
+      "status": new FormControl('')
     });
+    this.search();
   }
 
   search() {
-
+    const api = this.equipmentService.api + '/maintenance/submitter';
+    let param = {
+      startDate: this.searchForm.get('startDate')?.value,
+      endDate: this.searchForm.get('endDate')?.value,
+      equipment: this.searchForm.get('equipment')?.value,
+      equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
+      status: this.selectedStatus
+    };
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+      this.listOfData = result.data
+    });
   }
 
   view() {
 
   }
 
-  export() {
+  deprecate() {
+    const api = this.equipmentService.api + '/maintenance/auditor/deprecate';
+    let param = {
+      "ids": Array.from(this.setOfCheckedId)
+    };
+    this.equipmentService.postData(api, param).then(() => {
+      this.resetAndSearch();
+      this.isVisible = false;
+      this.isOkLoading = false;
+    })
+  }
+
+  audit() {
+    const api = this.equipmentService.api + '/maintenance/auditor/audit';
+    let param = {
+      "ids": Array.from(this.setOfCheckedId),
+    };
+    this.equipmentService.postData(api, param).then(() => {
+      this.resetAndSearch();
+      this.isVisible = false;
+      this.isOkLoading = false;
+    })
+  }
+
+  showModal(type: string): void {
+    if (this.setOfCheckedId.size == 0) {
+      this.nzMsgService.error("请选择至少一条数据进行操作")
+    } else {
+      switch (type) {
+        case 'delete':
+          this.isAudit = false;
+          break;
+        case 'audit':
+          this.isAudit = true;
+          break;
+      }
+      this.isVisible = true;
+    }
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    if (this.isAudit) {
+      this.audit();
+    } else {
+      this.deprecate()
+    }
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 3000);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
+  resetAndSearch() {
+    this.searchForm.setControl('equipment', new FormControl(''));
+    this.searchForm.setControl('equipmentGroup', new FormControl(''))
+    this.search();
+  }
+
+  export(){
 
   }
 }

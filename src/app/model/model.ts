@@ -98,5 +98,7 @@ export interface EquipmentsMaintenanceSheet {
   status: string,
   picUrls: string[],
   pauseTime:string,
-  maintenanceDesc:string
+  maintenanceDesc:string,
+  auditor:Person,
+  auditTime:Date
 }

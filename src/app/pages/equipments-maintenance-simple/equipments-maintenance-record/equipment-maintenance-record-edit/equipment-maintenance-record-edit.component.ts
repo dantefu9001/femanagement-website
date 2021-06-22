@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentsMaintenanceRecordComponent} from "../equipments-maintenance-record.component";
 import {EquipmentEditUploadPicComponent} from "../../../equipments/equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 import {EquipmentService} from "../../../../service/equipment.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-equipment-maintenance-record-edit',
@@ -38,8 +39,9 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
       this.view();
     } else {
       this.equipmentMaintenanceEditForm.setControl('code', new FormControl(Date.now().toString()));
+      this.isVisible = true;
     }
-    this.isVisible = true;
+
   }
 
   private initData() {
@@ -51,14 +53,12 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
     this.isOkLoading = true;
     if (this.editable) {
       this.add();
-    }else {
+    } else {
       this.isVisible = false;
       this.isOkLoading = false;
       this.clearForm();
     }
-
   }
-
 
   handleCancel(): void {
     this.isVisible = false;
@@ -80,6 +80,7 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               public equipmentService: EquipmentService,
+              public nzMsgService: NzMessageService,
               equipmentEditUploadPicComponent1: EquipmentEditUploadPicComponent,
               equipmentEditUploadPicComponent2: EquipmentEditUploadPicComponent,
               public equipmentsMaintenanceRecordComponent: EquipmentsMaintenanceRecordComponent) {
@@ -128,7 +129,7 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
 
   view() {
     if (this.equipmentMaintenanceComponent.setOfCheckedId.size !== 1) {
-      alert("请选择一条数据查看");
+      this.nzMsgService.error("请选择一条数据查看");
     } else {
       let selectedId = this.equipmentMaintenanceComponent.setOfCheckedId.values().next().value;
       this.selectedEquipmentMaintenanceSheet = this.equipmentMaintenanceComponent.listOfData.filter(d => d.id === selectedId)[0]
@@ -150,6 +151,7 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
       this.uploadPicComponent.url = this.selectedEquipmentMaintenanceSheet.picUrls?.pop()!
       this.uploadPicComponent2.url = this.selectedEquipmentMaintenanceSheet.picUrls?.pop()!
       this.equipmentMaintenanceEditForm.setControl('malfunctionTime', new FormControl(this.selectedEquipmentMaintenanceSheet.malfunctionTime))
+      this.isVisible = true;
     }
   }
 

@@ -51,8 +51,21 @@
       <app-equipments-maintenance-job-booking-modal
         style="margin-left: 8px;margin-top: 8px"></app-equipments-maintenance-job-booking-modal>
       <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
-      <button nz-button nzType="'primary'" (click)="deprecate()">删除</button>
-      <button nz-button nzType="'primary'" (click)="check()">审核</button>
+      <button nz-button nzType="primary" (click)="showModal('delete')">
+        <span>作废</span>
+      </button>
+      <button nz-button nzType="primary" (click)="showModal('audit')">
+        <span>审核</span>
+      </button>
+      <nz-modal
+        [(nzVisible)]="isVisible"
+        nzTitle="{{isAudit?'批准维修单':'作废维修单'}}"
+        (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()"
+        [nzOkLoading]="isOkLoading"
+      >
+        <p *nzModalContent>{{isAudit?'是否批准该维修单？':'是否作废该维修单？'}}</p>
+      </nz-modal>
     </div>
   </nz-row>
 

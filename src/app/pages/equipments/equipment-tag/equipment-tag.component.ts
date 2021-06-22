@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {EquipmentsComponent} from "../equipments.component";
 import {Equipment} from "../../../model/model";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-equipment-tag',
@@ -18,7 +19,7 @@ export class EquipmentTagComponent {
   equipmentCode!: string;
   qrCodeInfo!: string;
 
-  constructor(public equipmentsComponent: EquipmentsComponent) {
+  constructor(public equipmentsComponent: EquipmentsComponent, public nzMsgService:NzMessageService) {
     this.equipmentComponent = equipmentsComponent;
   }
 
@@ -38,7 +39,7 @@ export class EquipmentTagComponent {
       this.isVisible = true;
     }
     else{
-      alert("请选择设备")
+      this.nzMsgService.error("请选择设备")
     }
   }
 

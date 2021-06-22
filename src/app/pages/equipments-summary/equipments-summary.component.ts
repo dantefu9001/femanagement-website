@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {EquipmentsSummary} from "../../model/model";
 import {EquipmentService} from "../../service/equipment.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 export interface Data {
   id: number;
@@ -66,7 +67,9 @@ export class EquipmentsSummaryComponent implements OnInit {
     this.refreshCheckedStatus();
   }
 
-  constructor(private fb:FormBuilder,public equipmentService: EquipmentService){
+  constructor(private fb:FormBuilder,
+              public nzMsgService:NzMessageService,
+              public equipmentService: EquipmentService){
   }
 
   ngOnInit(): void {
@@ -83,8 +86,8 @@ export class EquipmentsSummaryComponent implements OnInit {
   }
 
   edit() {
-    if (this.setOfCheckedId.size > 1 || this.setOfCheckedId.size < 1) {
-      alert("请选择单个小结进行编辑");
+    if (this.setOfCheckedId.size == 1) {
+      this.nzMsgService.error("请选择单个小结进行编辑");
     } else {
       this.selectedSummary = this.summaryList.filter(summary=>this.setOfCheckedId.has(summary.id)).pop()!;
       this.showModal();

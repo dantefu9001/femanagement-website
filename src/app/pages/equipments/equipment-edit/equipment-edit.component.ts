@@ -17,6 +17,7 @@ import {
 } from "../../../model/model";
 import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentEditUploadPicComponent} from "./equipment-edit-upload-pic/equipment-edit-upload-pic.component";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-equipment-edit',
@@ -84,6 +85,7 @@ export class EquipmentEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private modal: NzModalService,
+              public nzMsgService:NzMessageService,
               public equipmentService: EquipmentService,
               equipmentsComponent: EquipmentsComponent) {
     this.equipmentsComponent = equipmentsComponent;
@@ -114,7 +116,7 @@ export class EquipmentEditComponent implements OnInit {
     this.selectedEquipment = this.equipmentsComponent.selectedEquipment;
     if (this.isEdit) {
       if (undefined === this.selectedEquipment) {
-        alert("请选择设备");
+        this.nzMsgService.error("请选择设备");
       }
       this.setupEquipment(this.selectedEquipment)
     }
