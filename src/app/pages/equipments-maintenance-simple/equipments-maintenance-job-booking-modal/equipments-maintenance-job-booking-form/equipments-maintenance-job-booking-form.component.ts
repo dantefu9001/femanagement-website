@@ -5,6 +5,7 @@ import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {EquipmentEditUploadPicComponent} from "../../../equipments/equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {MalfunctionType} from "../../../basicdata/basic-data-configs/basic-data-configs.component";
 
 @Component({
   selector: 'app-equipments-maintenance-job-booking-form',
@@ -14,7 +15,7 @@ import {EquipmentsMaintenanceSheet} from "../../../../model/model";
 export class EquipmentsMaintenanceJobBookingFormComponent implements OnInit {
   @ViewChild('uploadPicComponent1') upload1: EquipmentEditUploadPicComponent;
   @ViewChild('uploadPicComponent2') upload2: EquipmentEditUploadPicComponent;
-  @Input() maintenance!:EquipmentsMaintenanceSheet;
+  maintenance!:EquipmentsMaintenanceSheet;
   maintenanceForm: FormGroup;
   selectedMaintenanceCode!: number;
   maintenanceCodes!: Array<number>;
@@ -29,7 +30,7 @@ export class EquipmentsMaintenanceJobBookingFormComponent implements OnInit {
     this.upload1 = upload1;
     this.upload2 = upload2;
     this.maintenanceForm = this.fb.group({
-      repairNumber: [''],
+      repairNumber: this.maintenance?.code!,
       malfunctionType: [''],
       time: '',
       comment: ''

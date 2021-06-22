@@ -10,9 +10,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
   styleUrls: ['./equipments-maintenance-management-unfinished.component.scss']
 })
 export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnInit {
-  listOfSelection = [];
-
-
+  listOfSelection :Array<EquipmentsMaintenanceSheet>= [];
   isVisible = false;
   isOkLoading = false;
 
@@ -35,8 +33,10 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
+      this.listOfSelection = [...this.listOfData.filter(d=>d.id == id)]
     } else {
       this.setOfCheckedId.delete(id);
+      this.listOfSelection = this.listOfSelection.filter(d=>d.id!==id)
     }
   }
 
@@ -60,7 +60,10 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
-  constructor(public fb: FormBuilder, public equipmentService: EquipmentService, public nzMsgService: NzMessageService) {
+  constructor(
+    public fb: FormBuilder,
+    public equipmentService: EquipmentService,
+    public nzMsgService: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -156,4 +159,13 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
   }
 
 
+  // report() {
+  //   if(this.setOfCheckedId.size!==1){
+  //     this.nzMsgService.error("请选择一条数据进行报工")
+  //   }else{
+  //     let id =Array.from(this.setOfCheckedId)[0]
+  //     this.selectedMaintenance = this.listOfData.find(d=>d.id ==id)!
+  //     this.equipmentBookingFormModalComponent.showModal(this.selectedMaintenance);
+  //   }
+  // }
 }

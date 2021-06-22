@@ -24,7 +24,10 @@ import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equi
 
 @NgModule({
   providers:[
-    EquipmentEditUploadPicComponent
+    EquipmentEditUploadPicComponent,
+    EquipmentsMaintenanceJobBookingModalComponent,
+    EquipmentsMaintenanceJobBookingFormComponent,
+    EquipmentsMaintenanceJobBookingTableComponent
   ],
   declarations: [
     EquipmentsMaintenanceRecordComponent,

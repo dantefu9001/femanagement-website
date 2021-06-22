@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EquipmentService} from "../../../service/equipment.service";
 
-class MalfunctionType {
+export class MalfunctionType {
   name: string;
   hideButton: boolean;
 
@@ -11,7 +11,7 @@ class MalfunctionType {
   }
 }
 
-class MalfunctionLevel extends MalfunctionType {
+export class MalfunctionLevel extends MalfunctionType {
   desc: string;
 
   constructor(name: string, hideButton: boolean, desc: string) {

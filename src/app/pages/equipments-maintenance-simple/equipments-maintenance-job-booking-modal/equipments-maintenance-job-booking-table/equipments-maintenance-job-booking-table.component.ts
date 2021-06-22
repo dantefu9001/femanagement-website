@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {EquipmentsMaintenanceSheet} from "../../../../model/model";
 
 interface ItemData {
   id: number;
@@ -12,6 +13,8 @@ interface ItemData {
   templateUrl: './equipments-maintenance-job-booking-table.component.html'
 })
 export class EquipmentsMaintenanceJobBookingTableComponent implements OnInit {
+  maintenance!:EquipmentsMaintenanceSheet;
+
   listOfSelection = [
     {
       text: 'Select All Row',

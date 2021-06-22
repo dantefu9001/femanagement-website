@@ -88,7 +88,6 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status: this.selectedStatus
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data
