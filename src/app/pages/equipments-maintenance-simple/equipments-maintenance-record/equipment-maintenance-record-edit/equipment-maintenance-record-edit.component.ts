@@ -51,10 +51,12 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
     this.isOkLoading = true;
     if (this.editable) {
       this.add();
+    }else {
+      this.isVisible = false;
+      this.isOkLoading = false;
+      this.clearForm();
     }
-    this.isVisible = false;
-    this.isOkLoading = false;
-    this.clearForm();
+
   }
 
 
@@ -116,6 +118,10 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
     const api = this.equipmentService.api + '/maintenance/submitter';
     this.equipmentService.postData(api, param).then((result: any) => {
       console.log(result.code);
+      this.isVisible = false;
+      this.isOkLoading = false;
+      this.clearForm();
+      this.equipmentsMaintenanceRecordComponent.resetAndSearch();
     })
 
   }

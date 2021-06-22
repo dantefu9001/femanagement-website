@@ -58,6 +58,11 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
     this.search();
   }
 
+  resetAndSearch() {
+    this.searchForm.setControl('equipment', new FormControl(''));
+    this.searchForm.setControl('equipmentGroup', new FormControl(''))
+    this.search();
+  }
 
   search() {
     const api = this.equipmentService.api + '/maintenance/submitter';
@@ -78,7 +83,7 @@ export class EquipmentsMaintenanceRecordComponent implements OnInit {
     let param = {
       "ids": Array.from(this.setOfCheckedId),
     }
-    this.equipmentService.postData(api, param).then(()=>{
+    this.equipmentService.postData(api, param).then(() => {
       this.search();
     })
   }
