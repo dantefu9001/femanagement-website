@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../../model/model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -29,13 +29,7 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
   listOfData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
-  status = [{
-    name: '新增',
-    value: 'new'
-  }, {
-    name: '待审核',
-    value: 'toBeChecked'
-  }];
+
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
@@ -88,7 +82,7 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status:"验证已审核"
+      status: MaintenanceStatus.VALIDATION_APPROVED
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data

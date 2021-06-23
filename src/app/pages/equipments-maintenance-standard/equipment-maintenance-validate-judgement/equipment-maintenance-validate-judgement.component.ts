@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {EquipmentsMaintenanceSheet} from "../../../model/model";
+import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../model/model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentService} from "../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -105,7 +105,7 @@ export class EquipmentMaintenanceValidateJudgementComponent {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status: '已维护'
+      status:MaintenanceStatus.MAINTAINED+","+MaintenanceStatus.RATED
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data
@@ -167,7 +167,7 @@ export class EquipmentMaintenanceValidateJudgementComponent {
     const api = this.equipmentService.api + '/maintenance/submitter/confirm';
     let param = {
       id: this.listOfSelection[0]?.id,
-      status: '已确认'
+      status: MaintenanceStatus.CONFIRMED
     }
     this.equipmentService.postData(api, param).then((result: any) => {
       this.listOfData = result.data
@@ -180,10 +180,11 @@ export class EquipmentMaintenanceValidateJudgementComponent {
     const api = this.equipmentService.api + '/maintenance/submitter/rate';
     let param = {
       id: this.listOfSelection[0]?.id,
-        responseRating: this.responseRating.response,
-        qualityRating: this.qualityRating.quality,
-        fiveSRating: this.fiveSRating.fiveS,
-        overallRating: this.overallRating.overall,
+      responseRating: this.responseRating.response,
+      qualityRating: this.qualityRating.quality,
+      fiveSRating: this.fiveSRating.fiveS,
+      overallRating: this.overallRating.overall,
+      status:MaintenanceStatus.RATED,
       description: this.judgeForm.get('remark')?.value,
       anonymous: this.anonymous
     };

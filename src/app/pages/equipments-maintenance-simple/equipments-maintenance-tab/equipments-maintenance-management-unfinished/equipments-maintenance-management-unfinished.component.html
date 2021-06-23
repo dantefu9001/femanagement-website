@@ -30,6 +30,7 @@
         <nz-select
           name="status"
           [(ngModel)]="selectedStatus"
+          (ngModelChange)="search()"
           [ngModelOptions]="{ standalone: true }"
         >
           <nz-option

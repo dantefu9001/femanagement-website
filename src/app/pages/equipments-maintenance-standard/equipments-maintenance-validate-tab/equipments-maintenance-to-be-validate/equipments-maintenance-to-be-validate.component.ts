@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../../model/model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -94,7 +94,7 @@ export class EquipmentsMaintenanceToBeValidateComponent implements OnInit {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status: "待验证"
+      status: MaintenanceStatus.VALIDATED
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data

@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {EquipmentsMaintenanceSheet} from "../../../model/model";
+import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../model/model";
 import {EquipmentsMaintenanceJobBookingFormComponent} from "./equipments-maintenance-job-booking-form/equipments-maintenance-job-booking-form.component";
 import {EquipmentsMaintenanceJobBookingTableComponent} from "./equipments-maintenance-job-booking-table/equipments-maintenance-job-booking-table.component";
 import {EquipmentsMaintenanceManagementUnfinishedComponent} from "../equipments-maintenance-tab/equipments-maintenance-management-unfinished/equipments-maintenance-management-unfinished.component";
@@ -57,7 +57,8 @@ export class EquipmentsMaintenanceJobBookingModalComponent {
       pauseTime: this.equipmentBookingForm.maintenanceForm.get('time')?.value,
       maintenanceDesc: this.equipmentBookingForm.maintenanceForm.get('comment')?.value,
       maintainPicUrls: [this.equipmentBookingForm.upload1.url, this.equipmentBookingForm.upload2.url],
-      spareParts:this.equipmentBookingTable.listOfData
+      spareParts:this.equipmentBookingTable.listOfData,
+      status:MaintenanceStatus.MAINTAINED
     }
     this.equipmentService.postData(api, param).then(() => {
       this.nzMsgService.success("报工成功")

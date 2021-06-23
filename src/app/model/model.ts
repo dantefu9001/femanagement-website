@@ -119,3 +119,14 @@ export interface SparePart {
   period: number,
   remark: string,
 }
+
+export enum MaintenanceStatus {
+  SUBMITTED="已提交",
+  TO_BE_DISPATCHED="待分派",
+  DISPATCHED="已分派",
+  MAINTAINED="已维修",
+  CONFIRMED="已确认",
+  RATED="已评价",
+  VALIDATED="已验证",
+  VALIDATION_APPROVED="验证已审核"
+}

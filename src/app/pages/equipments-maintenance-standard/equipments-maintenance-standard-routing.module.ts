@@ -6,7 +6,7 @@ import {EquipmentsMaintenanceValidateTabComponent} from "./equipments-maintenanc
 
 const routes: Routes = [
   {path: 'record-standard', component: EquipmentsMaintenanceRecordComponent},
-  {path: 'rate', component: EquipmentMaintenanceValidateJudgementComponent},
+  {path: 'rating', component: EquipmentMaintenanceValidateJudgementComponent},
   {path: 'validate', component: EquipmentsMaintenanceValidateTabComponent}
 ];
 

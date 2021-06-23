@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../../model/model";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 
@@ -22,14 +22,7 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
   listOfData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
-  status = [{
-    name: '新增',
-    value: 'new'
-  }, {
-    name: '待审核',
-    value: 'toBeChecked'
-  }];
-  selectedStatus = this.status[0].name;
+
   isAudit!: boolean;
 
   updateCheckedSet(id: number, checked: boolean): void {

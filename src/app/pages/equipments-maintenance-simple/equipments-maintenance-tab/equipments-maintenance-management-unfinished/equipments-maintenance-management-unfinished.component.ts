@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../../model/model";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 
@@ -21,11 +21,11 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
   status = [{
-    name: '新增',
-    value: 'new'
+    name: MaintenanceStatus.SUBMITTED,
   }, {
-    name: '待审核',
-    value: 'toBeChecked'
+    name:MaintenanceStatus.TO_BE_DISPATCHED,
+  }, {
+    name: MaintenanceStatus.DISPATCHED,
   }];
   selectedStatus = this.status[0].name;
   isAudit!: boolean;
@@ -142,10 +142,6 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
     } else {
       this.deprecate()
     }
-    setTimeout(() => {
-      this.isVisible = false;
-      this.isOkLoading = false;
-    }, 3000);
   }
 
   handleCancel(): void {
@@ -157,15 +153,4 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
     this.searchForm.setControl('equipmentGroup', new FormControl(''))
     this.search();
   }
-
-
-  // report() {
-  //   if(this.setOfCheckedId.size!==1){
-  //     this.nzMsgService.error("请选择一条数据进行报工")
-  //   }else{
-  //     let id =Array.from(this.setOfCheckedId)[0]
-  //     this.selectedMaintenance = this.listOfData.find(d=>d.id ==id)!
-  //     this.equipmentBookingFormModalComponent.showModal(this.selectedMaintenance);
-  //   }
-  // }
 }
