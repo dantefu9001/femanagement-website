@@ -29,20 +29,60 @@
     </div>
     <div class="edit-area">
       <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
-      <button nz-button nzType="primary" (click)="showModal('delete')">
+      <button nz-button nzType="primary" (click)="showValidateModal()">
         <span>验证</span>
       </button>
-      <button nz-button nzType="primary" (click)="showModal('audit')">
+      <button nz-button nzType="primary" (click)="showApproveModal()">
         <span>审核</span>
       </button>
+
+
       <nz-modal
         [(nzVisible)]="isVisible"
-        nzTitle="{{isAudit?'批准维修单':'作废维修单'}}"
+        nzTitle="验证信息"
         (nzOnCancel)="handleCancel()"
         (nzOnOk)="handleOk()"
         [nzOkLoading]="isOkLoading"
+        [nzWidth]="340"
       >
-        <p *nzModalContent>{{isAudit?'是否批准该维修单？':'是否作废该维修单？'}}</p>
+        <form nz-form [formGroup]="validateForm">
+          <nz-form-item>
+            <nz-form-label>设备组</nz-form-label>
+            <nz-form-control>
+              <nz-select style="width: 75%"
+                name="equipment-group"
+                [(ngModel)]="selectedValidate"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of validations"
+                  [nzLabel]="item"
+                  [nzValue]="item"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>说明</nz-form-label>
+            <nz-form-control>
+              <textarea rows="5" style="width: 75%;margin-left: 12px" placeholder="请输入" formControlName="description"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-modal>
+
+      <nz-modal
+        [(nzVisible)]="isApproveVisible"
+        nzTitle="审核验证"
+        (nzOnCancel)="handleApproveCancel()"
+        (nzOnOk)="handleApproveOk()"
+        [nzOkLoading]="isApproveOkLoading"
+      >
+        <p *nzModalContent>是否批准选中的内容？</p>
       </nz-modal>
     </div>
   </nz-row>

@@ -14,36 +14,35 @@ interface Person {
 @Component({
   selector: 'app-equipments-maintenance-to-be-validate',
   templateUrl: './equipments-maintenance-to-be-validate.component.html',
-  styleUrls:['./equipments-maintenance-to-be-validate.component.scss']
+  styleUrls: ['./equipments-maintenance-to-be-validate.component.scss']
 })
-export class EquipmentsMaintenanceToBeValidateComponent implements OnInit{
-  listOfSelection :Array<EquipmentsMaintenanceSheet>= [];
+export class EquipmentsMaintenanceToBeValidateComponent implements OnInit {
+  listOfSelection: Array<EquipmentsMaintenanceSheet> = [];
   isVisible = false;
   isOkLoading = false;
-
   checked = false;
   indeterminate = false;
   listOfCurrentPageData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
   listOfData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
-  status = [{
-    name: '新增',
-    value: 'new'
-  }, {
-    name: '待审核',
-    value: 'toBeChecked'
-  }];
-  selectedStatus = this.status[0].name;
-  isAudit!: boolean;
+  validateForm!: FormGroup;
+  validations = [
+    '完全有效',
+    '部分有效',
+    '无效'
+  ]
+  selectedValidate: string = this.validations[0];
+  isApproveVisible: boolean = false;
+  isApproveOkLoading: boolean = false;
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
-      this.listOfSelection = [...this.listOfData.filter(d=>d.id == id)]
+      this.listOfSelection = [...this.listOfData.filter(d => d.id == id)]
     } else {
       this.setOfCheckedId.delete(id);
-      this.listOfSelection = this.listOfSelection.filter(d=>d.id!==id)
+      this.listOfSelection = this.listOfSelection.filter(d => d.id !== id)
     }
   }
 
@@ -81,6 +80,10 @@ export class EquipmentsMaintenanceToBeValidateComponent implements OnInit{
       "endDate": [null],
       "status": new FormControl('')
     });
+
+    this.validateForm = this.fb.group({
+      "description": ''
+    })
     this.search();
   }
 
@@ -91,7 +94,7 @@ export class EquipmentsMaintenanceToBeValidateComponent implements OnInit{
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status: this.selectedStatus
+      status: "待验证"
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data
@@ -126,37 +129,61 @@ export class EquipmentsMaintenanceToBeValidateComponent implements OnInit{
     })
   }
 
-  showModal(type: string): void {
-    if (this.setOfCheckedId.size == 0) {
-      this.nzMsgService.error("请选择至少一条数据进行操作")
+  showValidateModal(): void {
+    if (this.listOfSelection.length !== 1) {
+      this.nzMsgService.error("请选择单条数据进行操作");
     } else {
-      switch (type) {
-        case 'delete':
-          this.isAudit = false;
-          break;
-        case 'audit':
-          this.isAudit = true;
-          break;
-      }
       this.isVisible = true;
     }
   }
 
+  showApproveModal(): void {
+    if (this.listOfSelection.length < 1) {
+      this.nzMsgService.error("请选择数据");
+    }
+    // else if (this.listOfSelection.find(d => d.validation === undefined)) {
+    //   this.nzMsgService.error("请勿选择未验证的数据");
+    // }
+    else {
+      this.isApproveVisible = true;
+    }
+  }
+
+
   handleOk(): void {
     this.isOkLoading = true;
-    if (this.isAudit) {
-      this.audit();
-    } else {
-      this.deprecate()
-    }
-    setTimeout(() => {
-      this.isVisible = false;
+    const api = this.equipmentService.api + '/maintenance/submitter/validate';
+    let param = {
+      id: this.listOfSelection[0]?.id,
+      validation: this.selectedValidate,
+      validateDesc: this.validateForm.get('description')?.value
+    };
+    this.equipmentService.postData(api, param).then(() => {
+      this.resetAndSearch();
       this.isOkLoading = false;
-    }, 3000);
+      this.isVisible = false;
+    })
   }
 
   handleCancel(): void {
     this.isVisible = false;
+  }
+
+  handleApproveOk() {
+    this.isApproveOkLoading = true;
+    const api = this.equipmentService.api + '/maintenance/auditor/approve-validation';
+    let param = {
+      ids: Array.from(this.setOfCheckedId)
+    };
+    this.equipmentService.postData(api, param).then(() => {
+      this.resetAndSearch();
+      this.isApproveOkLoading = false;
+      this.isApproveVisible = false;
+    })
+  }
+
+  handleApproveCancel() {
+    this.isApproveVisible = false;
   }
 
   resetAndSearch() {
