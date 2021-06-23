@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EquipmentService} from "../../../service/equipment.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 export class MalfunctionType {
   name: string;
@@ -86,7 +87,7 @@ export class BasicDataConfigsComponent implements OnInit {
     this.fetchData();
   }
 
-  constructor(private equipmentService: EquipmentService) {
+  constructor(private equipmentService: EquipmentService, public nzMsgService: NzMessageService) {
   }
 
   saveConfigs() {
@@ -104,16 +105,16 @@ export class BasicDataConfigsComponent implements OnInit {
       equipmentSummary: this.enableEquipmentManagement,
       sparePartManagement: this.enableSparePartsManagement
     }
-    this.equipmentService.postData(api, param).then(()=>{
+    this.equipmentService.postData(api, param).then(() => {
+      this.nzMsgService.success("保存成功");
       this.fetchData();
     })
   }
 
 
-
   private fetchData() {
     let api = this.equipmentService.api + '/config';
-    this.equipmentService.getData(api).then((result:any)=>{
+    this.equipmentService.getData(api).then((result: any) => {
       let resultData = result.data;
       if (result.data !== undefined) {
         this.isEasyMode = resultData.easyMode;
@@ -128,7 +129,7 @@ export class BasicDataConfigsComponent implements OnInit {
         this.enableEquipmentManagement = resultData.equipmentSummary;
         this.enableSparePartsManagement = resultData.sparePartManagement;
       }
-    }).catch((e:Error)=>{
+    }).catch((e: Error) => {
       console.error(e.message);
     })
   }

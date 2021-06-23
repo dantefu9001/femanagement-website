@@ -1,0 +1,137 @@
+<form nz-form [formGroup]="searchForm" class="ant-advanced-search-form">
+  <nz-row nz-row>
+    <nz-form-item>
+      <nz-form-label>设备组</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入" formControlName="equipmentGroup"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>设备</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入" formControlName="equipment"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>提交时间</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="startDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>至</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="endDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="search-area">
+      <button nz-button nzType="'primary'" (click)="search()">查询</button>
+    </div>
+    <div class="edit-area">
+      <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
+      <button nz-button nzType="primary" (click)="confirm()">确认</button>
+      <button nz-button nzType="primary" (click)="judge()">评价</button>
+
+      <nz-modal
+        [(nzVisible)]="isConfirmVisible"
+        nzTitle="提示"
+        (nzOnCancel)="handleConfirmCancel()"
+        (nzOnOk)="handleConfirmOk()"
+        [nzOkLoading]="isConfirmOkLoading"
+        nzOkText="直接确认"
+        nzCancelText="进行评价"
+      >
+        <p *nzModalContent>是否进行确认？</p>      <button></button>
+
+      </nz-modal>
+
+      <nz-modal
+        [(nzVisible)]="isJudgementVisible"
+        nzTitle="提示"
+        (nzOnCancel)="handleJudgementCancel()"
+        (nzOnOk)="handleJudgementOk()"
+        [nzOkLoading]="isJudgementOkLoading"
+        [nzWidth]="400"
+      >
+        <form nz-form [formGroup]="judgeForm" nzLayout="horizontal">
+          <nz-form-item>
+            <nz-form-label>维修编号</nz-form-label>
+            <nz-form-control>
+              <input nz-input placeholder="hello" formControlName="code">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label style="margin-top: 4px">响应性</nz-form-label>
+            <nz-form-control>
+              <app-response-rating #responseRatingComponent style="margin-left: 14px"></app-response-rating>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label style="margin-top: 4px">维修质量</nz-form-label>
+            <nz-form-control>
+              <app-quality-rating #qualityRatingComponent></app-quality-rating>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label style="margin-top: 4px">现场5S</nz-form-label>
+            <nz-form-control>
+              <app-five-s-rating #fiveSRatingComponent style="margin-left: 12px"></app-five-s-rating>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label style="margin-top: 4px">总体评价</nz-form-label>
+            <nz-form-control>
+              <app-overall-rating #overallRatingComponent></app-overall-rating>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>补充说明</nz-form-label>
+            <nz-form-control>
+              <textarea rows="5" formControlName="remark" placeholder="补充说明"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <label nz-checkbox [(ngModel)]="anonymous" formControlName="submitAnonymously">匿名提交</label>
+          </nz-form-item>
+        </form>
+      </nz-modal>
+    </div>
+  </nz-row>
+
+</form>
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+  <thead>
+  <tr>
+    <th
+      [(nzChecked)]="checked"
+      [nzIndeterminate]="indeterminate"
+      (nzCheckedChange)="onAllChecked($event)"
+    ></th>
+    <th>编号</th>
+    <th>车间</th>
+    <th>设备</th>
+    <th>描述</th>
+    <th>维护人</th>
+    <th>故障判定</th>
+    <th>措施</th>
+    <th>停机时间</th>
+    <th>图片</th>
+    <th>总体评价</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+    <td>{{ data.code }}</td>
+    <td>{{ data.productionLine?.name }}</td>
+    <td>{{ data.equipment?.name }}</td>
+    <td>{{ data.description }}</td>
+    <td>{{ data.maintenancePerson?.name }}</td>
+    <td>{{ data.malfunctionType }}</td>
+    <td>图片</td>
+    <td>{{data.pauseTime}}</td>
+    <td>{{data.maintenanceDesc}}</td>
+  </tr>
+  </tbody>
+</nz-table>
