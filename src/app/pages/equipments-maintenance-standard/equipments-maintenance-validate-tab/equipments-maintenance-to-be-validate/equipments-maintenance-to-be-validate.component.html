@@ -88,8 +88,7 @@
   </nz-row>
 
 </form>
-<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
-          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
   <thead>
   <tr>
     <th
@@ -100,14 +99,17 @@
     <th>编号</th>
     <th>车间</th>
     <th>设备</th>
-    <th>状态</th>
-    <th>提交时间</th>
     <th>描述</th>
-    <th>提交人</th>
-    <th>图片</th>
-    <th>处理人</th>
-    <th>停机时间</th>
-    <th>处理方案</th>
+    <th>维修人</th>
+    <th>故障判定</th>
+    <th>措施</th>
+    <th>预防措施</th>
+    <th>验证人</th>
+    <th>判定</th>
+    <th>验证时间</th>
+    <th>说明</th>
+
+
   </tr>
   </thead>
   <tbody>
@@ -116,14 +118,15 @@
     <td>{{ data.code }}</td>
     <td>{{ data.productionLine?.name }}</td>
     <td>{{ data.equipment?.name }}</td>
-    <td>{{ data.status }}</td>
-    <td>{{ data.malfunctionTime.toLocaleString() }}</td>
     <td>{{ data.description }}</td>
-    <td>{{ data.submitter?.name }}</td>
-    <td>图片</td>
     <td>{{ data.maintenancePerson?.name }}</td>
-    <td>{{data.pauseTime}}</td>
-    <td>{{data.maintenanceDesc}}</td>
+    <td>{{data.malfunctionType}}</td>
+    <td>{{data.action}}</td>
+    <td>{{data.precaution}}</td>
+    <td>{{data.validator}}</td>
+    <td>{{data.validation}}</td>
+    <td>{{data.validateTime}}</td>
+    <td>{{data.validateDesc}}</td>
   </tr>
   </tbody>
 </nz-table>

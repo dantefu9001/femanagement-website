@@ -36,9 +36,6 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
     name: '待审核',
     value: 'toBeChecked'
   }];
-  selectedStatus = this.status[0].name;
-  isAudit!: boolean;
-
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
@@ -91,6 +88,7 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
+      status:"验证已审核"
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data
@@ -101,70 +99,4 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
 
   }
 
-  deprecate() {
-    const api = this.equipmentService.api + '/maintenance/auditor/deprecate';
-    let param = {
-      "ids": Array.from(this.setOfCheckedId)
-    };
-    this.equipmentService.postData(api, param).then(() => {
-      this.resetAndSearch();
-      this.isVisible = false;
-      this.isOkLoading = false;
-    })
-  }
-
-  audit() {
-    const api = this.equipmentService.api + '/maintenance/auditor/audit';
-    let param = {
-      "ids": Array.from(this.setOfCheckedId),
-    };
-    this.equipmentService.postData(api, param).then(() => {
-      this.resetAndSearch();
-      this.isVisible = false;
-      this.isOkLoading = false;
-    })
-  }
-
-  showModal(type: string): void {
-    if (this.setOfCheckedId.size == 0) {
-      this.nzMsgService.error("请选择至少一条数据进行操作")
-    } else {
-      switch (type) {
-        case 'delete':
-          this.isAudit = false;
-          break;
-        case 'audit':
-          this.isAudit = true;
-          break;
-      }
-      this.isVisible = true;
-    }
-  }
-
-  handleOk(): void {
-    this.isOkLoading = true;
-    if (this.isAudit) {
-      this.audit();
-    } else {
-      this.deprecate()
-    }
-    setTimeout(() => {
-      this.isVisible = false;
-      this.isOkLoading = false;
-    }, 3000);
-  }
-
-  handleCancel(): void {
-    this.isVisible = false;
-  }
-
-  resetAndSearch() {
-    this.searchForm.setControl('equipment', new FormControl(''));
-    this.searchForm.setControl('equipmentGroup', new FormControl(''))
-    this.search();
-  }
-
-  export() {
-
-  }
 }
