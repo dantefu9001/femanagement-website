@@ -1,0 +1,82 @@
+<form nz-form [formGroup]="searchForm" class="ant-advanced-search-form">
+  <nz-row nz-row>
+    <nz-form-item>
+      <nz-form-label>设备组</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入" formControlName="equipmentGroup"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>设备</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入" formControlName="equipment"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>提交时间</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="startDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>至</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="endDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="search-area">
+      <button nz-button nzType="'primary'" (click)="search()">查询</button>
+    </div>
+    <div class="edit-area">
+      <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
+    </div>
+  </nz-row>
+
+</form>
+
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+  <thead>
+  <tr>
+    <th
+      [nzSelections]="listOfSelection"
+      [(nzChecked)]="checked"
+      [nzIndeterminate]="indeterminate"
+      (nzCheckedChange)="onAllChecked($event)"
+    ></th>
+    <th>编号</th>
+    <th>车间</th>
+    <th>设备</th>
+    <th>描述</th>
+    <th>维修人</th>
+    <th>故障判定</th>
+    <th>措施</th>
+    <th>预防措施</th>
+    <th>验证人</th>
+    <th>判定</th>
+    <th>验证时间</th>
+    <th>说明</th>
+    <th>审核人</th>
+    <th>审核时间</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+    <td>{{ data.code }}</td>
+    <td>{{ data.productionLine?.name }}</td>
+    <td>{{ data.equipment?.name }}</td>
+    <td>{{ data.description }}</td>
+    <td>{{ data.maintenancePerson?.name }}</td>
+    <td>{{data.malfunctionType}}</td>
+    <td>{{data.action}}</td>
+    <td>{{data.precaution}}</td>
+    <td>{{data.validator}}</td>
+    <td>{{data.validation}}</td>
+    <td>{{data.validateTime}}</td>
+    <td>{{data.validateDesc}}</td>
+    <td>{{data.auditor}}</td>
+    <td>{{data.auditTime}}</td>
+  </tr>
+  </tbody>
+</nz-table>

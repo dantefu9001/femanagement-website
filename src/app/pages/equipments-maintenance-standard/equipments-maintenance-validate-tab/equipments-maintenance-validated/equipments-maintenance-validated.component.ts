@@ -1,15 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 
+interface Person {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+}
+
 @Component({
-  selector: 'app-equipments-maintenance-management-history',
-  templateUrl: './equipments-maintenance-management-history.component.html',
-  styleUrls: ['./equipments-maintenance-management-history.component.scss']
+  selector: 'app-equipments-maintenance-validated',
+  templateUrl: './equipments-maintenance-validated.component.html',
+  styleUrls: ['./equipments-maintenance-validated.component.scss']
 })
-export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
+export class EquipmentsMaintenanceValidatedComponent implements OnInit {
   listOfSelection = [];
 
 
@@ -60,7 +67,10 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
-  constructor(public fb: FormBuilder, public equipmentService: EquipmentService, public nzMsgService: NzMessageService) {
+  public fb: FormBuilder;
+
+  constructor(fb: FormBuilder, public equipmentService: EquipmentService, public nzMsgService: NzMessageService) {
+    this.fb = fb;
   }
 
   ngOnInit(): void {
@@ -154,7 +164,7 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
     this.search();
   }
 
-  export(){
+  export() {
 
   }
 }

@@ -17,6 +17,10 @@ import {ResponseRatingComponent} from './equipment-maintenance-validate-judgemen
 import {QualityRatingComponent} from './equipment-maintenance-validate-judgement/ratings/quality-rating/quality-rating.component';
 import {FiveSRatingComponent} from './equipment-maintenance-validate-judgement/ratings/five-s-rating/five-s-rating.component';
 import {OverallRatingComponent} from './equipment-maintenance-validate-judgement/ratings/overall-rating/overall-rating.component';
+import { EquipmentsMaintenanceValidateTabComponent } from './equipments-maintenance-validate-tab/equipments-maintenance-validate-tab.component';
+import {NzTabsModule} from "ng-zorro-antd/tabs";
+import { EquipmentsMaintenanceToBeValidateComponent } from './equipments-maintenance-validate-tab/equipments-maintenance-to-be-validate/equipments-maintenance-to-be-validate.component';
+import { EquipmentsMaintenanceValidatedComponent } from './equipments-maintenance-validate-tab/equipments-maintenance-validated/equipments-maintenance-validated.component';
 
 
 @NgModule({
@@ -26,7 +30,10 @@ import {OverallRatingComponent} from './equipment-maintenance-validate-judgement
     ResponseRatingComponent,
     QualityRatingComponent,
     FiveSRatingComponent,
-    OverallRatingComponent
+    OverallRatingComponent,
+    EquipmentsMaintenanceValidateTabComponent,
+    EquipmentsMaintenanceToBeValidateComponent,
+    EquipmentsMaintenanceValidatedComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +47,8 @@ import {OverallRatingComponent} from './equipment-maintenance-validate-judgement
     NzDatePickerModule,
     NzTableModule,
     NzRateModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzTabsModule
   ],
   providers: [
     OverallRatingComponent,

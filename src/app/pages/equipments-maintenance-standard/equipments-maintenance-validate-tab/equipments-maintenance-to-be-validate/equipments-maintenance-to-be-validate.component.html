@@ -1,0 +1,89 @@
+<form nz-form [formGroup]="searchForm" class="ant-advanced-search-form">
+  <nz-row nz-row>
+    <nz-form-item>
+      <nz-form-label>设备组</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入" formControlName="equipmentGroup"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>设备</nz-form-label>
+      <nz-form-control>
+        <input nz-input placeholder="请输入" formControlName="equipment"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>提交时间</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="startDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>至</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker formControlName="endDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="search-area">
+      <button nz-button nzType="'primary'" (click)="search()">查询</button>
+    </div>
+    <div class="edit-area">
+      <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
+      <button nz-button nzType="primary" (click)="showModal('delete')">
+        <span>验证</span>
+      </button>
+      <button nz-button nzType="primary" (click)="showModal('audit')">
+        <span>审核</span>
+      </button>
+      <nz-modal
+        [(nzVisible)]="isVisible"
+        nzTitle="{{isAudit?'批准维修单':'作废维修单'}}"
+        (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()"
+        [nzOkLoading]="isOkLoading"
+      >
+        <p *nzModalContent>{{isAudit?'是否批准该维修单？':'是否作废该维修单？'}}</p>
+      </nz-modal>
+    </div>
+  </nz-row>
+
+</form>
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+  <thead>
+  <tr>
+    <th
+      [(nzChecked)]="checked"
+      [nzIndeterminate]="indeterminate"
+      (nzCheckedChange)="onAllChecked($event)"
+    ></th>
+    <th>编号</th>
+    <th>车间</th>
+    <th>设备</th>
+    <th>状态</th>
+    <th>提交时间</th>
+    <th>描述</th>
+    <th>提交人</th>
+    <th>图片</th>
+    <th>处理人</th>
+    <th>停机时间</th>
+    <th>处理方案</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+    <td>{{ data.code }}</td>
+    <td>{{ data.productionLine?.name }}</td>
+    <td>{{ data.equipment?.name }}</td>
+    <td>{{ data.status }}</td>
+    <td>{{ data.malfunctionTime.toLocaleString() }}</td>
+    <td>{{ data.description }}</td>
+    <td>{{ data.submitter?.name }}</td>
+    <td>图片</td>
+    <td>{{ data.maintenancePerson?.name }}</td>
+    <td>{{data.pauseTime}}</td>
+    <td>{{data.maintenanceDesc}}</td>
+  </tr>
+  </tbody>
+</nz-table>

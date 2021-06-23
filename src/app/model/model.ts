@@ -101,6 +101,12 @@ export interface EquipmentsMaintenanceSheet {
   maintenanceDesc: string,
   auditor: Person,
   auditTime: Date
+  action:string,
+  precaution:string,
+  validator:Person,
+  validation:string,
+  validateTime:Date,
+  validateDesc:string
 }
 
 export interface SparePart {

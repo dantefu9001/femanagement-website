@@ -1,18 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentsMaintenanceSheet} from "../../../../model/model";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 
+interface Person {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+}
+
 @Component({
-  selector: 'app-equipments-maintenance-management-history',
-  templateUrl: './equipments-maintenance-management-history.component.html',
-  styleUrls: ['./equipments-maintenance-management-history.component.scss']
+  selector: 'app-equipments-maintenance-to-be-validate',
+  templateUrl: './equipments-maintenance-to-be-validate.component.html',
+  styleUrls:['./equipments-maintenance-to-be-validate.component.scss']
 })
-export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
-  listOfSelection = [];
-
-
+export class EquipmentsMaintenanceToBeValidateComponent implements OnInit{
+  listOfSelection :Array<EquipmentsMaintenanceSheet>= [];
   isVisible = false;
   isOkLoading = false;
 
@@ -35,8 +40,10 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
+      this.listOfSelection = [...this.listOfData.filter(d=>d.id == id)]
     } else {
       this.setOfCheckedId.delete(id);
+      this.listOfSelection = this.listOfSelection.filter(d=>d.id!==id)
     }
   }
 
@@ -60,7 +67,10 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
-  constructor(public fb: FormBuilder, public equipmentService: EquipmentService, public nzMsgService: NzMessageService) {
+  constructor(
+    public fb: FormBuilder,
+    public equipmentService: EquipmentService,
+    public nzMsgService: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -81,6 +91,7 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
+      status: this.selectedStatus
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data
@@ -154,7 +165,4 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
     this.search();
   }
 
-  export(){
-
-  }
 }
