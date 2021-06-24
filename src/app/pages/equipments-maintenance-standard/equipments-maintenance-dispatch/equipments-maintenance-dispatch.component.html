@@ -29,69 +29,77 @@
     </div>
     <div class="edit-area">
       <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
-      <button nz-button nzType="primary" (click)="confirm()">确认</button>
-      <button nz-button nzType="primary" (click)="judge()">评价</button>
+      <button nz-button nzType="primary" (click)="showDeleteModal()">作废</button>
+      <button nz-button nzType="primary" (click)="showDispatchModal()">分派</button>
+      <button nz-button nzType="primary" (click)="showConfirmModal()">审核</button>
 
       <nz-modal
-        [(nzVisible)]="isConfirmVisible"
-        nzTitle="提示"
-        (nzOnCancel)="handleConfirmCancel()"
-        (nzOnOk)="handleConfirmOk()"
-        [nzOkLoading]="isConfirmOkLoading"
-        nzOkText="直接确认"
-        nzCancelText="进行评价"
+        [(nzVisible)]="isDeleteVisible"
+        nzTitle="是否作废"
+        (nzOnCancel)="handleDeleteCancel()"
+        (nzOnOk)="handleDeleteOk()"
+        [nzOkLoading]="isDeleteOkLoading"
       >
-        <p *nzModalContent>是否进行确认？</p>
+        <p *nzModalContent>是否作废选中的内容？</p>
 
       </nz-modal>
 
       <nz-modal
-        [(nzVisible)]="isJudgementVisible"
-        nzTitle="提示"
-        (nzOnCancel)="handleJudgementCancel()"
-        (nzOnOk)="handleJudgementOk()"
-        [nzOkLoading]="isJudgementOkLoading"
-        [nzWidth]="400"
+        [(nzVisible)]="isConfirmVisible"
+        nzTitle="是否审核"
+        (nzOnCancel)="handleConfirmCancel()"
+        (nzOnOk)="handleConfirmOk()"
+        [nzOkLoading]="isConfirmOkLoading"
       >
-        <form nz-form [formGroup]="judgeForm" nzLayout="horizontal">
-          <nz-form-item>
-            <nz-form-label>维修编号</nz-form-label>
+        <p *nzModalContent>是否确认选中的内容？</p>
+
+      </nz-modal>
+
+      <nz-modal
+        [(nzVisible)]="isDispatchVisible"
+        nzTitle="分派维修任务"
+        (nzOnCancel)="handleDispatchCancel()"
+        (nzOnOk)="handleDispatchOk()"
+        [nzOkLoading]="isDispatchOkLoading"
+        [nzWidth]="320"
+      >
+        <form nz-form [formGroup]="dispatchForm" nzLayout="horizontal">
+          <nz-form-item style=" margin-left: 40px">
+            <nz-form-label>负责人</nz-form-label>
             <nz-form-control>
-              <input nz-input placeholder="hello" formControlName="code">
+              <nz-select style="width: 80%"
+                name="engineers"
+                [(ngModel)]="selectedEngineer"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <nz-option
+                  *ngFor="let item of engineers"
+                  [nzLabel]="item.name"
+                  [nzValue]="item"
+                >
+                  <ng-template #tpl>
+                    {{ item }}
+                  </ng-template>
+                </nz-option>
+              </nz-select>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label style="margin-top: 4px">响应性</nz-form-label>
+            <nz-form-label>要求完工时间</nz-form-label>
             <nz-form-control>
-              <app-response-rating #responseRatingComponent style="margin-left: 14px"></app-response-rating>
+              <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="deadline" style="width: 80%"
+                              formControlName="dispatchDeadline">
+
+              </nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item style=" margin-left: 28px">
+            <nz-form-label>派工信息</nz-form-label>
+            <nz-form-control>
+              <textarea rows="5" style="width: 80%" formControlName="info" placeholder="填写派工信息"></textarea>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label style="margin-top: 4px">维修质量</nz-form-label>
-            <nz-form-control>
-              <app-quality-rating #qualityRatingComponent></app-quality-rating>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label style="margin-top: 4px">现场5S</nz-form-label>
-            <nz-form-control>
-              <app-five-s-rating #fiveSRatingComponent style="margin-left: 12px"></app-five-s-rating>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label style="margin-top: 4px">总体评价</nz-form-label>
-            <nz-form-control>
-              <app-overall-rating #overallRatingComponent></app-overall-rating>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label>补充说明</nz-form-label>
-            <nz-form-control>
-              <textarea rows="5" formControlName="remark" placeholder="补充说明"></textarea>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <label nz-checkbox [(ngModel)]="anonymous" formControlName="submitAnonymously">匿名提交</label>
           </nz-form-item>
         </form>
       </nz-modal>
@@ -116,7 +124,6 @@
     <th>故障判定</th>
     <th>措施</th>
     <th>停机时间</th>
-    <th>图片</th>
     <th>总体评价</th>
   </tr>
   </thead>
@@ -129,9 +136,9 @@
     <td>{{ data.description }}</td>
     <td>{{ data.maintenancePerson?.name }}</td>
     <td>{{ data.malfunctionType }}</td>
-    <td>图片</td>
     <td>{{data.pauseTime}}</td>
     <td>{{data.maintenanceDesc}}</td>
+    <td>{{data.ratingOfMaintenance}}</td>
   </tr>
   </tbody>
 </nz-table>

@@ -21,6 +21,7 @@ import { EquipmentsMaintenanceValidateTabComponent } from './equipments-maintena
 import {NzTabsModule} from "ng-zorro-antd/tabs";
 import { EquipmentsMaintenanceToBeValidateComponent } from './equipments-maintenance-validate-tab/equipments-maintenance-to-be-validate/equipments-maintenance-to-be-validate.component';
 import { EquipmentsMaintenanceValidatedComponent } from './equipments-maintenance-validate-tab/equipments-maintenance-validated/equipments-maintenance-validated.component';
+import { EquipmentsMaintenanceDispatchComponent } from './equipments-maintenance-dispatch/equipments-maintenance-dispatch.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { EquipmentsMaintenanceValidatedComponent } from './equipments-maintenanc
     OverallRatingComponent,
     EquipmentsMaintenanceValidateTabComponent,
     EquipmentsMaintenanceToBeValidateComponent,
-    EquipmentsMaintenanceValidatedComponent
+    EquipmentsMaintenanceValidatedComponent,
+    EquipmentsMaintenanceDispatchComponent
   ],
   imports: [
     CommonModule,

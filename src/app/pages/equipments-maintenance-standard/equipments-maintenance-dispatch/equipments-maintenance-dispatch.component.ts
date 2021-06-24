@@ -1,23 +1,16 @@
-import {Component, ViewChild} from '@angular/core';
-import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../model/model";
+import {Component, OnInit} from '@angular/core';
+import {EquipmentsMaintenanceSheet, MaintenanceStatus, Person} from "../../../model/model";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentService} from "../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {ResponseRatingComponent} from "./ratings/response-rating/response-rating.component";
-import {OverallRatingComponent} from "./ratings/overall-rating/overall-rating.component";
-import {FiveSRatingComponent} from "./ratings/five-s-rating/five-s-rating.component";
-import {QualityRatingComponent} from "./ratings/quality-rating/quality-rating.component";
 
 @Component({
-  selector: 'app-equipment-maintenance-validate-judgement',
-  templateUrl: './equipment-maintenance-validate-judgement.component.html',
-  styleUrls: ['./equipment-maintenance-validate-judgement.component.scss']
+  selector: 'app-equipments-maintenance-dispatch',
+  templateUrl: './equipments-maintenance-dispatch.component.html',
+
+  styleUrls: ['./equipments-maintenance-dispatch.component.scss']
 })
-export class EquipmentMaintenanceValidateJudgementComponent {
-  @ViewChild('responseRatingComponent') responseRating: ResponseRatingComponent;
-  @ViewChild('overallRatingComponent') overallRating: OverallRatingComponent;
-  @ViewChild('fiveSRatingComponent') fiveSRating: FiveSRatingComponent;
-  @ViewChild('qualityRatingComponent') qualityRating: QualityRatingComponent;
+export class EquipmentsMaintenanceDispatchComponent implements OnInit {
   listOfSelection: Array<EquipmentsMaintenanceSheet> = [];
 
   checked = false;
@@ -28,11 +21,14 @@ export class EquipmentMaintenanceValidateJudgementComponent {
   searchForm!: FormGroup;
   isConfirmVisible: boolean = false;
   isConfirmOkLoading: boolean = false;
-  isJudgementVisible: boolean = false;
-  isJudgementOkLoading: boolean = false;
-  judgeForm!: FormGroup;
-  anonymous: boolean = false;
-
+  isDispatchVisible: boolean = false;
+  isDispatchOkLoading: boolean = false;
+  dispatchForm!: FormGroup;
+  isDeleteVisible: boolean = false;
+  isDeleteOkLoading: boolean = false;
+  engineers!: Array<Person>;
+  selectedEngineer!: Person;
+  deadline!: Date;
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -65,17 +61,9 @@ export class EquipmentMaintenanceValidateJudgementComponent {
   }
 
   constructor(
-    public overallRatingComponent: OverallRatingComponent,
-    public fiveSRatingComponent: FiveSRatingComponent,
-    public qualityRatingComponent: QualityRatingComponent,
-    public responseRatingComponent: ResponseRatingComponent,
     public fb: FormBuilder,
     public equipmentService: EquipmentService,
     public nzMsgService: NzMessageService) {
-    this.overallRating = overallRatingComponent;
-    this.fiveSRating = fiveSRatingComponent;
-    this.qualityRating = qualityRatingComponent;
-    this.responseRating = responseRatingComponent;
   }
 
   ngOnInit(): void {
@@ -84,17 +72,12 @@ export class EquipmentMaintenanceValidateJudgementComponent {
       "equipment": new FormControl(''),
       "startDate": [null],
       "endDate": [null],
-      "status": new FormControl('')
     });
-    this.judgeForm = this.fb.group({
-      "code": '',
-      "response": '',
-      "quality": '',
-      "fiveS": '',
-      "overall": '',
-      "remark": '',
-      "submitAnonymously": ''
+    this.dispatchForm = this.fb.group({
+      'dispatchDeadline':'',
+      "info": ''
     })
+    this.fetchEngineers();
     this.search();
   }
 
@@ -105,7 +88,7 @@ export class EquipmentMaintenanceValidateJudgementComponent {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status:MaintenanceStatus.MAINTAINED+","+MaintenanceStatus.RATED
+      status: MaintenanceStatus.MAINTAINED + "," + MaintenanceStatus.RATED
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data
@@ -116,26 +99,33 @@ export class EquipmentMaintenanceValidateJudgementComponent {
 
   }
 
-
   resetAndSearch() {
     this.searchForm.setControl('equipment', new FormControl(''));
     this.searchForm.setControl('equipmentGroup', new FormControl(''))
     this.search();
   }
 
-  confirm() {
+  showDeleteModal() {
     if (this.listOfSelection.length !== 1) {
-      this.nzMsgService.error("请选择一条数据")
+      this.nzMsgService.error("请选择至少一条数据")
     } else {
-      this.isConfirmVisible = true;
+      this.isDeleteVisible = true;
     }
   }
 
-  judge() {
+  showDispatchModal() {
     if (this.listOfSelection.length !== 1) {
       this.nzMsgService.error("请选择一条数据")
     } else {
-      this.isJudgementVisible = true;
+      this.isDispatchVisible = true;
+    }
+  }
+
+  showConfirmModal() {
+    if (this.listOfSelection.length < 1) {
+      this.nzMsgService.error("请选择至少一条数据")
+    } else {
+      this.isConfirmVisible = true;
     }
   }
 
@@ -143,55 +133,82 @@ export class EquipmentMaintenanceValidateJudgementComponent {
   handleConfirmOk() {
     //update rating numbers
     this.isConfirmOkLoading = true;
-    this.confirmData();
+    this.confirmDispatch();
   }
 
-  handleJudgementOk() {
+  handleDispatchOk() {
     //update status to confirm
-    this.isJudgementOkLoading = true;
-    this.rate();
+    this.isDispatchOkLoading = true;
+    this.dispatchMaintenance()
+  }
+
+  handleDeleteOk() {
+    this.isDeleteOkLoading = true;
+    this.deleteMaintenance();
   }
 
 
   handleConfirmCancel() {
     this.isConfirmVisible = false;
-    this.isJudgementVisible = true;
   }
 
-  handleJudgementCancel() {
-    this.isJudgementVisible = false;
+  handleDispatchCancel() {
+    this.isDispatchVisible = false;
   }
 
+  handleDeleteCancel() {
+    this.isDeleteVisible = false;
+  }
 
-  confirmData() {
-    const api = this.equipmentService.api + '/maintenance/submitter/confirm';
+  dispatchMaintenance() {
+    const api = this.equipmentService.api + '/maintenance/auditor/dispatch';
     let param = {
       id: this.listOfSelection[0]?.id,
-      status: MaintenanceStatus.CONFIRMED
+      status: MaintenanceStatus.TO_BE_DISPATCHED,
+      maintenancePerson: this.selectedEngineer,
+      dispatchInfo:this.dispatchForm.get('info')?.value,
+      deadLine:this.deadline.toISOString()
     }
-    this.equipmentService.postData(api, param).then((result: any) => {
+    this.equipmentService.postData(api, param).then(() => {
+      this.nzMsgService.success('已分派')
       this.resetAndSearch();
+      this.isDispatchVisible = false;
+      this.isDispatchOkLoading = false;
+    });
+  }
+
+
+  confirmDispatch() {
+    const api = this.equipmentService.api + '/maintenance/auditor/confirm';
+    let param = {
+      id: this.listOfSelection[0]?.id,
+      status: MaintenanceStatus.DISPATCHED
+    }
+    this.equipmentService.postData(api, param).then(() => {
+      this.nzMsgService.success('已审核')
+      this.resetAndSearch()
       this.isConfirmVisible = false;
       this.isConfirmOkLoading = false;
     });
   }
 
-  rate() {
-    const api = this.equipmentService.api + '/maintenance/submitter/rate';
+  deleteMaintenance() {
+    const api = this.equipmentService.api + '/maintenance/auditor/deprecate';
     let param = {
-      id: this.listOfSelection[0]?.id,
-      responseRating: this.responseRating.response,
-      qualityRating: this.qualityRating.quality,
-      fiveSRating: this.fiveSRating.fiveS,
-      overallRating: this.overallRating.overall,
-      status:MaintenanceStatus.RATED,
-      description: this.judgeForm.get('remark')?.value,
-      anonymous: this.anonymous
-    };
+      ids: Array.from(this.setOfCheckedId),
+    }
     this.equipmentService.postData(api, param).then(() => {
-      this.isJudgementVisible = false;
-      this.isJudgementOkLoading = false;
+      this.nzMsgService.success("已删除")
       this.resetAndSearch();
+      this.isDeleteOkLoading = false;
+      this.isDeleteVisible = false;
     });
+  }
+
+  fetchEngineers() {
+    const api = this.equipmentService.api+'/personnel/list';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.engineers = result.data;
+    })
   }
 }

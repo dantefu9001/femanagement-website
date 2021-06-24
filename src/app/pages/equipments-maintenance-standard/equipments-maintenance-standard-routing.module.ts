@@ -3,9 +3,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {EquipmentsMaintenanceRecordComponent} from "../equipments-maintenance-simple/equipments-maintenance-record/equipments-maintenance-record.component";
 import {EquipmentMaintenanceValidateJudgementComponent} from "./equipment-maintenance-validate-judgement/equipment-maintenance-validate-judgement.component";
 import {EquipmentsMaintenanceValidateTabComponent} from "./equipments-maintenance-validate-tab/equipments-maintenance-validate-tab.component";
+import {EquipmentsMaintenanceDispatchComponent} from "./equipments-maintenance-dispatch/equipments-maintenance-dispatch.component";
 
 const routes: Routes = [
   {path: 'record-standard', component: EquipmentsMaintenanceRecordComponent},
+  {path: 'dispatch', component: EquipmentsMaintenanceDispatchComponent},
   {path: 'rating', component: EquipmentMaintenanceValidateJudgementComponent},
   {path: 'validate', component: EquipmentsMaintenanceValidateTabComponent}
 ];
