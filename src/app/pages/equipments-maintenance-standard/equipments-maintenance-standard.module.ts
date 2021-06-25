@@ -22,6 +22,11 @@ import {NzTabsModule} from "ng-zorro-antd/tabs";
 import { EquipmentsMaintenanceToBeValidateComponent } from './equipments-maintenance-validate-tab/equipments-maintenance-to-be-validate/equipments-maintenance-to-be-validate.component';
 import { EquipmentsMaintenanceValidatedComponent } from './equipments-maintenance-validate-tab/equipments-maintenance-validated/equipments-maintenance-validated.component';
 import { EquipmentsMaintenanceDispatchComponent } from './equipments-maintenance-dispatch/equipments-maintenance-dispatch.component';
+import { EquipmentsMaintenanceMyJobBookingsComponent } from './equipments-maintenance-my-job-bookings/equipments-maintenance-my-job-bookings.component';
+import { EquipmentsMaintenanceJobBookingModalFormComponent } from './equipments-maintenance-my-job-bookings/equipments-maintenance-job-booking-modal-form/equipments-maintenance-job-booking-modal-form.component';
+import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component";
+import {EquipmentsMaintenanceJobBookingTableComponent} from "../equipments-maintenance-simple/equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-table/equipments-maintenance-job-booking-table.component";
+import {EquipmentsModule} from "../equipments/equipments.module";
 
 
 @NgModule({
@@ -35,7 +40,9 @@ import { EquipmentsMaintenanceDispatchComponent } from './equipments-maintenance
     EquipmentsMaintenanceValidateTabComponent,
     EquipmentsMaintenanceToBeValidateComponent,
     EquipmentsMaintenanceValidatedComponent,
-    EquipmentsMaintenanceDispatchComponent
+    EquipmentsMaintenanceDispatchComponent,
+    EquipmentsMaintenanceMyJobBookingsComponent,
+    EquipmentsMaintenanceJobBookingModalFormComponent
   ],
   imports: [
     CommonModule,
@@ -50,9 +57,13 @@ import { EquipmentsMaintenanceDispatchComponent } from './equipments-maintenance
     NzTableModule,
     NzRateModule,
     NzCheckboxModule,
-    NzTabsModule
+    NzTabsModule,
+    EquipmentsModule
   ],
   providers: [
+    EquipmentsMaintenanceJobBookingModalFormComponent,
+    EquipmentEditUploadPicComponent,
+    EquipmentsMaintenanceJobBookingTableComponent,
     OverallRatingComponent,
     QualityRatingComponent,
     FiveSRatingComponent,

@@ -39,9 +39,10 @@ import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equi
     EquipmentsMaintenanceJobBookingFormComponent,
     EquipmentsMaintenanceJobBookingTableComponent,
   ],
-  exports: [
-    EquipmentsMaintenanceRecordComponent
-  ],
+    exports: [
+        EquipmentsMaintenanceRecordComponent,
+        EquipmentsMaintenanceJobBookingTableComponent
+    ],
     imports: [
         CommonModule,
         EquipmentsMaintenanceSimpleRoutingModule,

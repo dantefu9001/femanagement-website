@@ -1,0 +1,102 @@
+<form nz-form [formGroup]="maintenanceForm" nzLayout="horizontal">
+  <nz-row>
+    <nz-form-item>
+      <nz-form-label>维修编号</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="repairNumber"
+          [(ngModel)]="selectedMaintenanceCode"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option
+            *ngFor="let item of maintenanceCodes"
+            [nzLabel]="item"
+            [nzValue]="item"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>维修人员</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="maintenancePerson"
+          [(ngModel)]="selectedPerson"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option
+            *ngFor="let item of personnel"
+            [nzLabel]="item.name"
+            [nzValue]="item"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>故障判定</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          name="malfunction"
+          [(ngModel)]="malfunctionType"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <nz-option
+            *ngFor="let item of malfunctionTypes"
+            [nzLabel]="item"
+            [nzValue]="item"
+          >
+            <ng-template #tpl>
+              {{ item }}
+            </ng-template>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-row>
+      <nz-form-item>
+        <nz-form-label>排除故障用时</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="troubleShootingTime" [(ngModel)]="timeOfTroubleShooting" (ngModelChange)="addTime()" placeholder="请输入"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>维修操作用时</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="maintenanceTime" [(ngModel)]="timeOfMaintenance"  (ngModelChange)="addTime()" placeholder="请输入"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>总停机时间</nz-form-label>
+        <nz-form-control>
+          <input nz-input formControlName="totalPauseTime" placeholder="请输入"/>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-row>
+    <nz-row>
+      <nz-col>
+        <nz-form-item>
+          <nz-form-label style="margin-top: 6px">维修描述</nz-form-label>
+          <nz-form-control>
+            <textarea style="margin-top: 6px" formControlName="comment" nz-input rows="5"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label style="margin-top: 2px">预防措施</nz-form-label>
+          <nz-form-control>
+            <textarea style="margin-top: 2px" formControlName="precautions" nz-input rows="5"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <app-equipment-edit-upload-pic #uploadPicComponent1></app-equipment-edit-upload-pic>
+      <app-equipment-edit-upload-pic #uploadPicComponent2></app-equipment-edit-upload-pic>
+    </nz-row>
+  </nz-row>
+</form>
