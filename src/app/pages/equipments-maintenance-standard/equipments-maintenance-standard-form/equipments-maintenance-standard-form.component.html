@@ -64,7 +64,6 @@
             <nz-select [disabled]="!editable"
                        name="workshops"
                        [(ngModel)]="selectedProductionLine"
-                       (ngModelChange)="fetchProcess()"
                        [ngModelOptions]="{ standalone: true }"
             >
               <nz-option
@@ -85,7 +84,6 @@
             <nz-select [disabled]="!editable"
                        name="process"
                        [(ngModel)]="selectedProcess"
-                       (ngModelChange)="fetchEquipments()"
                        [ngModelOptions]="{ standalone: true }"
             >
               <nz-option
@@ -106,7 +104,6 @@
             <nz-select [disabled]="!editable"
                        name="equipment"
                        [(ngModel)]="selectedEquipment"
-                       (ngModelChange)="fetchEquipments()"
                        [ngModelOptions]="{ standalone: true }"
             >
               <nz-option

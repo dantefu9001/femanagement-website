@@ -27,7 +27,7 @@ import { EquipmentsMaintenanceJobBookingModalFormComponent } from './equipments-
 import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 import {EquipmentsMaintenanceJobBookingTableComponent} from "../equipments-maintenance-simple/equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-table/equipments-maintenance-job-booking-table.component";
 import {EquipmentsModule} from "../equipments/equipments.module";
-import { EquipmentsMaintenanceStandardFormComponent } from './equipments-maintenance-standard-form/equipments-maintenance-standard-form.component';
+import {EquipmentsMaintenanceStandardFormComponent} from "./equipments-maintenance-standard-form/equipments-maintenance-standard-form.component";
 
 
 @NgModule({

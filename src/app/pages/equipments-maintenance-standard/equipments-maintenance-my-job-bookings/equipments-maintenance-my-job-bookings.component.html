@@ -29,7 +29,7 @@
       <button nz-button nzType="'primary'" (click)="search()">查询</button>
     </div>
     <div class="edit-area">
-      <app-equipments-maintenance-standard-form></app-equipments-maintenance-standard-form>
+      <app-equipments-maintenance-standard-form [selectedMaintenanceSheet]="listOfSelection[0]"></app-equipments-maintenance-standard-form>
       <button nz-button nzType="primary" (click)="showModal()">
         <span>报工</span>
       </button>
