@@ -1,18 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {EquipmentsSummary, Person} from "../../../model/model";
+import {EquipmentsSummary, Group, Person, summaryType} from "../../../model/model";
 import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentsSummaryComponent} from "../equipments-summary.component";
 
-interface Group {
-  name: string,
-  id: number
-}
 
-interface summaryType {
-  name: string,
-  value: string
-}
 
 @Component({
   selector: 'app-equipments-summary-add',

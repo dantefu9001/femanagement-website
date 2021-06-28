@@ -1,3 +1,5 @@
+<h3>维修单分派管理</h3>
+
 <form nz-form [formGroup]="searchForm" class="ant-advanced-search-form">
   <nz-row nz-row>
     <nz-form-item>
@@ -28,7 +30,7 @@
       <button nz-button nzType="'primary'" (click)="search()">查询</button>
     </div>
     <div class="edit-area">
-      <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
+      <app-equipments-maintenance-standard-form></app-equipments-maintenance-standard-form>
       <button nz-button nzType="primary" (click)="showDeleteModal()">作废</button>
       <button nz-button nzType="primary" (click)="showDispatchModal()">分派</button>
       <button nz-button nzType="primary" (click)="showConfirmModal()">审核</button>

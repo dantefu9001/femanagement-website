@@ -28,7 +28,7 @@
       <button nz-button nzType="'primary'" (click)="search()">查询</button>
     </div>
     <div class="edit-area">
-      <button nz-button nzType="'primary'" (click)="view()">查看详情</button>
+      <app-equipments-maintenance-standard-form></app-equipments-maintenance-standard-form>
       <button nz-button nzType="primary" (click)="showValidateModal()">
         <span>验证</span>
       </button>
@@ -50,9 +50,9 @@
             <nz-form-label>设备组</nz-form-label>
             <nz-form-control>
               <nz-select style="width: 75%"
-                name="equipment-group"
-                [(ngModel)]="selectedValidate"
-                [ngModelOptions]="{ standalone: true }"
+                         name="equipment-group"
+                         [(ngModel)]="selectedValidate"
+                         [ngModelOptions]="{ standalone: true }"
               >
                 <nz-option
                   *ngFor="let item of validations"
@@ -69,7 +69,8 @@
           <nz-form-item>
             <nz-form-label>说明</nz-form-label>
             <nz-form-control>
-              <textarea rows="5" style="width: 75%;margin-left: 12px" placeholder="请输入" formControlName="description"></textarea>
+              <textarea rows="5" style="width: 75%;margin-left: 12px" placeholder="请输入"
+                        formControlName="description"></textarea>
             </nz-form-control>
           </nz-form-item>
         </form>
@@ -88,7 +89,8 @@
   </nz-row>
 
 </form>
-<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData" (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+<nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
   <thead>
   <tr>
     <th

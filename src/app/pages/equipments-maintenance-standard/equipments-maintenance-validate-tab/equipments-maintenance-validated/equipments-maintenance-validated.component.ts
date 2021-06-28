@@ -92,5 +92,4 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
   view() {
 
   }
-
 }

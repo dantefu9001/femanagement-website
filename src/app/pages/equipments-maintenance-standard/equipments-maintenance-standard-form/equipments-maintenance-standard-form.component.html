@@ -1,0 +1,440 @@
+<button nz-button nzType="primary" (click)="showModal()">查看详情</button>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="设备维修记录单"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+  [nzWidth]="'1050px'"
+>
+  <form nz-form [formGroup]="validateForm">
+    <h3>故障上报</h3>
+    <div>
+      <nz-row>
+        <nz-form-item>
+          <nz-form-label>编号</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="请输入" formControlName="code"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>人员</nz-form-label>
+          <nz-form-control>
+            <nz-select [disabled]="!editable"
+                       name="reporter"
+                       [(ngModel)]="reporter"
+                       [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of personnel"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>上报部门</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              name="groups"
+              [(ngModel)]="selectedGroup"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of groups"
+                [nzLabel]="item.name"
+                [nzValue]="item.id"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>车间</nz-form-label>
+          <nz-form-control>
+            <nz-select [disabled]="!editable"
+                       name="workshops"
+                       [(ngModel)]="selectedProductionLine"
+                       (ngModelChange)="fetchProcess()"
+                       [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of productionLines"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>工序</nz-form-label>
+          <nz-form-control>
+            <nz-select [disabled]="!editable"
+                       name="process"
+                       [(ngModel)]="selectedProcess"
+                       (ngModelChange)="fetchEquipments()"
+                       [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of process"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>设备</nz-form-label>
+          <nz-form-control>
+            <nz-select [disabled]="!editable"
+                       name="equipment"
+                       [(ngModel)]="selectedEquipment"
+                       (ngModelChange)="fetchEquipments()"
+                       [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of equipments"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>上报时间</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="reportDate"
+                            formControlName="dateOfReport"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>故障描述</nz-form-label>
+          <nz-form-control>
+            <textarea rows="2" placeholder="请输入文本" formControlName="description"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+    </div>
+    <h3>维修过程</h3>
+    <div>
+      <nz-row>
+        <nz-form-item>
+          <nz-form-label>维修人员</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              name="maintenancePerson"
+              [(ngModel)]="maintainer"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of personnel"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>分派时间</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="dispatchDate"
+                            formControlName="dateOfDispatch"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>分派人员</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              name="dispatchPerson"
+              [(ngModel)]="dispatcher"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of personnel"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>派工信息</nz-form-label>
+          <nz-form-control>
+            <input nz-input="" formControlName="dispatchInfo" placeholder="填写派工信息"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>故障判定</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              name="malfunctionType"
+              [(ngModel)]="malfunctionType"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of malfunctionTypes"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>截至时间</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="deadline"
+                            formControlName="dateOfDeadline"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>故障判定</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              name="malfunctionLevel"
+              [(ngModel)]="malfunctionLevel"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of malfunctionLevels"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>故障说明</nz-form-label>
+          <nz-form-control>
+            <input nz-input="" formControlName="malfunctionDesc"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>停机时间</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="pauseTime" placeholder="请输入"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>完成时间</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="finishDate"
+                            formControlName="dateOfFinish"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>审核人员</nz-form-label>
+          <nz-form-control>
+            <nz-select [disabled]="!editable"
+                       name="checker"
+                       [(ngModel)]="checker"
+                       [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of personnel"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>审核时间</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="checkDate"
+                            formControlName="dateOfCheck"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>维修描述</nz-form-label>
+          <nz-form-control>
+            <textarea rows="2" formControlName="maintenanceDesc" nz-input></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>预防措施</nz-form-label>
+          <nz-form-control>
+            <textarea rows="2" formControlName="precautions" nz-input></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>验证人员</nz-form-label>
+          <nz-form-control>
+            <nz-select [disabled]="!editable"
+                       name="validator"
+                       [(ngModel)]="validator"
+                       [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of personnel"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>验证时间</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="validateDate"
+                            formControlName="dateOfValidation"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>说明</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="validateDesc" placeholder="请输入"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>判定</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="validateJudgement" placeholder="请输入"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+    </div>
+
+    <h3>备件消耗</h3>
+    <div>
+      <nz-table #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+                [nzScroll]="scrollJson">
+        <thead>
+        <tr>
+          <th>编号</th>
+          <th>名称</th>
+          <th>当前库存</th>
+          <th>计量单位</th>
+          <th>消耗数量</th>
+          <th>更换周期（天）</th>
+          <th>备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of rowSelectionTable.data">
+          <td>{{ data.code }}</td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.stock }}</td>
+          <td>{{ data.unit }}</td>
+          <td>{{ data.consumption }}</td>
+          <td>{{ data.period }}</td>
+          <td>{{ data.remark }}</td>
+
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+
+    <h3>服务评价</h3>
+
+    <div>
+      <nz-row class="rating">
+        <nz-form-item>
+          <nz-form-label >响应性</nz-form-label>
+          <nz-form-control>
+            <app-response-rating #responseRatingComponent></app-response-rating>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label style="margin-left: 32px;">维修质量</nz-form-label>
+          <nz-form-control>
+            <app-quality-rating #qualityRatingComponent></app-quality-rating>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label style="margin-left: 32px;">现场5S</nz-form-label>
+          <nz-form-control>
+            <app-five-s-rating #fiveSRatingComponent></app-five-s-rating>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label style="margin-left: 32px;">总体评价</nz-form-label>
+          <nz-form-control>
+            <app-overall-rating #overallRatingComponent></app-overall-rating>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+      <nz-row>
+        <nz-form-item>
+          <nz-form-label>评价人员</nz-form-label>
+          <nz-form-control>
+            <nz-select [disabled]="!editable"
+                       name="ratePerson"
+                       [(ngModel)]="ratePerson"
+                       [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let item of personnel"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              >
+                <ng-template #tpl>
+                  {{ item }}
+                </ng-template>
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>评价时间</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker nzFormat="yyyy-MM-dd" [(ngModel)]="rateDate"
+                            formControlName="dateOfRate"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>补充说明</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="feedbackDesc" placeholder="请输入"/>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-row>
+    </div>
+  </form>
+
+</nz-modal>

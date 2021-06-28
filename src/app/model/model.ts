@@ -130,3 +130,14 @@ export enum MaintenanceStatus {
   VALIDATED="已验证",
   VALIDATION_APPROVED="验证已审核"
 }
+
+
+export interface Group {
+  name: string,
+  id: number
+}
+
+export interface summaryType {
+  name: string,
+  value: string
+}
