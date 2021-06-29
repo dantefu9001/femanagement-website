@@ -374,25 +374,27 @@
         <nz-form-item>
           <nz-form-label >响应性</nz-form-label>
           <nz-form-control>
-            <app-response-rating #responseRatingComponent></app-response-rating>
+<!--            <app-response-rating #responseRatingComponent></app-response-rating>-->
+            <nz-rate [(ngModel)]="response" formControlName="responseRate" nzDisabled></nz-rate>
+
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label style="margin-left: 32px;">维修质量</nz-form-label>
           <nz-form-control>
-            <app-quality-rating #qualityRatingComponent></app-quality-rating>
+            <nz-rate [(ngModel)]="quality" formControlName="qualityRate" nzDisabled></nz-rate>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label style="margin-left: 32px;">现场5S</nz-form-label>
           <nz-form-control>
-            <app-five-s-rating #fiveSRatingComponent></app-five-s-rating>
+            <nz-rate [(ngModel)]="fiveS" formControlName="fiveSRate" nzDisabled></nz-rate>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label style="margin-left: 32px;">总体评价</nz-form-label>
           <nz-form-control>
-            <app-overall-rating #overallRatingComponent></app-overall-rating>
+            <nz-rate [(ngModel)]="overall" formControlName="overallRate" nzDisabled></nz-rate>
           </nz-form-control>
         </nz-form-item>
       </nz-row>

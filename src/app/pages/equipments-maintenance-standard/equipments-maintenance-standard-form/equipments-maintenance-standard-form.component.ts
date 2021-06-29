@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MalfunctionLevel, MalfunctionType} from "../../basicdata/basic-data-configs/basic-data-configs.component";
@@ -26,10 +26,6 @@ import {NzMessageService} from "ng-zorro-antd/message";
 })
 export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
   @Input() selectedMaintenanceSheet!: EquipmentsMaintenanceSheet;
-  @ViewChild('responseRatingComponent') responseRating: ResponseRatingComponent;
-  @ViewChild('overallRatingComponent') overallRating: OverallRatingComponent;
-  @ViewChild('fiveSRatingComponent') fiveSRating: FiveSRatingComponent;
-  @ViewChild('qualityRatingComponent') qualityRating: QualityRatingComponent;
 
   validateForm: FormGroup;
   isVisible: boolean = false;
@@ -65,19 +61,16 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
   listOfData!: Array<SparePart>;
   ratePerson!: Person;
   rateDate!: Date;
+  response!: number;
+  quality!: number;
+  fiveS!: number;
+  overall!: number;
 
 
   constructor(private fb: FormBuilder,
               public nzMsgService: NzMessageService,
               public equipmentService: EquipmentService,
-              public overallRatingComponent: OverallRatingComponent,
-              public fiveSRatingComponent: FiveSRatingComponent,
-              public qualityRatingComponent: QualityRatingComponent,
-              public responseRatingComponent: ResponseRatingComponent,) {
-    this.overallRating = overallRatingComponent;
-    this.fiveSRating = fiveSRatingComponent;
-    this.qualityRating = qualityRatingComponent;
-    this.responseRating = responseRatingComponent;
+              ) {
     this.validateForm = this.fb.group({
       code: '',
       dateOfReport: '',
@@ -95,13 +88,18 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
       validateDesc: '',
       validateJudgement: '',
       dateOfRate: '',
-      feedbackDesc: ''
+      feedbackDesc: '',
+      responseRate:'',
+      qualityRate:'',
+      fiveSRate:'',
+      overallRate:''
     });
   }
 
   ngOnInit(): void {
     this.fetchPersonnel();
     this.fetchProductionLine();
+    this.fetchMalfunctionType();
   }
 
   handleCancel() {
@@ -138,6 +136,40 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
     this.validateForm.setControl('description', new FormControl(this.selectedMaintenanceSheet.description));
     this.validateForm.setControl('dateOfReport', new FormControl(this.selectedMaintenanceSheet.malfunctionTime));
     //维修过程
+    this.maintainer = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.maintenancePerson?.id)!;
+    this.dispatchDate = this.selectedMaintenanceSheet.malfunctionTime;//todo use the right time;
+    this.dispatcher = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.dispatcher?.id)!;
+    this.validateForm.setControl('dispatchInfo', new FormControl(this.selectedMaintenanceSheet.dispatchInfo));
+    this.malfunctionType = this.malfunctionTypes.find(m => m.name == this.selectedMaintenanceSheet.malfunctionType)!;
+    this.deadline = this.selectedMaintenanceSheet.deadline;
+    this.malfunctionLevel = this.malfunctionLevels.find(m => m.name == this.selectedMaintenanceSheet.malfunctionLevel)!;
+    this.validateForm.setControl('malfunctionDesc', new FormControl(this.selectedMaintenanceSheet.malfunctionDesc));
+    this.validateForm.setControl('pauseTime', new FormControl(this.selectedMaintenanceSheet.pauseTime));
+    this.finishDate = this.selectedMaintenanceSheet.finishTime;
+    this.checker = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.checker?.id)!
+    this.checkDate = this.selectedMaintenanceSheet.checkDate;
+    this.validateForm.setControl('maintenanceDesc', new FormControl(this.selectedMaintenanceSheet.maintenanceDesc));
+    this.validateForm.setControl('precautions', new FormControl(this.selectedMaintenanceSheet.precaution));
+    this.validator = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.validator?.id)!;
+    this.validateDate = this.selectedMaintenanceSheet.validateTime;
+    //服务评价
+    this.fetchRatings();
+  }
+
+  fetchRatings() {
+    const api = this.equipmentService.api + '/rating';
+    let param = {
+      id: this.selectedMaintenanceSheet.id
+    }
+    this.equipmentService.getDataWithParams(api, param).then((result: any) => {
+      this.response = result.data.responseRating;
+      this.quality = result.data.qualityRating;
+      this.fiveS = result.data.fiveSRating;
+      this.overall = result.data.overallRating;
+      this.ratePerson = this.personnel.find(p => p.id == result.data.ratePerson?.id)!;
+      this.validateForm.setControl('dateOfRate',new FormControl(result.data.rateDate));
+      this.validateForm.setControl('feedbackDesc',new FormControl(result.data.description));
+    })
   }
 
   fetchPersonnel(): void {
@@ -171,6 +203,18 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
     this.equipmentService.getData(api).then((result: any) => {
       this.equipments = result.data;
       this.buildForm();
+    });
+  }
+
+  private fetchMalfunctionType() {
+    const api = this.equipmentService.api + '/config';
+    this.equipmentService.getData(api).then((result: any) => {
+      this.malfunctionTypes = JSON.parse(result.data.malfunctionType).map((item: any) => {
+        return item.name
+      });
+      this.malfunctionLevels = JSON.parse(result.data.malfunctionLevel).map((item: any) => {
+        return item.name;
+      });
     });
   }
 }

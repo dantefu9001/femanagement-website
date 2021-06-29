@@ -83,6 +83,17 @@ export interface EquipmentsSummary {
 }
 
 export interface EquipmentsMaintenanceSheet {
+  checker: Person;
+  rateDesc: string;
+  rateDate: Date;
+  ratePerson: Person;
+  checkDate: Date;
+  finishTime: Date;
+  malfunctionDesc: string;
+  malfunctionLevel: string;
+  deadline: Date;
+  dispatchInfo: string;
+  dispatcher: Person;
   id: number;
   code: string,
   submitter: Person;
