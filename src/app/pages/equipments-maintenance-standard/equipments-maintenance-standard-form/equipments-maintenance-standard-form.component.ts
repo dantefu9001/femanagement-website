@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {MalfunctionLevel, MalfunctionType} from "../../basicdata/basic-data-configs/basic-data-configs.component";
@@ -11,10 +11,6 @@ import {
   ProductionLine,
   SparePart
 } from "../../../model/model";
-import {ResponseRatingComponent} from "../equipment-maintenance-validate-judgement/ratings/response-rating/response-rating.component";
-import {OverallRatingComponent} from "../equipment-maintenance-validate-judgement/ratings/overall-rating/overall-rating.component";
-import {FiveSRatingComponent} from "../equipment-maintenance-validate-judgement/ratings/five-s-rating/five-s-rating.component";
-import {QualityRatingComponent} from "../equipment-maintenance-validate-judgement/ratings/quality-rating/quality-rating.component";
 import {EquipmentService} from "../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 
@@ -100,6 +96,7 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
     this.fetchPersonnel();
     this.fetchProductionLine();
     this.fetchMalfunctionType();
+
   }
 
   handleCancel() {
@@ -152,6 +149,8 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
     this.validateForm.setControl('precautions', new FormControl(this.selectedMaintenanceSheet.precaution));
     this.validator = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.validator?.id)!;
     this.validateDate = this.selectedMaintenanceSheet.validateTime;
+    //备件
+    this.fetchSpareParts();
     //服务评价
     this.fetchRatings();
   }
@@ -216,5 +215,15 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
         return item.name;
       });
     });
+  }
+
+  fetchSpareParts() {
+    const api = this.equipmentService.api + '/spare-part/maintenance'
+    let param = {
+      id:this.selectedMaintenanceSheet.id
+    }
+    this.equipmentService.getDataWithParams(api,param).then((result: any) => {
+      this.listOfData = result.data
+    })
   }
 }
