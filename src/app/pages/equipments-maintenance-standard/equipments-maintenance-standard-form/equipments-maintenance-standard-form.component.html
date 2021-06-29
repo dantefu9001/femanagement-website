@@ -199,7 +199,7 @@
             >
               <nz-option
                 *ngFor="let item of malfunctionTypes"
-                [nzLabel]="item.name"
+                [nzLabel]="item"
                 [nzValue]="item"
               >
                 <ng-template #tpl>
@@ -226,7 +226,7 @@
             >
               <nz-option
                 *ngFor="let item of malfunctionLevels"
-                [nzLabel]="item.name"
+                [nzLabel]="item"
                 [nzValue]="item"
               >
                 <ng-template #tpl>
@@ -237,9 +237,9 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label>故障说明</nz-form-label>
+          <nz-form-label>等级说明</nz-form-label>
           <nz-form-control>
-            <input nz-input="" formControlName="malfunctionDesc"/>
+            <input nz-input="" formControlName="malfunctionLevelDesc"/>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>

@@ -26,8 +26,10 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
   validateForm: FormGroup;
   isVisible: boolean = false;
   isOkLoading: boolean = false;
-  malfunctionTypes!: Array<MalfunctionType>;
-  malfunctionType!: MalfunctionType;
+  malfunctionTypes!: Array<string>;
+  malfunctionType!: string;
+  malfunctionLevels!: Array<string>;
+  malfunctionLevel!: string;
   reporter!: Person;
   maintainer!: Person;
   personnel!: Array<Person>;
@@ -44,8 +46,7 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
   dispatchDate!: Date;
   dispatcher!: Person;
   deadline!: Date;
-  malfunctionLevels!: Array<MalfunctionLevel>;
-  malfunctionLevel!: MalfunctionLevel;
+
   finishDate!: Date;
   validator!: Person;
   validateDate!: Date;
@@ -75,6 +76,7 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
       dispatchInfo: '',
       dateOfDeadline: '',
       malfunctionDesc: '',
+      malfunctionLevelDesc: '',
       pauseTime: '',
       dateOfFinish: '',
       dateOfCheck: '',
@@ -96,7 +98,6 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
     this.fetchPersonnel();
     this.fetchProductionLine();
     this.fetchMalfunctionType();
-
   }
 
   handleCancel() {
@@ -137,18 +138,22 @@ export class EquipmentsMaintenanceStandardFormComponent implements OnInit {
     this.dispatchDate = this.selectedMaintenanceSheet.malfunctionTime;//todo use the right time;
     this.dispatcher = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.dispatcher?.id)!;
     this.validateForm.setControl('dispatchInfo', new FormControl(this.selectedMaintenanceSheet.dispatchInfo));
-    this.malfunctionType = this.malfunctionTypes.find(m => m.name == this.selectedMaintenanceSheet.malfunctionType)!;
+    this.malfunctionType = this.malfunctionTypes.find(m => m == this.selectedMaintenanceSheet.malfunctionType)!;
     this.deadline = this.selectedMaintenanceSheet.deadline;
-    this.malfunctionLevel = this.malfunctionLevels.find(m => m.name == this.selectedMaintenanceSheet.malfunctionLevel)!;
-    this.validateForm.setControl('malfunctionDesc', new FormControl(this.selectedMaintenanceSheet.malfunctionDesc));
+    this.malfunctionLevel = this.malfunctionLevels.find(m => m == this.selectedMaintenanceSheet.malfunctionLevel)!;
+    //todo level description
+    this.validateForm.setControl('malfunctionLevelDesc', new FormControl(this.selectedMaintenanceSheet.malfunctionDesc));
     this.validateForm.setControl('pauseTime', new FormControl(this.selectedMaintenanceSheet.pauseTime));
     this.finishDate = this.selectedMaintenanceSheet.finishTime;
     this.checker = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.checker?.id)!
-    this.checkDate = this.selectedMaintenanceSheet.checkDate;
+    this.validateForm.setControl('dateOfCheck', new FormControl(this.selectedMaintenanceSheet.checkDate));
     this.validateForm.setControl('maintenanceDesc', new FormControl(this.selectedMaintenanceSheet.maintenanceDesc));
     this.validateForm.setControl('precautions', new FormControl(this.selectedMaintenanceSheet.precaution));
+    this.validateForm.setControl('dateOfDeadline', new FormControl(this.selectedMaintenanceSheet.deadline));
     this.validator = this.personnel.find(p => p.id == this.selectedMaintenanceSheet.validator?.id)!;
-    this.validateDate = this.selectedMaintenanceSheet.validateTime;
+    this.validateForm.setControl('dateOfValidation', new FormControl(this.selectedMaintenanceSheet.validateTime));
+    this.validateForm.setControl('validateJudgement',new FormControl(this.selectedMaintenanceSheet.validation));
+    this.validateForm.setControl('validateDesc', new FormControl(this.selectedMaintenanceSheet.validateDesc));
     //备件
     this.fetchSpareParts();
     //服务评价
