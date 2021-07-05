@@ -8,6 +8,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {EquipmentsMaintenanceJobBookingFormComponent} from "../../equipments-maintenance-simple/equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-form/equipments-maintenance-job-booking-form.component";
 import {EquipmentsMaintenanceJobBookingTableComponent} from "../../equipments-maintenance-simple/equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-table/equipments-maintenance-job-booking-table.component";
 import {EquipmentsMaintenanceJobBookingModalFormComponent} from "./equipments-maintenance-job-booking-modal-form/equipments-maintenance-job-booking-modal-form.component";
+import {NzImageService} from "ng-zorro-antd/image";
 
 @Component({
   selector: 'app-equipments-maintenance-my-job-bookings',
@@ -70,6 +71,7 @@ export class EquipmentsMaintenanceMyJobBookingsComponent {
     public fb: FormBuilder,
     equipmentBookingForm: EquipmentsMaintenanceJobBookingModalFormComponent,
     equipmentBookingTable: EquipmentsMaintenanceJobBookingTableComponent,
+    public nzImageService: NzImageService,
     public equipmentService: EquipmentService,
     public nzMsgService: NzMessageService) {
     this.equipmentBookingForm = equipmentBookingForm;
@@ -145,5 +147,16 @@ export class EquipmentsMaintenanceMyJobBookingsComponent {
     this.searchForm.setControl('equipment', new FormControl(''));
     this.searchForm.setControl('equipmentGroup', new FormControl(''))
     this.search();
+  }
+
+  viewPic(pic: any) {
+    const images = [
+      {
+        src: pic,
+
+        alt: ''
+      }
+    ];
+    this.nzImageService.preview(images, { nzZoom: 1, nzRotate: 0 });
   }
 }

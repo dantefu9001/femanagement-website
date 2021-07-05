@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EquipmentsMaintenanceSheet, MaintenanceStatus} from "../../../../model/model";
 import {EquipmentService} from "../../../../service/equipment.service";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {NzImageService} from "ng-zorro-antd/image";
 
 @Component({
   selector: 'app-equipments-maintenance-management-unfinished',
@@ -63,6 +64,7 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
   constructor(
     public fb: FormBuilder,
     public equipmentService: EquipmentService,
+    public nzImageService: NzImageService,
     public nzMsgService: NzMessageService) {
   }
 
@@ -152,5 +154,16 @@ export class EquipmentsMaintenanceManagementUnfinishedComponent implements OnIni
     this.searchForm.setControl('equipment', new FormControl(''));
     this.searchForm.setControl('equipmentGroup', new FormControl(''))
     this.search();
+  }
+
+  viewPic(pic: any) {
+    const images = [
+      {
+        src: pic,
+
+        alt: ''
+      }
+    ];
+    this.nzImageService.preview(images, { nzZoom: 1, nzRotate: 0 });
   }
 }

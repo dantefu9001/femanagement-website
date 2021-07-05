@@ -20,6 +20,8 @@ import { EquipmentsMaintenanceJobBookingFormComponent } from './equipments-maint
 import { EquipmentsMaintenanceJobBookingTableComponent } from './equipments-maintenance-job-booking-modal/equipments-maintenance-job-booking-table/equipments-maintenance-job-booking-table.component';
 import {EquipmentsModule} from "../equipments/equipments.module";
 import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equipment-edit-upload-pic/equipment-edit-upload-pic.component";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {NzImageService} from "ng-zorro-antd/image";
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equi
     EquipmentEditUploadPicComponent,
     EquipmentsMaintenanceJobBookingModalComponent,
     EquipmentsMaintenanceJobBookingFormComponent,
-    EquipmentsMaintenanceJobBookingTableComponent
+    EquipmentsMaintenanceJobBookingTableComponent,
+    NzMessageService,
+    NzImageService
   ],
   declarations: [
     EquipmentsMaintenanceRecordComponent,
@@ -55,7 +59,7 @@ import {EquipmentEditUploadPicComponent} from "../equipments/equipment-edit/equi
         NzFormModule,
         NzSelectModule,
         FormsModule,
-        EquipmentsModule
+        EquipmentsModule,
     ]
 })
 export class EquipmentsMaintenanceSimpleModule {

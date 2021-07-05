@@ -80,7 +80,11 @@
     <td>{{ data.malfunctionTime.toLocaleString() }}</td>
     <td>{{ data.description }}</td>
     <td>{{ data.submitter?.name }}</td>
-    <td>图片</td>
+    <td >
+      <div *ngFor="let pic of data.picUrls;let i = index">
+        <a (click)="viewPic(pic)">图片{{i+1}}</a>
+      </div>
+    </td>
     <td>{{ data.maintenancePerson?.name }}</td>
     <td>{{data.pauseTime}}</td>
     <td>{{data.maintenanceDesc}}</td>

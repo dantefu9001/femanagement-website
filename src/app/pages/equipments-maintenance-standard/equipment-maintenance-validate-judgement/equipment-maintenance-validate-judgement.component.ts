@@ -7,6 +7,7 @@ import {ResponseRatingComponent} from "./ratings/response-rating/response-rating
 import {OverallRatingComponent} from "./ratings/overall-rating/overall-rating.component";
 import {FiveSRatingComponent} from "./ratings/five-s-rating/five-s-rating.component";
 import {QualityRatingComponent} from "./ratings/quality-rating/quality-rating.component";
+import {NzImageService} from "ng-zorro-antd/image";
 
 @Component({
   selector: 'app-equipment-maintenance-validate-judgement',
@@ -71,6 +72,7 @@ export class EquipmentMaintenanceValidateJudgementComponent {
     public responseRatingComponent: ResponseRatingComponent,
     public fb: FormBuilder,
     public equipmentService: EquipmentService,
+    public nzImageService:NzImageService,
     public nzMsgService: NzMessageService) {
     this.overallRating = overallRatingComponent;
     this.fiveSRating = fiveSRatingComponent;
@@ -193,5 +195,16 @@ export class EquipmentMaintenanceValidateJudgementComponent {
       this.isJudgementOkLoading = false;
       this.resetAndSearch();
     });
+  }
+
+  viewPic(pic: any) {
+    const images = [
+      {
+        src: pic,
+
+        alt: ''
+      }
+    ];
+    this.nzImageService.preview(images, { nzZoom: 1, nzRotate: 0 });
   }
 }
