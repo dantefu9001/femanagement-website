@@ -28,6 +28,7 @@ import { EquipmentTagComponent } from './equipment-tag/equipment-tag.component';
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import { EquipmentGroupEditModalComponent } from './equipment-group/equipment-group-edit-modal/equipment-group-edit-modal.component';
+import { EquipmentEditUploadFileComponent } from './equipment-edit/equipment-edit-upload-file/equipment-edit-upload-file.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import { EquipmentGroupEditModalComponent } from './equipment-group/equipment-gr
         EquipmentEditUploadPicComponent,
         EquipmentTagComponent,
         EquipmentGroupEditModalComponent,
+        EquipmentEditUploadFileComponent,
     ],
     imports: [
         CommonModule,

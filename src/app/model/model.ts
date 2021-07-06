@@ -2,6 +2,8 @@ export interface Equipment {
   isSelected: boolean,
   id: number;
   picture: string
+  equipmentManifest:string,
+  maintenanceManifest:string,
   name: string;
   code: string;
   responsible: Person;

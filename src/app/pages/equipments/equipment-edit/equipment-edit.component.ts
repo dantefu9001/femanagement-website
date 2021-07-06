@@ -18,6 +18,7 @@ import {
 import {EquipmentService} from "../../../service/equipment.service";
 import {EquipmentEditUploadPicComponent} from "./equipment-edit-upload-pic/equipment-edit-upload-pic.component";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {EquipmentEditUploadFileComponent} from "./equipment-edit-upload-file/equipment-edit-upload-file.component";
 
 @Component({
   selector: 'app-equipment-edit',
@@ -31,6 +32,8 @@ export class EquipmentEditComponent implements OnInit {
   @ViewChild('attributesTableComponent') attributesTableComponent!: EquipmentAttributesTableComponent;
   @ViewChild('equipmentParamsComponent') equipmentParamsComponent!: EquipmentParamsComponent;
   @ViewChild('equipmentEditUploadPicComponent') equipmentEditUploadPicComponent!: EquipmentEditUploadPicComponent;
+  @ViewChild('equipmentManifest') equipmentManifest!:EquipmentEditUploadFileComponent;
+  @ViewChild('maintenanceManifest') maintenanceManifest!:EquipmentEditUploadFileComponent;
   confirmModal?: NzModalRef;
   isVisible = false;
   isOkLoading = false;
@@ -223,6 +226,8 @@ export class EquipmentEditComponent implements OnInit {
       isDelete: "0",
       customAttributes: JSON.stringify(this.attributesTableComponent.selfDefinedAttributes),
       enterprise: "",
+      equipmentManifest:this.equipmentManifest.url!,
+      maintenanceManifest:this.maintenanceManifest.url!
     };
   }
 

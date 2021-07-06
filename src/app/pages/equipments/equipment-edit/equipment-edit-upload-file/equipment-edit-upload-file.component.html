@@ -1,0 +1,9 @@
+
+    <nz-upload
+      [nzAction]='equipmentService.api+"/equipments/upload-file"'
+      nzAccept="application/pdf"
+      [nzShowUploadList]="false"
+      (nzChange)="handleChange($event)"
+    >
+      <a>{{title}}</a>
+    </nz-upload>
