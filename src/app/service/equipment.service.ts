@@ -32,6 +32,13 @@ export class EquipmentService {
     });
   }
 
+  exportData(api:string, args:any, responseType:any):any{
+    return new Promise((resolve) => {
+      axios.get(api, {params: args, responseType:responseType}).then((response) => {
+        resolve(response);
+      });
+    });  }
+
   postData(api: string, arg: any): any {
     return new Promise((resolve => {
       axios.post(api, arg).then((response) => {

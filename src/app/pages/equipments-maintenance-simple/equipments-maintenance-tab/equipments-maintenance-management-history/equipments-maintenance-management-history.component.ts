@@ -148,6 +148,21 @@ export class EquipmentsMaintenanceManagementHistoryComponent implements OnInit {
   }
 
   export(){
-
+    let api = this.equipmentService.api + '/maintenance/export';
+    let param = {
+      startDate: this.searchForm.get('startDate')?.value,
+      endDate: this.searchForm.get('endDate')?.value,
+      equipment: this.searchForm.get('equipment')?.value,
+      equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
+    };
+    this.equipmentService.exportData(api, param, 'blob').then((res:any)=>{
+      let blob = new Blob([res.data],{type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+      let a = document.createElement("a");
+      document.body.appendChild(a);
+      a.download =new Date().toLocaleString();
+      a.href = URL.createObjectURL(blob);
+      a.click();
+      a.remove();
+    });
   }
 }
