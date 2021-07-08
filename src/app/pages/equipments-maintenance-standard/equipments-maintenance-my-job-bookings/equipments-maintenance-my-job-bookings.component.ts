@@ -130,6 +130,11 @@ export class EquipmentsMaintenanceMyJobBookingsComponent {
     if (this.setOfCheckedId.size !== 1) {
       this.nzMsgService.error("请选择一条数据进行操作")
     } else {
+      this.equipmentBookingForm.maintenanceCodes = this.listOfData.map(m=>{
+        return m.code;
+      });
+      this.equipmentBookingForm.selectedMaintenanceCode = this.equipmentBookingForm.maintenanceCodes
+        .find(code=>code==this.listOfSelection[0].code)!
       this.isVisible = true;
     }
   }

@@ -38,7 +38,6 @@
   <thead>
   <tr>
     <th
-      [nzSelections]="listOfSelection"
       [(nzChecked)]="checked"
       [nzIndeterminate]="indeterminate"
       (nzCheckedChange)="onAllChecked($event)"
@@ -71,11 +70,11 @@
     <td>{{data.malfunctionType}}</td>
     <td>{{data.action}}</td>
     <td>{{data.precaution}}</td>
-    <td>{{data.validator}}</td>
+    <td>{{data.validator?.name}}</td>
     <td>{{data.validation}}</td>
     <td>{{data.validateTime}}</td>
     <td>{{data.validateDesc}}</td>
-    <td>{{data.auditor}}</td>
+    <td>{{data.auditor?.name}}</td>
     <td>{{data.auditTime}}</td>
   </tr>
   </tbody>

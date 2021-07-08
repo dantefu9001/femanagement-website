@@ -17,7 +17,6 @@ export class EquipmentsMaintenanceJobBookingModalComponent {
   isVisible = false;
   isOkLoading = false;
   maintenance!: EquipmentsMaintenanceSheet;
-  picUrls = [];
 
   constructor(public nzMsgService: NzMessageService,
               public equipmentService: EquipmentService,
@@ -34,7 +33,11 @@ export class EquipmentsMaintenanceJobBookingModalComponent {
       this.nzMsgService.error("请选择一条数据")
     } else {
       this.maintenance = this.equipmentManagementUnfinished.listOfSelection[0];
-      this.equipmentBookingForm.maintenance = this.maintenance;
+      this.equipmentBookingForm.maintenanceCodes = this.equipmentManagementUnfinished.listOfData.map(m=>{
+        return m.code;
+      });
+      this.equipmentBookingForm.selectedMaintenanceCode = this.equipmentBookingForm.maintenanceCodes
+        .find(m=>m==this.equipmentManagementUnfinished.listOfSelection[0].code)!
       this.equipmentBookingTable.maintenance = this.maintenance;
       this.isVisible = true;
     }

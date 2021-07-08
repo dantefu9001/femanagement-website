@@ -141,7 +141,7 @@ export enum MaintenanceStatus {
   CONFIRMED="已确认",
   RATED="已评价",
   VALIDATED="已验证",
-  VALIDATION_APPROVED="验证已审核"
+  TO_BE_VALIDATED="待验证"
 }
 
 

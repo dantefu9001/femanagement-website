@@ -137,6 +137,7 @@ export class EquipmentMaintenanceValidateJudgementComponent {
     if (this.listOfSelection.length !== 1) {
       this.nzMsgService.error("请选择一条数据")
     } else {
+      this.judgeForm.setControl('code',new FormControl(this.listOfSelection[0]?.code));
       this.isJudgementVisible = true;
     }
   }

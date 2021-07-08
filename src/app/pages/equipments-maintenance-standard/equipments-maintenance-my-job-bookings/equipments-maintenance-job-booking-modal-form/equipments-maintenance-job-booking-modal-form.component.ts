@@ -17,8 +17,8 @@ export class EquipmentsMaintenanceJobBookingModalFormComponent {
   @ViewChild('uploadPicComponent2') upload2: EquipmentEditUploadPicComponent;
   maintenance!: EquipmentsMaintenanceSheet;
   maintenanceForm: FormGroup;
-  selectedMaintenanceCode!: number;
-  maintenanceCodes!: Array<number>;
+  selectedMaintenanceCode!: string;
+  maintenanceCodes!: Array<string>;
   malfunctionType!: string;
   malfunctionTypes!: Array<string>;
   personnel!: Array<Person>;
@@ -67,6 +67,5 @@ export class EquipmentsMaintenanceJobBookingModalFormComponent {
   }
 
   addTime() {
-    console.log("changed");
   }
 }

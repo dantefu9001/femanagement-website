@@ -31,46 +31,49 @@ import {EquipmentsMaintenanceStandardFormComponent} from "./equipments-maintenan
 
 
 @NgModule({
-  declarations: [
-    EquipmentsMaintenanceRecordStandardComponent,
-    EquipmentMaintenanceValidateJudgementComponent,
-    ResponseRatingComponent,
-    QualityRatingComponent,
-    FiveSRatingComponent,
-    OverallRatingComponent,
-    EquipmentsMaintenanceValidateTabComponent,
-    EquipmentsMaintenanceToBeValidateComponent,
-    EquipmentsMaintenanceValidatedComponent,
-    EquipmentsMaintenanceDispatchComponent,
-    EquipmentsMaintenanceMyJobBookingsComponent,
-    EquipmentsMaintenanceJobBookingModalFormComponent,
-    EquipmentsMaintenanceStandardFormComponent
-  ],
-  imports: [
-    CommonModule,
-    EquipmentsMaintenanceStandardRoutingModule,
-    EquipmentsMaintenanceSimpleModule,
-    NzFormModule,
-    ReactiveFormsModule,
-    NzSelectModule,
-    FormsModule,
-    NzModalModule,
-    NzDatePickerModule,
-    NzTableModule,
-    NzRateModule,
-    NzCheckboxModule,
-    NzTabsModule,
-    EquipmentsModule
-  ],
-  providers: [
-    EquipmentsMaintenanceJobBookingModalFormComponent,
-    EquipmentEditUploadPicComponent,
-    EquipmentsMaintenanceJobBookingTableComponent,
-    OverallRatingComponent,
-    QualityRatingComponent,
-    FiveSRatingComponent,
-    ResponseRatingComponent,
-  ]
+    declarations: [
+        EquipmentsMaintenanceRecordStandardComponent,
+        EquipmentMaintenanceValidateJudgementComponent,
+        ResponseRatingComponent,
+        QualityRatingComponent,
+        FiveSRatingComponent,
+        OverallRatingComponent,
+        EquipmentsMaintenanceValidateTabComponent,
+        EquipmentsMaintenanceToBeValidateComponent,
+        EquipmentsMaintenanceValidatedComponent,
+        EquipmentsMaintenanceDispatchComponent,
+        EquipmentsMaintenanceMyJobBookingsComponent,
+        EquipmentsMaintenanceJobBookingModalFormComponent,
+        EquipmentsMaintenanceStandardFormComponent
+    ],
+    imports: [
+        CommonModule,
+        EquipmentsMaintenanceStandardRoutingModule,
+        EquipmentsMaintenanceSimpleModule,
+        NzFormModule,
+        ReactiveFormsModule,
+        NzSelectModule,
+        FormsModule,
+        NzModalModule,
+        NzDatePickerModule,
+        NzTableModule,
+        NzRateModule,
+        NzCheckboxModule,
+        NzTabsModule,
+        EquipmentsModule
+    ],
+    exports: [
+        EquipmentsMaintenanceStandardFormComponent
+    ],
+    providers: [
+        EquipmentsMaintenanceJobBookingModalFormComponent,
+        EquipmentEditUploadPicComponent,
+        EquipmentsMaintenanceJobBookingTableComponent,
+        OverallRatingComponent,
+        QualityRatingComponent,
+        FiveSRatingComponent,
+        ResponseRatingComponent,
+    ]
 })
 export class EquipmentsMaintenanceStandardModule {
 }

@@ -5,6 +5,7 @@
       <nz-form-control>
         <nz-select
           name="repairNumber"
+          [disabled]="cannotEdit"
           [(ngModel)]="selectedMaintenanceCode"
           [ngModelOptions]="{ standalone: true }"
         >

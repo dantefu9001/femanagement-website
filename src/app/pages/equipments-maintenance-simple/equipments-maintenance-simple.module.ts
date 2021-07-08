@@ -47,20 +47,20 @@ import {NzImageService} from "ng-zorro-antd/image";
         EquipmentsMaintenanceRecordComponent,
         EquipmentsMaintenanceJobBookingTableComponent
     ],
-    imports: [
-        CommonModule,
-        EquipmentsMaintenanceSimpleRoutingModule,
-        NzTableModule,
-        NzGridModule,
-        ReactiveFormsModule,
-        NzDatePickerModule,
-        NzModalModule,
-        NzTabsModule,
-        NzFormModule,
-        NzSelectModule,
-        FormsModule,
-        EquipmentsModule,
-    ]
+  imports: [
+    CommonModule,
+    EquipmentsMaintenanceSimpleRoutingModule,
+    NzTableModule,
+    NzGridModule,
+    ReactiveFormsModule,
+    NzDatePickerModule,
+    NzModalModule,
+    NzTabsModule,
+    NzFormModule,
+    NzSelectModule,
+    FormsModule,
+    EquipmentsModule,
+  ]
 })
 export class EquipmentsMaintenanceSimpleModule {
 }

@@ -17,7 +17,7 @@ interface Person {
   styleUrls: ['./equipments-maintenance-validated.component.scss']
 })
 export class EquipmentsMaintenanceValidatedComponent implements OnInit {
-  listOfSelection = [];
+  listOfSelection: Array<EquipmentsMaintenanceSheet> = [];
 
 
   isVisible = false;
@@ -33,8 +33,10 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
+      this.listOfSelection = [...this.listOfData.filter(d => d.id == id)]
     } else {
       this.setOfCheckedId.delete(id);
+      this.listOfSelection = this.listOfSelection.filter(d => d.id !== id)
     }
   }
 
@@ -82,7 +84,7 @@ export class EquipmentsMaintenanceValidatedComponent implements OnInit {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status: MaintenanceStatus.VALIDATION_APPROVED
+      status: MaintenanceStatus.VALIDATED
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data

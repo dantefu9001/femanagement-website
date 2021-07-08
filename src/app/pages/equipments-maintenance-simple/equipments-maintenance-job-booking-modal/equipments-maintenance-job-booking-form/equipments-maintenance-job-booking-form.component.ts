@@ -17,10 +17,11 @@ export class EquipmentsMaintenanceJobBookingFormComponent implements OnInit {
   @ViewChild('uploadPicComponent2') upload2: EquipmentEditUploadPicComponent;
   maintenance!:EquipmentsMaintenanceSheet;
   maintenanceForm: FormGroup;
-  selectedMaintenanceCode!: number;
-  maintenanceCodes!: Array<number>;
+  selectedMaintenanceCode!: string;
+  maintenanceCodes!: Array<string>;
   malfunctionType!: string;
   malfunctionTypes!: Array<string>;
+  @Input() cannotEdit: boolean=false;
 
   constructor(private fb: FormBuilder,
               upload1: EquipmentEditUploadPicComponent,
