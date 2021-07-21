@@ -11,7 +11,8 @@ export class EquipmentService {
     return this._api;
   }
 
-  private _api = "http://localhost:8091/api";
+  private _api = "api";
+  // private _api = "http://localhost:8091/api";
 
   constructor() {
   }
@@ -37,7 +38,8 @@ export class EquipmentService {
       axios.get(api, {params: args, responseType:responseType}).then((response) => {
         resolve(response);
       });
-    });  }
+    });
+  }
 
   postData(api: string, arg: any): any {
     return new Promise((resolve => {
