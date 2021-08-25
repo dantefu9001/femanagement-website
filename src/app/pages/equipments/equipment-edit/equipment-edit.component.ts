@@ -101,7 +101,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
-        this.equipmentsComponent.search('', '', '', this.equipmentsComponent.selectedGroup?.id);
+        this.equipmentsComponent.search(null!, null!, null!, this.equipmentsComponent.selectedGroup?.id);
       })
     } else {
       const api = this.equipmentService.api+'/equipments';
@@ -109,7 +109,7 @@ export class EquipmentEditComponent implements OnInit {
         console.log(result);
         this.isVisible = false;
         this.isOkLoading = false;
-        this.equipmentsComponent.search('', '', '', this.equipmentsComponent.selectedGroup?.id);
+        this.equipmentsComponent.search(null!, null!, null!, this.equipmentsComponent.selectedGroup?.id);
       })
     }
 

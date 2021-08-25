@@ -79,7 +79,7 @@ export class EquipmentGroupEditModalComponent implements OnInit {
       this.selectedGroup = this.equipmentGroups[0]
       this.selectedGroup.isSelected = true;
       this.equipmentsComponent.selectedGroup = this.selectedGroup;
-      this.equipmentsComponent.search('','','',this.selectedGroup?.id)
+      this.equipmentsComponent.search(null!,null!,null!,this.selectedGroup?.id)
     });
   }
 
@@ -130,6 +130,6 @@ export class EquipmentGroupEditModalComponent implements OnInit {
     this.selectedGroup = item;
     this.selectedGroup.isSelected = true;
     this.equipmentsComponent.selectedGroup = this.selectedGroup;
-    this.equipmentsComponent.search('', '', '',this.selectedGroup?.id);
+    this.equipmentsComponent.search(null!, null!, null!,this.selectedGroup?.id);
   }
 }

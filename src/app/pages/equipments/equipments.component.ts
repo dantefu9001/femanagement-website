@@ -49,7 +49,7 @@ export class EquipmentsComponent implements OnInit {
       console.log('id:', this.idOfSelectedRow);
       api += this.idOfSelectedRow
       this.equipmentService.deleteData(api).then((result: any) => {
-        this.search('', '', '', this.selectedGroup?.id);
+        this.search(null!, null!, null!, this.selectedGroup?.id);
       })
     }
   }
