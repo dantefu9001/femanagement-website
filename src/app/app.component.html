@@ -27,12 +27,12 @@
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/equipments">设备管理</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
+          <li nz-menu-item nzMatchRouter [hidden]="!enableEquipmentManagement">
             <a routerLink="/equipments-summary">设备管理小结</a>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="设备维修-简单模式" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="设备维修-简单模式" nzIcon="dashboard" [hidden]="!isEasyMode">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/equipments-maintenance/record">设备维修单</a>
@@ -47,7 +47,7 @@
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/equipments-maintenance-standard/record">设备维修单</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
+          <li nz-menu-item nzMatchRouter [hidden]="isAutoDispatch">
             <a routerLink="/equipments-maintenance-standard/dispatch">维修分派及审核</a>
           </li>
           <li nz-menu-item nzMatchRouter>

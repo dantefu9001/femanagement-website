@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import {BasicDataConfigsComponent} from "./pages/basicdata/basic-data-configs/basic-data-configs.component";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 registerLocaleData(zh);
 
@@ -30,7 +32,7 @@ registerLocaleData(zh);
     NzLayoutModule,
     NzMenuModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+  providers: [BasicDataConfigsComponent,NzMessageService,{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
