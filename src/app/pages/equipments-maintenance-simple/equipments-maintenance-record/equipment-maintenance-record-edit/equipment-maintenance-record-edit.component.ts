@@ -38,7 +38,8 @@ export class EquipmentMaintenanceRecordEditComponent implements OnInit {
     if (!this.editable) {
       this.view();
     } else {
-      this.equipmentMaintenanceEditForm.setControl('code', new FormControl(Date.now().toString()));
+      this.randomCode = Date.now().toString()
+      this.equipmentMaintenanceEditForm.setControl('code', new FormControl(this.randomCode));
       this.isVisible = true;
     }
 
