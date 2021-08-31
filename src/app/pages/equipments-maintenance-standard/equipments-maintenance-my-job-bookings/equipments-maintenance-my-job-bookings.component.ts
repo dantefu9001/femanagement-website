@@ -29,13 +29,7 @@ export class EquipmentsMaintenanceMyJobBookingsComponent {
   listOfData: ReadonlyArray<EquipmentsMaintenanceSheet> = [];
   setOfCheckedId = new Set<number>();
   searchForm!: FormGroup;
-  status = [{
-    name: MaintenanceStatus.SUBMITTED,
-  }, {
-    name: MaintenanceStatus.TO_BE_DISPATCHED,
-  }, {
-    name: MaintenanceStatus.DISPATCHED,
-  }];
+
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -84,7 +78,6 @@ export class EquipmentsMaintenanceMyJobBookingsComponent {
       "equipment": new FormControl(''),
       "startDate": [null],
       "endDate": [null],
-      "status": new FormControl('')
     });
     this.search();
   }
@@ -96,6 +89,7 @@ export class EquipmentsMaintenanceMyJobBookingsComponent {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
+      status:MaintenanceStatus.DISPATCHED
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data

@@ -88,7 +88,7 @@ export class EquipmentsMaintenanceDispatchComponent implements OnInit {
       endDate: this.searchForm.get('endDate')?.value,
       equipment: this.searchForm.get('equipment')?.value,
       equipmentGroup: this.searchForm.get('equipmentGroup')?.value,
-      status: MaintenanceStatus.MAINTAINED + "," + MaintenanceStatus.RATED
+      status: MaintenanceStatus.SUBMITTED
     };
     this.equipmentService.getDataWithParams(api, param).then((result: any) => {
       this.listOfData = result.data
