@@ -86,7 +86,7 @@ export class EquipmentsSummaryComponent implements OnInit {
   }
 
   edit() {
-    if (this.setOfCheckedId.size == 1) {
+    if (this.setOfCheckedId.size !== 1) {
       this.nzMsgService.error("请选择单个小结进行编辑");
     } else {
       this.selectedSummary = this.summaryList.filter(summary=>this.setOfCheckedId.has(summary.id)).pop()!;
